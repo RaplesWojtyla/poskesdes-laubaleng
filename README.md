@@ -1,151 +1,66 @@
-## - [Intro](#intro)
-## - [Instalasi Dan Konfigurasi](#instalasi-dan-konfigurasi)
-## - [Kontributor](#Kontributor)
-## - [Source](#source)
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-# [Intro](#intro)
-Web Apotek Jati Negara adalah sebuah website yang dibuat untuk memenuhi kewajiban tugas besar matakuliah Manajemen Sistem Basis Data (Teknologi Informasi, Universitas Sumatera Utara).  
-Apotek Jati Negara adalah aplikasi apotek online yang memungkinkan pengguna untuk dengan mudah mencari dan memesan obat-obatan secara praktis dari rumah mereka. Dengan antarmuka yang ramah pengguna dan fitur-fitur inovatif, aplikasi ini bertujuan untuk menyederhanakan proses pembelian obat dan meningkatkan kenyamanan pengguna serta mempermudah pihak apotek untuk mengontrol data data dari apotek.  
-  
-[NB: Apotek Jati Negara adalah sebuah apotek yang berlokasi di Medan, data dan informasi yang ada telah disamarkan]
+<p align="center">
+<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
-# Instalasi Dan Konfigurasi
-- ## Tech
-   #### - [Laravel 10]
-   #### - [Tailwind CSS]
-   #### - [Laravel Breeze]
-   #### - [Laravel Livewire]
+## About Laravel
 
- - ## Instalasi
-   - #### Lakukan Clone pada Github Repositori ini
-        - Klik tombol "Code" (berwarna hijau) untuk mendapatkan URL repository. Jika menggunakan HTTPS, salin URL tersebut. Jika menggunakan SSH, klik ikon SSH dan salin URL SSH.
-        - Buka terminal, command prompt atau Git Bash(rekomendasi) di komputer Anda.
-        - Pindah ke direktori di mana Anda ingin menyimpan salinan lokal repository. Gunakan perintah cd untuk berpindah ke direktori tersebut.
-          #### Contoh:
-              cd path/ke/direktori/tujuan
-        - Gunakan perintah git clone dengan menyertakan URL repository yang telah Anda salin sebelumnya.
-          #### Contoh untuk HTTPS:
-              git clone https://github.com/nama-akun/nama-repo.git
-          #### Atau untuk SSH:
-              git clone git@github.com:nama-akun/nama-repo.git
-   - #### Jalankan Di Code Editor
-       - Buka Terminal di direktori penyimpanan project.
-   - #### Install Dependensi
-     #### - Jalankan perintah berikut:
-         composer install
-     #### - Selanjutnya, jalankan perintah berikut:
-         npm install
-   - #### Buat Salinan File Konfigurasi
-     - Salin file `.env.example` dan beri nama baru menjadi `.env`
-       #### Jalankan Perintah Berikut:
-           cp .env.example .env
-   - #### Konfigurasi file `.env`
-     - # Masukkan pengaturan untuk storage file .env
-             FILESYSTEM_DISK=public
-     - Buka file `.env` dan konfigurasi pengaturan database, koneksi email, dan login google.
-       ### Pengaturan database
-       #### memungkinkan penggunaan akun database mysql yang berbeda saat login dengan user privilege yang berbeda:
-           # Koneksi database menggunakan root
-             DB_HOST=127.0.0.1
-             DB_PORT=3306
-             DB_DATABASE=apotekjatinegara
-             DB_USERNAME=root
-             DB_PASSWORD=
-           # Akhir koneksi database menggunakan root
-            
-           # Koneksi database menggunakan customer
-            DB_HOST_CUSTOMER=127.0.0.1
-            DB_PORT_CUSTOMER=3306
-            DB_DATABASE_CUSTOMER=apotekjatinegara
-            DB_USERNAME_CUSTOMER=root
-            DB_PASSWORD_CUSTOMER=
-           # Akhir koneksi database menggunakan customer
-            
-           # Koneksi database menggunakan cashier
-            DB_HOST_CASHIER=127.0.0.1
-            DB_PORT_CASHIER=3306
-            DB_DATABASE_CASHIER=apotekjatinegara
-            DB_USERNAME_CASHIER=root
-            DB_PASSWORD_CASHIER=
-           # Akhir koneksi database menggunakan cashier
-            
-           # Koneksi database menggunakan owner
-            DB_HOST_OWNER=127.0.0.1
-            DB_PORT_OWNER=3306
-            DB_DATABASE_OWNER=apotekjatinegara
-            DB_USERNAME_OWNER=root
-            DB_PASSWORD_OWNER=
-           # Akhir koneksi database menggunakan owner
-         
-       ### Pengaturan Mail
-       #### Ubah sesuai kebutuhan:
-            MAIL_MAILER=smtp
-            MAIL_HOST=Host yang digunakan
-            MAIL_PORT=Post mail
-            MAIL_USERNAME=Username
-            MAIL_PASSWORD=Password
-            MAIL_ENCRYPTION=null
-            MAIL_FROM_ADDRESS="apotekjatinegara@gmail.com"
-            MAIL_FROM_NAME="Apotek Jati Negara"
-       [NB: tutorial menggunakan mailtrap (https://www.youtube.com/watch?v=OXqDlufizG8) (09:09 - 13:55)]
-         
-       ### Pengaturan Google
-       #### Isi sesuai data yang dimiliki:
-            GOOGLE_CLIENT_ID= Client_ID
-            GOOGLE_CLIENT_SECRET= Client_Secret
-       [NB: tutorial menggunakan log in with google (https://www.youtube.com/watch?v=XyMU2LJIZe8) (00:47 - 03:17)]
-   - #### Generate Application Key
-     #### Jalankan perintah berikut di terminal:
-         php artisan key:generate
-   - #### Jalankan Migrasi dan Seeder
-     Jalankan perintah migrasi untuk membuat struktur table
-     #### jalankan perintah berikut:
-         php artisan migrate
-     Jalankan perintah seeder untuk mengisi data pada table dengan data dummy
-     #### jalankan perintah berikut:
-         php artisan db:seed
-   - #### Jalankan Server Lokal
-     #### jalankan perintah berikut:
-         php artisan serve
-     #### lalu
-         php artisan storage:link
-     #### dan
-         npm run dev
-   - #### Buka Proyek di Browser
-      Buka browser dan kunjungi alamat yang ditampilkan di terminal. Biasanya, ini adalah `http://127.0.0.1:8000`.
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-     #### NB:
-         Username: -cek dimysql-
-         Password: password
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-# [Kontributor](#kontributor)
-- ### Alwin Liufandy
-  - Instagram: @winz.liu
-  - LinkedIn: Alwin Liufandy
-- ### Devandra Deal Fatahilla
-  - Instagram: @devandradealf
-  - LinkedIn: Devandra Deal
-- ### Jessindy Tanuwijaya
-  - Instagram: @jessindytanu
-  - LinkedIn: Jessindy Tanuwijaya
-- ### Julyant Anggara
-  - Instagram: @julyantanggara
-  - LinkedIn: Julyant Anggara
-- ### Muhammad Raihan Abdillah Lubis
-  - Instagram: @rrreyabd
-  - LinkedIn: Muhammad Raihan Abdillah Lubis
-- ### Yohana Septamia
-  - Instagram: @yohanasept_
-  - LinkedIn: Yohana Septamia
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-# [Source](#source)
-- ## Apotek Jati Negara
-  https://maps.app.goo.gl/G7Kpsg474Jd3uFDR6 (Maps)
-- ## [Laravel 10](#laravel-10)
-  https://laravel.com/
-- ## [Tailwind CSS](#tailwind-css)
-  https://tailwindcss.com/
-- ## [Laravel Breeze](#laravel-breeze)
-  https://laravel.com/docs/10.x/starter-kits#breeze-and-livewire
-- ## [Laravel Livewire](#laravel-livewire)
-  https://laravel-livewire.com/
+## Learning Laravel
+
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+
+You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+
+If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+
+## Laravel Sponsors
+
+We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+
+### Premium Partners
+
+- **[Vehikl](https://vehikl.com/)**
+- **[Tighten Co.](https://tighten.co)**
+- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+- **[64 Robots](https://64robots.com)**
+- **[Cubet Techno Labs](https://cubettech.com)**
+- **[Cyber-Duck](https://cyber-duck.co.uk)**
+- **[Many](https://www.many.co.uk)**
+- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
+- **[DevSquad](https://devsquad.com)**
+- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
+- **[OP.GG](https://op.gg)**
+- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
+- **[Lendio](https://lendio.com)**
+
+## Contributing
+
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+
+## Code of Conduct
+
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+
+## Security Vulnerabilities
+
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+
+## License
+
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
