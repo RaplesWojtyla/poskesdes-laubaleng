@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@font-face {
+    font-family: 'Trip';
+    src: url('../font/TripSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'TripBold';
+    src: url('../font/TripSans-Bold.ttf') format('truetype');
+}
+  
+body {
+    scroll-behavior: smooth;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.undraggable {
+    user-drag: none; 
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+  }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  display: none;
+}
+
+input:focus {
+    outline: none;
+}
+
+.pageActive {
+    background-color: #1A8889;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    border-radius: 50%;
+}
+
+/* RADIO BUTTON START */
+
+input[type="radio"] {
+    accent-color: #1A8889;
+    stroke: #1A8889;
+}
+
+/* RADIO BUTTON END */
+
+.textShadow {
+    text-shadow: 2px 2px rgba(0, 0, 0, .1);
+}
+
+.gradient-text {
+    background-image: linear-gradient(45deg, #F7A623, #A7D3D4, #1A8889);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.animate-character {
+   text-transform: uppercase;
+    background-image: linear-gradient(
+        90deg,
+        #A7D3D4 0%,
+        #1A8889 33%,
+        #F7A623 67%,
+        #A7D3D4 100%
+
+    );
+    background-size: auto auto;
+    background-clip: border-box;
+    background-size: 200% auto;
+    color: #fff;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textclip 5s linear infinite;
+    display: inline-block;
+    font-size: 190px;
+}
+
+@keyframes textclip {
+    to {
+        background-position: 200% center;
+    }
+}
+
+.table-scroll {
+    height: 100px !important;
+    overflow: scroll;
+}
