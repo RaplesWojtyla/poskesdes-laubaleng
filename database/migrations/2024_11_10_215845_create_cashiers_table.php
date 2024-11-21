@@ -15,8 +15,6 @@ return new class extends Migration
             $table->uuid('id_cashier')->primary();
             $table->uuid('id_user')->unique();
             $table->enum('gender', ['Pria', 'Wanita']);
-            $table->string('agama', 10);
-            $table->enum('kewarganegaraan', ['WNI', 'WNA']);
             $table->string('no_telp', 14);
             $table->text('address');
 

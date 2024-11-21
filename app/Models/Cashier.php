@@ -19,8 +19,6 @@ class Cashier extends Model
         'id_user',
         'cashier_name',
         'gender',
-        'agama',
-        'kewarganegaraan',
         'no_telp',
         'address'
     ];

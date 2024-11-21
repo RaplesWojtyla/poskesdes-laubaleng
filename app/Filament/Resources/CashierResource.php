@@ -48,16 +48,6 @@ class CashierResource extends Resource
                         'Wanita' => 'Wanita'
                     ])
                     ->required(),
-                
-                TextInput::make('agama')
-                    ->required(),
-				
-				Select::make('kewarganegaraan')
-					->options([
-						'WNI' => 'WNI',
-						'WNA' => 'WNA'
-					])
-					->required(),
 
 				TextInput::make('no_telp')
 					->label('Nomor Telpon')
@@ -96,12 +86,6 @@ class CashierResource extends Resource
                     ->label('Jenis Kelamin')
                     ->searchable(),
 
-                TextColumn::make('agama')
-                    ->searchable(),
-
-                TextColumn::make('kewarganegaraan')
-                    ->searchable(),
-
                 TextColumn::make('no_telp')
                     ->label('Nomor Telpon')
                     ->searchable(),
@@ -116,7 +100,17 @@ class CashierResource extends Resource
             ->actions([
                 ActionGroup::make([
 					EditAction::make(),
-					ViewAction::make(),
+					ViewAction::make()
+                        ->mutateRecordDataUsing(function (array $data, $record): array {
+                        $user = $record->user;
+
+                        $data['user']['email'] = $user->email;
+                        $data['user']['name'] = $user->name;
+                        $data['user']['email_verified_at'] = $user->email_verified_at;
+                        $data['user']['password'] = $user->password;
+
+                        return $data;
+                    }),
 					DeleteAction::make()
 				])
             ])

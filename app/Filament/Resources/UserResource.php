@@ -86,11 +86,7 @@ class UserResource extends Resource
             ])
             ->actions([
                 ActionGroup::make([
-                    EditAction::make()
-                        ->form([
-                            TextInput::make('TESTING')
-                                ->label('SDFJNJFN')
-                        ]),
+                    EditAction::make(),
                     ViewAction::make()
                         ->mutateRecordDataUsing(function (array $data, $record): array {
                         $user = $record->user;

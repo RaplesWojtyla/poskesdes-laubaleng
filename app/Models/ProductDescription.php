@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class ProductDescription extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     protected $table = 'products_description';
     protected $primaryKey = 'id_product_description';
@@ -18,6 +19,8 @@ class ProductDescription extends Model
         'id_product_description',
         'id_category',
         'id_unit',
+        'golongan_obat',
+        'id_supplier',
         'deskripsi',
         'side_effect',
         'dosage',
@@ -35,5 +38,9 @@ class ProductDescription extends Model
 
     public function unit() {
         return $this->belongsTo(Unit::class, 'id_unit');
+    }
+
+    public function supplier() {
+        return $this->belongsTo(Supplier::class, 'id_supplier');
     }
 }

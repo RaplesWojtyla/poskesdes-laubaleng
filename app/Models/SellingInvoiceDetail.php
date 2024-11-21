@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class SellingInvoiceDetail extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     protected $table = 'selling_invoice_detail';
     protected $primaryKey = 'id_selling_invoice_detail';
