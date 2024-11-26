@@ -27,6 +27,7 @@ class CashierResource extends Resource
     protected static ?string $model = Cashier::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-credit-card';
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
@@ -35,7 +36,7 @@ class CashierResource extends Resource
                 TextInput::make('user.email')
 					->label('Email')
                     ->email()
-                    ->unique('users', 'email', ignoreRecord: true)
+                    // ->unique('users', 'email', ignoreRecord: true)
                     ->required(),
                 
                 TextInput::make('user.name')
@@ -107,7 +108,7 @@ class CashierResource extends Resource
                         $data['user']['email'] = $user->email;
                         $data['user']['name'] = $user->name;
                         $data['user']['email_verified_at'] = $user->email_verified_at;
-                        $data['user']['password'] = $user->password;
+                        $data['user']['password'] = "";
 
                         return $data;
                     }),

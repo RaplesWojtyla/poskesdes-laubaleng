@@ -3,11 +3,13 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
+use App\Filament\Resources\UserResource\RelationManagers\UserRelationManager;
 use App\Models\Customer;
 use App\Models\User;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Notifications\Collection;
 use Filament\Pages\Page;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Resource;
@@ -18,12 +20,16 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 
 class UserResource extends Resource
 {
     protected static ?string $model = Customer::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
+    protected static ?int $navigationSort = 1;
+
+    // protected static ?string $recordTitleAttribute = 'user.name';
 
     public static function form(Form $form): Form
     {
@@ -86,7 +92,7 @@ class UserResource extends Resource
             ])
             ->actions([
                 ActionGroup::make([
-                    EditAction::make(),
+                    // EditAction::make(),
                     ViewAction::make()
                         ->mutateRecordDataUsing(function (array $data, $record): array {
                         $user = $record->user;
@@ -94,7 +100,7 @@ class UserResource extends Resource
                         $data['user']['email'] = $user->email;
                         $data['user']['name'] = $user->name;
                         $data['user']['email_verified_at'] = $user->email_verified_at;
-                        $data['user']['password'] = $user->password;
+                        $data['user']['password'] = '12345678';
 
                         return $data;
                     }),
@@ -119,8 +125,8 @@ class UserResource extends Resource
     {
         return [
             'index' => Pages\ListUsers::route('/'),
-            'create' => Pages\CreateUser::route('/create'),
-            'edit' => Pages\EditUser::route('/{record}/edit'),
+            // 'create' => Pages\CreateUser::route('/create'),
+            // 'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
 }

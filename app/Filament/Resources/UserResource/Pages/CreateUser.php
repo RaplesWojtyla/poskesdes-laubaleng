@@ -45,6 +45,6 @@ class CreateUser extends CreateRecord
     }
 
     protected function beforeCreate() {
-
+        //
     }
 }

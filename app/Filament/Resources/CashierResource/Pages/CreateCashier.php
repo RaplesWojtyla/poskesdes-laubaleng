@@ -5,9 +5,11 @@ namespace App\Filament\Resources\CashierResource\Pages;
 use App\Filament\Resources\CashierResource;
 use App\Models\User;
 use Exception;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class CreateCashier extends CreateRecord
 {
@@ -18,6 +20,17 @@ class CreateCashier extends CreateRecord
         try {
             return DB::transaction(function() use ($data) {
                 $uuid = Str::uuid();
+                
+                if 
+                (
+                    User::where('email', $data['user']['email'])
+                        ->where('id_user', '!=', $uuid)
+                        ->exists()) 
+                {
+                    throw ValidationException::withMessages([
+                        'user.email' => 'Email telah digunakan'
+                    ]);
+                }
 
                 User::create([
                     'id_user' => $uuid,
@@ -33,8 +46,22 @@ class CreateCashier extends CreateRecord
 
                 return $data;
             });
+        } catch(ValidationException $e) {
+            Notification::make()
+                ->title('Error')
+                ->body($e->getMessage())
+                ->danger()
+                ->send();
+            
+            throw $e;
         } catch (Exception $e) {
-            throw new \RuntimeException('Gagal menyimpan data: ' . $e->getMessage());
+            Notification::make()
+                ->title('Error')
+                ->body('Gagal menyimpan data: ' . $e->getMessage())
+                ->danger()
+                ->send();
+            
+            throw $e;
         }
     }
 }
