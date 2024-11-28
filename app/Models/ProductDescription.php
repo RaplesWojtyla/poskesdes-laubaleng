@@ -22,8 +22,10 @@ class ProductDescription extends Model
         'golongan_obat',
         'id_supplier',
         'deskripsi',
+        'indication',
         'side_effect',
         'dosage',
+        'NIE',
         'type',
         'product_img'
     ];

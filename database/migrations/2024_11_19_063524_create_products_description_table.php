@@ -18,8 +18,10 @@ return new class extends Migration
             $table->enum('golongan_obat', ['Bebas', 'Bebas Terbatas', 'Keras', 'Narkotika']);
             $table->uuid('id_supplier');
             $table->text('deskripsi');
+            $table->text('indication');
             $table->text('side_effect');
             $table->text('dosage');
+            $table->string('NIE', 15);
             $table->enum('type', ['Umum', 'Resep dokter']);
             $table->text('product_img');
 

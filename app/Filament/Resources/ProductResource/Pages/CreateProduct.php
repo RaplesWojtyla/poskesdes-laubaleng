@@ -7,6 +7,7 @@ use App\Models\ProductDescription;
 use App\Models\ProductDetail;
 use Exception;
 use Filament\Actions;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -30,8 +31,10 @@ class CreateProduct extends CreateRecord
                     'golongan_obat' => $data['description']['golongan_obat'],
                     'id_supplier' => $data['description']['id_supplier'],
                     'deskripsi' => $data['description']['deskripsi'],
+                    'indication' => $data['description']['indication'],
                     'side_effect' => $data['description']['side_effect'],
                     'dosage' => $data['description']['dosage'],
+                    'NIE' => $data['description']['NIE'],
                     'type' => $data['description']['type'],
                     'product_img' => $data['description']['product_img'],
                 ]);
@@ -45,7 +48,6 @@ class CreateProduct extends CreateRecord
                 ];
 
                 unset($data['description'], $data['detail']);
-                // unset($data['detail']);
                 $data['id_product'] = $id_product;
                 $data['id_product_description'] = $id_description;
 
@@ -54,7 +56,13 @@ class CreateProduct extends CreateRecord
                 return $data;
             });
         } catch (Exception $e) {
-            throw new \RuntimeException('Gagal menyimpan data product: ' . $e->getMessage());
+            Notification::make()
+                ->title('Error')
+                ->body('Gagal menyimpan data obat: ' . $e->getMessage())
+                ->danger()
+                ->send();
+            
+            throw $e;
         }
     }
 
@@ -72,7 +80,13 @@ class CreateProduct extends CreateRecord
                 ]);
             });
         } catch (Exception $e) {
-            throw new \RuntimeException('Gagal menyimpan data product_detail: ' . $e->getMessage());
+            Notification::make()
+                ->title('Error')
+                ->body('Gagal menyimpan data obat: ' . $e->getMessage())
+                ->danger()
+                ->send();
+            
+            throw $e;
         }
     }
 }

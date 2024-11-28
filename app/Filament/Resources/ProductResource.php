@@ -78,6 +78,10 @@ class ProductResource extends Resource
                             ])
                             ->required()
                             ->searchable(),
+
+                        TextInput::make('description.NIE')
+                            ->label('Nomor Izin Edar')
+                            ->required(),
                         
                         Select::make('description.id_supplier')
                             ->label('Supplier')
@@ -102,33 +106,8 @@ class ProductResource extends Resource
                         
                         DatePicker::make('detail.exp_date')
                             ->label('Tanggal Kadaluarsa')
-                            ->required()
-                    ])->columns(3),
-
-                    Section::make('Detail Obat')->schema([
-                        MarkdownEditor::make('description.deskripsi')
-                            ->label('Deskripsi Obat')
-                            ->columnSpanFull()
-                            ->fileAttachmentsDirectory('deskripsi')
                             ->required(),
-                        
-                        MarkdownEditor::make('description.side_effect')
-                            ->label("Efek Samping")
-                            ->columnSpanFull()
-                            ->fileAttachmentsDirectory('side_effect')
-                            ->required(),
-                        
-                        MarkdownEditor::make('description.dosage')
-                            ->label("Dosis Obat")
-                            ->columnSpanFull()
-                            ->fileAttachmentsDirectory('dosage')
-                            ->required()
 
-                    ])->columns(3),
-                ])->columnSpan(3),
-
-                Group::make()->schema([
-                    Section::make('Price')->schema([
                         TextInput::make('detail.product_buy_price')
                             ->numeric()
                             ->required()
@@ -138,8 +117,35 @@ class ProductResource extends Resource
                             ->numeric()
                             ->required()
                             ->prefix('IDR'),
-                    ]),
-                    
+                    ])->columns(4),
+
+                    Section::make('Deskripsi Obat')->schema([
+                        MarkdownEditor::make('description.deskripsi')
+                            ->label('Deskripsi Obat')
+                            ->columnSpan(2)
+                            ->fileAttachmentsDirectory('deskripsi')
+                            ->required(),
+                        
+                        MarkdownEditor::make('description.indication')
+                            ->label('Indikasi / Manfaat / Kegunaan Obat')
+                            ->columnSpan(2)
+                            ->fileAttachmentsDirectory('deskripsi')
+                            ->required(),
+                        
+                        MarkdownEditor::make('description.side_effect')
+                            ->label("Efek Samping")
+                            ->columnSpan(2)
+                            ->fileAttachmentsDirectory('side_effect')
+                            ->required(),
+                        
+                        MarkdownEditor::make('description.dosage')
+                            ->label("Dosis Obat")
+                            ->columnSpan(2)
+                            ->fileAttachmentsDirectory('dosage')
+                            ->required()
+
+                    ])->columns(4),
+
                     Section::make('Gambar Obat')->schema([
                         FileUpload::make('description.product_img')
                             ->label('Gambar Obat')
@@ -147,8 +153,8 @@ class ProductResource extends Resource
                             ->directory('product_img')
                             ->required()
                     ])
-                ])->columnSpan(2),
-            ])->columns(5);
+                ])->columnSpan(4),
+            ])->columns(4);
     }
 
     public static function table(Table $table): Table
@@ -171,12 +177,16 @@ class ProductResource extends Resource
                     ->label('Golongan Obat')
                     ->searchable(),
                 
-                TextColumn::make('productDetail.stock')
-                    ->label('Stock Obat')
+                TextColumn::make('productDescription.type')
+                    ->label('Tipe Obat')
                     ->searchable(),
                 
-                TextColumn::make('productDetail.exp_date')
-                    ->label('Tanggal Kadaluarsa')
+                TextColumn::make('productDescription.NIE')
+                    ->label('Nomor Izin Edar')
+                    ->searchable(),
+                
+                TextColumn::make('productDetail.stock')
+                    ->label('Stock Obat')
                     ->searchable(),
                 
                 TextColumn::make('productDetail.exp_date')
@@ -187,6 +197,10 @@ class ProductResource extends Resource
                     ->searchable(),
             ])
             ->filters([
+                // SelectFilter::make('status')
+                //     // ->relationship('product', 'status')
+                //     ->placeholder('All'),
+                
                 SelectFilter::make('category')
                     ->relationship('productDescription.category', 'category')
                     ->placeholder('Semua Kategori'),
@@ -213,8 +227,10 @@ class ProductResource extends Resource
                             $data['description']['type'] = $description->type;
                             $data['description']['id_supplier'] = $description->supplier->id_supplier;
                             $data['description']['deskripsi'] = $description->deskripsi;
+                            $data['description']['indication'] = $description->indication;
                             $data['description']['side_effect'] = $description->side_effect;
                             $data['description']['dosage'] = $description->dosage;
+                            $data['description']['NIE'] = $description->NIE;
                             $data['description']['product_img'] = $description->product_img;
                             $data['detail']['stock'] = $detail->stock;
                             $data['detail']['exp_date'] = $detail->exp_date;
