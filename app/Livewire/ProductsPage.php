@@ -2,8 +2,11 @@
 
 namespace App\Livewire;
 
+use App\Helpers\CartManagement;
+use App\Livewire\Partials\Navbar;
 use App\Models\Category;
 use App\Models\Product;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -12,7 +15,8 @@ use Livewire\WithPagination;
 #[Title('Products - Poskesdes Laubaleng')]
 class ProductsPage extends Component
 {
-    use WithPagination;
+    use WithPagination, LivewireAlert;
+    
     #[Url]
     public $selected_categories = [];
 
@@ -33,6 +37,20 @@ class ProductsPage extends Component
 
     #[Url]
     public $sort = 'latest';
+    
+    // Add items to cart
+    public function addToCart($id_product)
+    {
+        $countItems = CartManagement::addItemsToCart($id_product);
+
+        $this->dispatch('updateCartCount', countItems: $countItems)->to(Navbar::class);
+
+        $this->alert('success', 'Obat Berhasil Ditambahkan ke dalam Keranjang!', [
+            'position' =>  'bottom-end',
+            'timer' =>  3000,
+            'toast' =>  true,
+        ]);
+    }
 
     public function render()
     {
