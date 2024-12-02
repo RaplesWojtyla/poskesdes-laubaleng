@@ -21,9 +21,17 @@ class CartPage extends Component
 
     public function mount()
     {
-        $this->id_customer = auth()->user()->customer->id_customer;
-        $this->cartItems = CartManagement::getCartItems($this->id_customer);
-        $this->totalPrice = CartManagement::calcTotalPriceAllCartItems($this->cartItems);
+        if (auth()->check())
+        {
+            $this->id_customer = auth()->user()->customer->id_customer;
+            $this->cartItems = CartManagement::getCartItems($this->id_customer);
+            $this->totalPrice = CartManagement::calcTotalPriceAllCartItems($this->cartItems);
+        }
+        else
+        {
+            $this->cartItems = [];
+            $this->totalPrice = 0;
+        }
     }
 
     public function increaseQuantity($id_product)

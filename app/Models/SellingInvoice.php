@@ -13,7 +13,6 @@ class SellingInvoice extends Model
     protected $table = 'selling_invoice';
     protected $primaryKey = 'id_selling_invoice';
     public $incrementing = false;
-    public $timestamps = false;
 
     protected $fillable = [
         'id_selling_invoice',

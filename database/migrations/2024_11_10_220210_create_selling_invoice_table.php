@@ -26,6 +26,7 @@ return new class extends Migration
             $table->text('refund_file')->nullable();
             $table->string('reject_reason')->nullable();
             $table->enum('order_status', ['Berhasil', 'Gagal', 'Menunggu Pengembalian', 'Menunggu Konfirmasi', 'Menunggu Pengambilan', 'Offline', 'Pengembalian']);
+            $table->timestamps();
 
             $table->foreign('id_customer')
                 ->references('id_customer')

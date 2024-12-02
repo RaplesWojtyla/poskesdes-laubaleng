@@ -40,7 +40,11 @@
               </tr>
               @empty
               <tr>
+                @auth
                 <td colspan="5" class="text-center pt-10 pb-4 text-4xl font-semibold text-red-500">Keranjang Anda Kosong!</td>
+                @else
+                <td colspan="5" class="text-center pt-10 pb-4 text-2xl font-semibold text-red-500">Silakan <a href="/login" class="text-blue-500 hover:underline">login</a> terlebih dahulu untuk melihat keranjang Anda.</td>
+                @endauth
               </tr>
               @endforelse
             </tbody>
@@ -63,8 +67,8 @@
             <span class="font-semibold">Total</span>
             <span class="font-semibold">Rp {{ number_format($totalPrice, '2', ',', '.') }}</span>
           </div>
-          @if ($cartItems->isNotEmpty())
-          <a href="/checkout" class="block text-center bg-blue-500 text-white py-2 px-4 rounded-lg mt-8 w-full">Checkout</a>
+          @if (!empty($cartItems[0]))
+            <a href="/checkout" class="block text-center bg-blue-500 text-white py-2 px-4 rounded-lg mt-8 w-full">Checkout</a>
           @endif
         </div>
       </div>
