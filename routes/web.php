@@ -28,19 +28,26 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', HomePage::class);
-Route::get('/register', RegisterPage::class);
-Route::get('/login', LoginPage::class);
-Route::get('/forgot', ForgotPasswordPage::class);
-Route::get('/reset', ResetPasswordPage::class);
-
-Route::get('/success', SuccessPage::class);
-Route::get('/cancel', CancelPage::class);
-
 Route::get('/categories', CategoriesPage::class);
 Route::get('/products', ProductsPage::class);
-Route::get('/cart', action: CartPage::class);
 Route::get('/products/{id_product}', action: ProductDetailPage::class);
 
-Route::get('/checkout', action: CheckoutPage::class);
-Route::get('/orders', action: MyOrderPage::class);
-Route::get('/my-orders/{order}', action: MyOrderDetailPage::class);
+Route::middleware('guest')->group(function () {
+	Route::get('/register', RegisterPage::class);
+	Route::get('/login', LoginPage::class)->name('login');
+	Route::get('/forgot', ForgotPasswordPage::class)->name('password.request'); ;
+	Route::get('/reset/{token}', ResetPasswordPage::class)->name('password.reset');
+});
+Route::get('/cart', action: CartPage::class);
+
+Route::middleware('auth')->group(function () {
+	Route::get('/checkout', action: CheckoutPage::class);
+	Route::get('/orders', action: MyOrderPage::class);
+	Route::get('/my-orders/{order}', action: MyOrderDetailPage::class);	
+	Route::get('/success', SuccessPage::class);
+	Route::get('/cancel', CancelPage::class);
+	Route::get('/logout', function () {
+		auth()->logout();
+		return redirect()->to('/');
+	});
+});

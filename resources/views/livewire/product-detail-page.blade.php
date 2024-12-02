@@ -52,9 +52,15 @@
               </div>
             </div>
             <div class="flex flex-wrap items-center gap-4">
+              @guest
+              <a href="/login" class="w-full p-4 bg-red-500 rounded-md lg:w-2/5 dark:text-gray-200 text-gray-50 hover:bg-red-600 dark:bg-red-500 dark:hover:bg-red-700">
+                Log in to add to cart </a>
+              @endguest
+              @auth
               <button wire:click="addToCart('{{ $productDetail->id_product }}')" class="w-full p-4 bg-blue-500 rounded-md lg:w-2/5 dark:text-gray-200 text-gray-50 hover:bg-blue-600 dark:bg-blue-500 dark:hover:bg-blue-700">
                 <span wire:loading.remove wire:target="addToCart('{{ $productDetail->id_product }}')">Add to cart</span> <span wire:loading wire:target="addToCart('{{ $productDetail->id_product }}')">Adding...</span>
               </button>
+              @endauth
             </div>
           </div>
         </div>

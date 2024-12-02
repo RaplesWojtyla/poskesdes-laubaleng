@@ -64,7 +64,7 @@
             <span class="font-semibold">Rp {{ number_format($totalPrice, '2', ',', '.') }}</span>
           </div>
           @if ($cartItems->isNotEmpty())
-          <button class="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</button>
+          <a href="/checkout" class="block text-center bg-blue-500 text-white py-2 px-4 rounded-lg mt-8 w-full">Checkout</a>
           @endif
         </div>
       </div>
