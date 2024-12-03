@@ -21,6 +21,7 @@ class SellingInvoiceDetail extends Model
         'product_name',
         'product_type',
         'product_sell_price',
+        'quantity',
     ];
 
     public function sellingInvoice() {
