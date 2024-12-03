@@ -10,26 +10,16 @@
 					<!-- Informasi Penerima -->
 					<div class="mb-6">
 						<h2 class="text-xl font-bold underline text-gray-700 dark:text-white mb-2">
-							Informasi Penerima
+							Informasi Penerima		
 						</h2>
-						<div class="grid grid-cols-2 gap-4">
+						<div class="mt-4">
 							<div>
-								<label class="block text-gray-700 dark:text-white mb-1" for="first_name">
-									Nama Depan
+								<label class="block text-gray-700 dark:text-white mb-1" for="recipientName">
+									Nama Penerima
 								</label>
-								<input class="w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none @error('firstName') border-red-500 @enderror" id="first_name" wire:model="firstName" type="text">
+								<input class="w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none @error('recipientName') border-red-500 @enderror" id="recipientName" wire:model="recipientName" type="text">
 								</input>
-								@error('firstName')
-								<div class="text-red-500 text-sm">{{ $message }}</div>
-								@enderror
-							</div>
-							<div>
-								<label class="block text-gray-700 dark:text-white mb-1" for="last_name">
-									Nama Belakang
-								</label>
-								<input class="@error('firstName') border-red-500 @enderror w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none" id="last_name" wire:model="lastName" type="text">
-								</input>
-								@error('lastName')
+								@error('recipientName')
 								<div class="text-red-500 text-sm">{{ $message }}</div>
 								@enderror
 							</div>
@@ -38,23 +28,23 @@
 							<label class="block text-gray-700 dark:text-white mb-1" for="phone">
 								Nomor Telepon
 							</label>
-							<input class="@error('firstName') border-red-500 @enderror w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none" id="phone" wire:model="phone" type="text">
+							<input class="@error('phone') border-red-500 @enderror w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none" id="phone" wire:model="phone" type="text">
 							</input>
 							@error('phone')
 								<div class="text-red-500 text-sm">{{ $message }}</div>
 							@enderror
 						</div>
 					</div>
-					<div class="text-lg font-semibold mb-4">
+					<div class="text-lg underline font-semibold mb-4">
 						Pilih Metode Pembayaran
 					</div>
 					<ul class="grid w-full gap-6 md:grid-cols-2">
 						<li>
-							<input wire:model="paymentMethod" class="hidden peer" id="hosting-small"  required="" type="radio" value="cod" />
+							<input wire:model="paymentMethod" class="hidden peer" id="hosting-small"  required="" type="radio" value="dana" />
 							<label class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700" for="hosting-small">
 								<div class="block">
 									<div class="w-full text-lg font-semibold">
-										Cash on Delivery (COD)
+										Dana
 									</div>
 								</div>
 								<svg aria-hidden="true" class="w-5 h-5 ms-3 rtl:rotate-180" fill="none" viewbox="0 0 14 10" xmlns="http://www.w3.org/2000/svg">
@@ -79,11 +69,11 @@
 							</input>
 						</li>
 						<li>
-							<input wire:model="paymentMethod" class="hidden peer" id="hosting-big"  type="radio" value="dana">
-							<label class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700" for="hosting-big">
+							<input wire:model="paymentMethod" class="hidden peer" id="hosting-bank-transer" type="radio" value="other_qris">
+							<label class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700" for="hosting-bank-transer">
 								<div class="block">
 									<div class="w-full text-lg font-semibold">
-										Dana
+										QRIS
 									</div>
 								</div>
 								<svg aria-hidden="true" class="w-5 h-5 ms-3 rtl:rotate-180" fill="none" viewbox="0 0 14 10" xmlns="http://www.w3.org/2000/svg">
@@ -91,14 +81,13 @@
 									</path>
 								</svg>
 							</label>
-							</input>
 						</li>
 						<li>
-							<input wire:model="paymentMethod" class="hidden peer" id="hosting-big"  type="radio" value="bri">
-							<label class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700" for="hosting-big">
+							<input wire:model="paymentMethod" class="hidden peer" id="hosting-qris" type="radio" value="bank_transfer">
+							<label class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700" for="hosting-qris">
 								<div class="block">
 									<div class="w-full text-lg font-semibold">
-										BRI
+										Bank Transfer
 									</div>
 								</div>
 								<svg aria-hidden="true" class="w-5 h-5 ms-3 rtl:rotate-180" fill="none" viewbox="0 0 14 10" xmlns="http://www.w3.org/2000/svg">
@@ -106,22 +95,23 @@
 									</path>
 								</svg>
 							</label>
-							</input>
 						</li>
 					</ul>
 					@error('paymentMethod')
 						<div class="text-red-500 text-sm">{{ $message }}</div>
 					@enderror
 
+					@if($requiresPrescription)
 					<div class="mt-6">
 						<h2 class="text-xl font-bold underline text-gray-700 dark:text-white mb-2">
-							Upload Bukti Pembayaran
+							Upload Resep Dokter
 						</h2>
-						<input type="file" wire:model="paymentProof" class="w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none @error('paymentProof') border-red-500 @enderror">
-						@error('paymentProof')
+						<input type="file" wire:model="resepDokter" class="w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none">
+						@error('resepDokter')
 							<div class="text-red-500 text-sm">{{ $message }}</div>
 						@enderror
 					</div>
+					@endif
 				</div>
 				<!-- End Card -->
 			</div>

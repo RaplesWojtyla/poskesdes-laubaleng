@@ -95,8 +95,33 @@
                     <a href="/orders" class="w-full text-center px-4 py-2 bg-blue-500 rounded-md text-gray-50 md:w-auto dark:text-gray-300 hover:bg-blue-600 dark:hover:bg-gray-700 dark:bg-gray-800">
                         View My Orders
                     </a>
+                    <button id="pay-button" class="w-full text-center px-4 py-2 bg-blue-500 rounded-md text-gray-50 md:w-auto dark:text-gray-300 hover:bg-blue-600 dark:hover:bg-gray-700 dark:bg-gray-800">
+                        Bayar
+                    </button>
                 </div>
             </div>
         </div>
     </section>
 </div>
+@section('scripts')
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
+    <script type="text/javascript">
+      document.getElementById('pay-button').onclick = function(){
+        // SnapToken acquired from previous step
+        snap.pay('{{ $snapToken }}', {
+          // Optional
+          onSuccess: function(result){
+            /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+          },
+          // Optional
+          onPending: function(result){
+            /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+          },
+          // Optional
+          onError: function(result){
+            /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+          }
+        });
+      };
+    </script>
+@endsection

@@ -21,14 +21,14 @@ class SellingInvoice extends Model
         'id_customer',
         'recipient_name',
         'recipient_phone',
-        'recipient_bank',
         'recipient_payment',
         'resep_dokter',
         'order_date',
         'order_completed',
         'refund_file',
         'reject_reason',
-        'order_status'
+        'order_status',
+        'snap_token'
     ];
 
     public function sellingInvoiceDetail() {

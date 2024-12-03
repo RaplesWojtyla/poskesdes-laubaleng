@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -18,14 +19,14 @@ return new class extends Migration
             $table->char('id_customer', 36)->nullable();
             $table->string('recipient_name', 100)->nullable();
             $table->string('recipient_phone', 14)->nullable();
-            $table->string('recipient_bank', 100)->nullable();
-            $table->text('recipient_payment')->nullable();
+            $table->string('recipient_payment', 100);
             $table->text('resep_dokter')->nullable();
-            $table->timestamp('order_date');
+            $table->timestamp('order_date')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('order_completed')->nullable();
             $table->text('refund_file')->nullable();
             $table->string('reject_reason')->nullable();
-            $table->enum('order_status', ['Berhasil', 'Gagal', 'Menunggu Pengembalian', 'Menunggu Konfirmasi', 'Menunggu Pengambilan', 'Offline', 'Pengembalian']);
+            $table->enum('order_status', ['Menunggu Pembayaran', 'Menunggu Pengembalian', 'Menunggu Pengambilan', 'Pembayaran Berhasil', 'Pengembalian Berhasil', 'Pembayaran Gagal', 'Pengembalian Gagal', 'Pengambilan Gagal', 'Dibatalkan', 'Selesai']);
+            $table->string('snap_token', 255)->nullable();
             $table->timestamps();
 
             $table->foreign('id_customer')
