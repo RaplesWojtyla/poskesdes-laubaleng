@@ -23,7 +23,11 @@ class LoginPage extends Component
             session()->flash('error', 'Email atau password salah');
             return;
         }
-
+        
+        if ($this->email == 'poskesdeslaubaleng@gmail.com') 
+        {
+            return redirect()->to('/admin');
+        }
         return redirect()->intended();
     }
 

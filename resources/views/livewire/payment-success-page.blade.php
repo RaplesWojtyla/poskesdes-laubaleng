@@ -3,7 +3,7 @@
         <div class="justify-center flex-1 max-w-6xl px-4 py-4 mx-auto bg-white border rounded-md dark:border-gray-900 dark:bg-gray-900 md:py-10 md:px-10">
             <div>
                 <h1 class="px-4 mb-8 text-2xl font-semibold tracking-wide text-gray-700 dark:text-gray-300 ">
-                    Pesanan anda telah diterima. Silahkan lakukan pembayaran </h1>
+                    Pembayaran Telah Diterima. Silahkan Lakukan Pengambilan Obat </h1>
                 <div class="flex border-b border-gray-200 dark:border-gray-700  items-stretch justify-start w-full h-full px-4 mb-8 md:flex-row xl:flex-col md:space-x-6 lg:space-x-8 xl:space-x-0">
                     <div class="flex items-start justify-start flex-shrink-0">
                         <div class="flex items-center justify-center w-full pb-6 space-x-4 md:justify-start">
@@ -61,24 +61,26 @@
                                 <p class="text-base font-semibold leading-4 text-gray-600 dark:text-gray-400">Rp {{number_format($totalPrice, '2', ',', '.') }} </p>
                             </div>
                         </div>
-                        {{-- PAYMENT SECTION --}}
+                        {{-- SHIPPING SECTION --}}
+                        
+                        {{-- PAYMENT STATUS SECTION --}}
                         <div class="flex flex-col w-full px-2 space-y-4 md:px-8 ">
                             <h2 class="mb-2 text-xl font-semibold text-gray-700 dark:text-gray-400">Status Pembayaran</h2>
                             <div class="flex items-start justify-between w-full">
                                 <div class="flex items-center justify-center space-x-2">
                                     <div class="w-8 h-5">
-                                        <svg xmlns="http://www.w3.o rg/2000/svg" width="16" height="16" fill="currentColor" class="w-6 h-6 text-blue-600 dark:text-blue-400 bi bi-credit-card" viewBox="0 0 16 16">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-6 h-6 text-blue-600 dark:text-blue-400 bi bi-credit-card" viewBox="0 0 16 16">
                                             <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1H0V4zm0 2h16v5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6zm1 3a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
                                         </svg>
                                     </div>
                                     <div class="flex flex-col items-center justify-start">
                                         <p class="text-lg font-semibold leading-6 text-gray-800 dark:text-gray-400">
-                                            @if($transaction->payment_status == 'Menunggu Pembayaran')
+                                            @if($transaction->order_status == 'Menunggu Pembayaran')
                                                 <span class="text-sm font-normal text-white bg-yellow-500 px-2 py-1 rounded">Menunggu Pembayaran</span>
-                                            @elseif($transaction->payment_status == 'Pembayaran Berhasil')
+                                            @elseif($transaction->order_status == 'Menunggu Pengambilan')
                                                 <span class="text-sm font-normal text-white bg-green-500 px-2 py-1 rounded">Pembayaran Berhasil</span>
                                             @else
-                                                <span class="text-sm font-normal text-white bg-red-500 px-2 py-1 rounded">Pembayaran Gagal</span>
+                                                <span class="text-sm font-normal text-white bg-red-500 px-2 py-1 rounded">{{ $transaction->order_status }}</span>
                                             @endif
                                         </p>
                                     </div>
@@ -88,41 +90,14 @@
                     </div>
                 </div>
                 <div class="flex items-center justify-start gap-4 px-4 mt-6 ">
-                    <button id="pay-button" class="w-full text-center px-10 py-3 bg-blue-500 rounded-md text-gray-50 md:w-auto dark:text-gray-300 hover:bg-blue-600 dark:hover:bg-gray-700 dark:bg-gray-800">
-                        Bayar Sekarang
-                    </button>
+                    <a href="/products" class="w-full text-center px-4 py-2 text-blue-500 border border-blue-500 rounded-md md:w-auto hover:text-white hover:bg-blue-600 dark:border-gray-700 dark:hover:bg-gray-700 dark:text-gray-300">
+                        Go back shopping
+                    </a>
+                    <a href="/orders" class="w-full text-center px-4 py-2 bg-blue-500 rounded-md text-gray-50 md:w-auto dark:text-gray-300 hover:bg-blue-600 dark:hover:bg-gray-700 dark:bg-gray-800">
+                        Lihat Order Lainnya
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 </div>
-@section('scripts')
-    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
-    <script type="text/javascript">
-      document.getElementById('pay-button').onclick = function(){
-        // SnapToken acquired from previous step
-        snap.pay('{{ $snapToken }}', {
-          // Optional
-          onSuccess: function(result){
-            // /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-            console.log('onSuccess' + JSON.stringify(result));
-            window.location.href = '/payment-success?order_id=' + result.order_id;
-          },
-          // Optional
-          onPending: function(result){
-            // /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-            window.location.href = '/success?order_id=' + result.order_id;
-          },
-          // Optional
-          onError: function(result){
-            // /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-            window.location.href = '/success/' + result.order_id;
-          },
-          onClose: function() {
-            // For example: when customer close the payment screen
-            window.location.href = '/success?order_id=' + result.order_id;
-          },
-        });
-      };
-    </script>
-@endsection

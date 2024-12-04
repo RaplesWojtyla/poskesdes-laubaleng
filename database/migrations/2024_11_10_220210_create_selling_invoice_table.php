@@ -25,7 +25,8 @@ return new class extends Migration
             $table->timestamp('order_completed')->nullable();
             $table->text('refund_file')->nullable();
             $table->string('reject_reason')->nullable();
-            $table->enum('order_status', ['Menunggu Pembayaran', 'Menunggu Pengembalian', 'Menunggu Pengambilan', 'Pembayaran Berhasil', 'Pengembalian Berhasil', 'Pembayaran Gagal', 'Pengembalian Gagal', 'Pengambilan Gagal', 'Dibatalkan', 'Selesai']);
+            $table->enum('payment_status', ['Menunggu Pembayaran', 'Pembayaran Berhasil', 'Pembayaran Gagal']);
+            $table->enum('order_status', ['Refund', 'Menunggu Pengambilan', 'Pengambilan Gagal', 'Dibatalkan', 'Pengambilan Berhasil'])->nullable();
             $table->string('snap_token', 255)->nullable();
             $table->timestamps();
 

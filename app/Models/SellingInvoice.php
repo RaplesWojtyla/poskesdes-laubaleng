@@ -27,6 +27,7 @@ class SellingInvoice extends Model
         'order_completed',
         'refund_file',
         'reject_reason',
+        'payment_status',
         'order_status',
         'snap_token'
     ];

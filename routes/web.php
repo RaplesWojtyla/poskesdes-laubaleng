@@ -11,9 +11,11 @@ use App\Livewire\CheckoutPage;
 use App\Livewire\HomePage;
 use App\Livewire\MyOrderDetailPage;
 use App\Livewire\MyOrderPage;
+use App\Livewire\PaymentSuccessPage;
 use App\Livewire\ProductDetailPage;
 use App\Livewire\ProductsPage;
 use App\Livewire\SuccessPage;
+use App\Providers\Filament\AdminPanelProvider;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,14 +42,29 @@ Route::middleware('guest')->group(function () {
 });
 Route::get('/cart', action: CartPage::class);
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'hasRole:user'])->group(function () {
+	// Route::get('/', HomePage::class);
 	Route::get('/checkout', action: CheckoutPage::class);
 	Route::get('/orders', action: MyOrderPage::class);
 	Route::get('/my-orders/{order}', action: MyOrderDetailPage::class);	
 	Route::get('/success', SuccessPage::class);
+	Route::get('/payment-success', PaymentSuccessPage::class);
 	Route::get('/cancel', CancelPage::class);
 	Route::get('/logout', function () {
 		auth()->logout();
 		return redirect()->to('/');
 	});
 });
+
+// Route::middleware(['auth', 'owner'])->group(function () {
+//     Route::prefix('admin')->group(function () {
+//         Route::get('/', function () {
+// 			return redirect()->to('/admin');
+// 		})->name('admin.dashboard');
+        
+// 		Route::get('/', function () {
+// 			return redirect()->to('/admin');
+// 		})->name('admin.dashboard');
+//         // Tambahkan route lain yang diperlukan untuk halaman admin
+//     });
+// });
