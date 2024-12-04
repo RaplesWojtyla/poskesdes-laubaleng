@@ -40,13 +40,15 @@ class LatestOrders extends BaseWidget
                     ->label('Status Transaksi')
                     ->badge()
                     ->color(fn (string $state): string => match($state) {
-                        'Berhasil' => 'success',
-                        'Menunggu Konfirmasi' => 'info',
+                        'Selesai' => 'success',
+                        'Menunggu Pembayaran' => 'info',
                         'Menunggu Pengambilan' => 'warning',
                         'Menunggu Pengembalian' => 'warning',
-                        'Pengembalian' => 'danger',
-                        'Gagal' => 'danger',
-                        'Offline' => 'success',
+                        'Pembayaran Berhasil' => 'success',
+                        'Pengembalian Berhasil' => 'danger',
+                        'Pengambilan Berhasil' => 'success',
+                        'Pembayaran Gagal' => 'danger',
+                        'Pengembalian Gagal' => 'danger',
                     })
                     ->sortable()
             ])

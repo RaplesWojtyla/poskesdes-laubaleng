@@ -55,7 +55,7 @@ class CheckoutPage extends Component
             $currInvoice = $lastInvoice ? (int)substr($lastInvoice->invoice_code, 4) + 1 : 1;
             $invoiceCode = 'INV-' . str_pad($currInvoice, 5, '0', STR_PAD_LEFT);
 
-            $resepDokterPath = $this->resepDokter ? $this->resepDokter->store('resep_dokter', 'public') : '';
+            $resepDokterPath = isset($this->resepDokter) ? $this->resepDokter->store('resep_dokter', 'public') : '';
 
             SellingInvoice::create([
                 'id_selling_invoice' => $id_selling_invoice,
@@ -64,8 +64,8 @@ class CheckoutPage extends Component
                 'recipient_name' => $this->recipientName,
                 'recipient_phone' => $this->phone,
                 'recipient_payment' => $this->paymentMethod,
-                'resep_dokter' => $this->resepDokter ? $resepDokterPath : null,
-                'order_status' => 'Menunggu Pembayaran',
+                'resep_dokter' => $resepDokterPath,
+                'payment_status' => 'Menunggu Pembayaran',
                 'order_date' => now(),                                      
             ]);
 
@@ -103,15 +103,16 @@ class CheckoutPage extends Component
             SellingInvoice::where('id_selling_invoice', $id_selling_invoice)
                 ->update(['snap_token' => $snapToken]);
 
-            session()->flash('snap_token', $snapToken);
+            // session()->flash('snap_token', $snapToken);
             CartManagement::clearCartItems(auth()->user()->customer->id_customer);
             
             DB::commit();
-            return redirect()->to('/success');
-        } catch (\Exception $e) {
+            return redirect()->to('/success?order_id=' . $invoiceCode);
+        } 
+        catch (\Exception $e) {
             DB::rollBack();
             session()->flash('error', $e->getMessage());
-            dd($e->getMessage());
+
             throw $e;
         }
     }
