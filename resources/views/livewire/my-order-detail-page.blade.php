@@ -1,5 +1,6 @@
 <div class="w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 mx-auto">
-  <h1 class="text-4xl font-bold text-slate-500">Order Details</h1>
+  <h1 class="text-4xl font-bold text-slate-500">Order Details</h1> 
+  <span class="text-3xl py-5 font-bold text-black-500"> {{ $orderDetail->invoice_code }}</span>
 
   <!-- Grid -->
   <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mt-5">
@@ -18,11 +19,11 @@
         <div class="grow">
           <div class="flex items-center gap-x-2">
             <p class="text-xs uppercase tracking-wide text-gray-500">
-              Customer
+              Nama Penerima
             </p>
           </div>
           <div class="mt-1 flex items-center gap-x-2">
-            <div>Jace Grimes</div>
+            <div>{{ $orderDetail->recipient_name }}</div>
           </div>
         </div>
       </div>
@@ -44,12 +45,12 @@
         <div class="grow">
           <div class="flex items-center gap-x-2">
             <p class="text-xs uppercase tracking-wide text-gray-500">
-              Order Date
+              Tanggal Transaksi
             </p>
           </div>
           <div class="mt-1 flex items-center gap-x-2">
             <h3 class="text-xl font-medium text-gray-800 dark:text-gray-200">
-              17-02-2024
+            {{ date('d F Y',strtotime($orderDetail->order_date)) }}
             </h3>
           </div>
         </div>
@@ -74,7 +75,19 @@
             </p>
           </div>
           <div class="mt-1 flex items-center gap-x-2">
-            <span class="bg-yellow-500 py-1 px-3 rounded text-white shadow">Processing</span>
+            @if($orderDetail->order_status == 'Menunggu Pengambilan')
+              <span class="bg-yellow-500 py-1 px-3 rounded text-white shadow">{{ $orderDetail->order_status }}</span>
+            @elseif($orderDetail->order_status == 'Pengambilan Gagal')
+              <span class="bg-red-600 py-1 px-3 rounded text-white shadow">{{ $orderDetail->order_status }}</span>
+            @elseif($orderDetail->order_status == 'Dibatalkan')
+              <span class="bg-red-700 py-1 px-3 rounded text-white shadow">{{ $orderDetail->order_status }}</span>
+            @elseif($orderDetail->order_status == 'Refund')
+              <span class="bg-red-500 py-1 px-3 rounded text-white shadow">{{ $orderDetail->order_status }}</span>
+            @elseif($orderDetail->order_status == 'Pengambilan Berhasil')
+              <span class="bg-green-500 py-1 px-3 rounded text-white shadow">{{ $orderDetail->order_status }}</span>
+            @else
+              <span class="bg-orange-500 py-1 px-3 rounded text-white shadow">Menunggu Pembayaran</span>
+            @endif
           </div>
         </div>
       </div>
@@ -96,11 +109,17 @@
         <div class="grow">
           <div class="flex items-center gap-x-2">
             <p class="text-xs uppercase tracking-wide text-gray-500">
-              Payment Status
+              Status Pembayaran
             </p>
           </div>
           <div class="mt-1 flex items-center gap-x-2">
-            <span class="bg-green-500 py-1 px-3 rounded text-white shadow">Paid</span>
+            @if ($orderDetail->payment_status == 'Menunggu Pembayaran')
+              <span class="bg-orange-500 py-1 px-3 rounded text-white shadow">{{ $orderDetail->payment_status }}</span>
+            @elseif ($orderDetail->payment_status == 'Pembayaran Gagal')
+              <span class="bg-red-600 py-1 px-3 rounded text-white shadow">{{ $orderDetail->payment_status }}</span>
+            @elseif ($orderDetail->payment_status == 'Pembayaran Berhasil')
+              <span class="bg-green-500 py-1 px-3 rounded text-white shadow">{{ $orderDetail->payment_status }}</span>
+            @endif
           </div>
         </div>
       </div>
@@ -115,83 +134,99 @@
         <table class="w-full">
           <thead>
             <tr>
-              <th class="text-left font-semibold">Product</th>
-              <th class="text-left font-semibold">Price</th>
-              <th class="text-left font-semibold">Quantity</th>
+              <th class="text-left font-semibold">Nama Produk</th>
+              <th class="text-left font-semibold">Harga</th>
+              <th class="text-left font-semibold">Kuantitas</th>
               <th class="text-left font-semibold">Total</th>
             </tr>
           </thead>
           <tbody>
-
-            <!--[if BLOCK]><![endif]-->
-            <tr wire:key="53">
+            @foreach($orderDetail->sellingInvoiceDetail as $detail)
+            <tr>
               <td class="py-4">
                 <div class="flex items-center">
-                  <img class="h-16 w-16 mr-4" src="http://localhost:8000/storage/products/01HND3J5XS7ZC5J84BK5YDM6Z2.jpg" alt="Product image">
-                  <span class="font-semibold">Samsung Galaxy Watch6</span>
+                  <img class="h-16 w-16 mr-4" src="{{ url('storage', $detail->product->productDescription->product_img) }}" alt="Product image">
+                  <span class="font-semibold">{{ $detail->product_name }}</span>
                 </div>
               </td>
-              <td class="py-4">₹29,999.00</td>
+              <td class="py-4">Rp {{ number_format($detail->product_sell_price, 2, ',', '.') }}</td>
               <td class="py-4">
-                <span class="text-center w-8">1</span>
+                <span class="text-center w-8">{{ $detail->quantity }}</span>
               </td>
-              <td class="py-4">₹29,999.00</td>
+              <td class="py-4">Rp {{ number_format($detail->product_sell_price * $detail->quantity, 2) }}</td>
             </tr>
-            <tr wire:key="54">
-              <td class="py-4">
-                <div class="flex items-center">
-                  <img class="h-16 w-16 mr-4" src="http://localhost:8000/storage/products/01HND30J0P7C6MWQ1XQK7YDQKA.jpg" alt="Product image">
-                  <span class="font-semibold">Samsung Galaxy Book3</span>
-                </div>
-              </td>
-              <td class="py-4">₹75,000.00</td>
-              <td class="py-4">
-                <span class="text-center w-8">5</span>
-              </td>
-              <td class="py-4">₹375,000.00</td>
-            </tr>
-            <!--[if ENDBLOCK]><![endif]-->
-
+            @endforeach
           </tbody>
         </table>
       </div>
 
+      @if($orderDetail->resep_dokter != null)
       <div class="bg-white overflow-x-auto rounded-lg shadow-md p-6 mb-4">
-        <h1 class="font-3xl font-bold text-slate-500 mb-3">Shipping Address</h1>
-        <div class="flex justify-between items-center">
-          <div>
-            <p>42227 Zoila Glens, Oshkosh, Michigan, 55928</p>
-          </div>
-          <div>
-            <p class="font-semibold">Phone:</p>
-            <p>023-509-0009</p>
-          </div>
+        <h1 class="font-3xl font-bold text-slate-500 mb-3">Resep Dokter</h1>
+        <div class="flex justify-center items-center">
+          <img src="{{ url('storage', $orderDetail->resep_dokter) }}" alt="Prescription image" class="max-w-full h-auto">
         </div>
       </div>
+      @endif
 
     </div>
     <div class="md:w-1/4">
       <div class="bg-white rounded-lg shadow-md p-6">
-        <h2 class="text-lg font-semibold mb-4">Summary</h2>
+        <h2 class="text-lg font-semibold mb-4">Rincian Pesanan</h2>
         <div class="flex justify-between mb-2">
           <span>Subtotal</span>
-          <span>₹404,999.00</span>
+          <span>Rp {{ number_format($orderDetail->getTotalInvoicePrice(), 2, ',', '.') }}</span>
         </div>
         <div class="flex justify-between mb-2">
-          <span>Taxes</span>
-          <span>₹0.00</span>
-        </div>
-        <div class="flex justify-between mb-2">
-          <span>Shipping</span>
-          <span>₹0.00</span>
+          <span>Biaya Lainnya</span>
+          <span>Rp 0,00</span>
         </div>
         <hr class="my-2">
         <div class="flex justify-between mb-2">
-          <span class="font-semibold">Grand Total</span>
-          <span class="font-semibold">₹404,999.00</span>
+          <span class="font-semibold">Total</span>
+          <span class="font-semibold">Rp {{ number_format($orderDetail->getTotalInvoicePrice(), 2, ',', '.') }}</span>
         </div>
 
+        @if($orderDetail->payment_status == 'Menunggu Pembayaran')
+        <div class="mt-6">
+          <button id="pay-button" class="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+            Bayar
+          </button>
+        </div>
+        @endif
+        
       </div>
     </div>
   </div>
 </div>
+
+@section('scripts')
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
+    <script type="text/javascript">
+      document.getElementById('pay-button').onclick = function(){
+        // SnapToken acquired from previous step
+        snap.pay('{{ $orderDetail->snap_token }}', {
+          // Optional
+          onSuccess: function(result){
+            // /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+            console.log('onSuccess' + JSON.stringify(result));
+            window.location.href = '/payment-success?order_id=' + result.order_id;
+          },
+          // Optional
+          onPending: function(result){
+            // /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+            window.location.href = '/success?order_id=' + result.order_id;
+          },
+          // Optional
+          onError: function(result){
+            // /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+            window.location.href = '/success/' + result.order_id;
+          },
+          onClose: function() {
+            // For example: when customer close the payment screen
+            window.location.href = '/success?order_id=' + result.order_id;
+          },
+        });
+      };
+    </script>
+@endsection

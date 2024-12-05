@@ -46,7 +46,7 @@ Route::middleware(['auth', 'hasRole:user'])->group(function () {
 	// Route::get('/', HomePage::class);
 	Route::get('/checkout', action: CheckoutPage::class);
 	Route::get('/orders', action: MyOrderPage::class);
-	Route::get('/my-orders/{order}', action: MyOrderDetailPage::class);	
+	Route::get('/my-orders/{id_selling_invoice}', action: MyOrderDetailPage::class);	
 	Route::get('/success', SuccessPage::class);
 	Route::get('/payment-success', PaymentSuccessPage::class);
 	Route::get('/cancel', CancelPage::class);

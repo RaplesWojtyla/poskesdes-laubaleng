@@ -39,4 +39,10 @@ class SellingInvoice extends Model
     public function customer() {
         return $this->belongsTo(Customer::class, 'id_customer');
     }
+
+    public function getTotalInvoicePrice() {
+        return $this->sellingInvoiceDetail->sum(function($detail) {
+            return $detail->getTotalPrice();
+        });
+    }
 }

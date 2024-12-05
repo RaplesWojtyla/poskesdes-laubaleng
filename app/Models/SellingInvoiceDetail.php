@@ -27,4 +27,12 @@ class SellingInvoiceDetail extends Model
     public function sellingInvoice() {
         return $this->belongsTo(SellingInvoice::class, 'id_selling_invoice');
     }
+
+    public function product() {
+        return $this->belongsTo(Product::class, 'product_name', 'product_name');
+    }
+
+    public function getTotalPrice() {
+        return $this->product_sell_price * $this->quantity;
+    }
 }
