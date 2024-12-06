@@ -34,23 +34,31 @@ class LatestOrders extends BaseWidget
                 
                 TextColumn::make('order_date')
                     ->label('Tanggal Transaksi')
+                    ->date('d F Y')
                     ->sortable(),
                 
-                TextColumn::make('order_status')
+                    TextColumn::make('payment_status')
                     ->label('Status Transaksi')
                     ->badge()
                     ->color(fn (string $state): string => match($state) {
-                        'Selesai' => 'success',
-                        'Menunggu Pembayaran' => 'info',
-                        'Menunggu Pengambilan' => 'warning',
-                        'Menunggu Pengembalian' => 'warning',
                         'Pembayaran Berhasil' => 'success',
-                        'Pengembalian Berhasil' => 'danger',
-                        'Pengambilan Berhasil' => 'success',
+                        'Menunggu Pembayaran' => 'warning',
                         'Pembayaran Gagal' => 'danger',
-                        'Pengembalian Gagal' => 'danger',
                     })
-                    ->sortable()
+                    ->sortable(),
+                
+                    TextColumn::make('order_status')
+                        ->label('Status Transaksi')
+                        ->badge()
+                        ->color(fn (string $state): string => match($state) {
+                            'Pengambilan Berhasil' => 'success',
+                            'Menunggu Pengambilan' => 'warning',
+                            'Pengambilan Gagal' => 'danger',
+                            'Dibatalkan' => 'danger',
+                            'Refund' => 'info',
+                        })
+                        ->searchable()
+                        ->sortable()
             ])
             ->actions([
                 Action::make('Detail')

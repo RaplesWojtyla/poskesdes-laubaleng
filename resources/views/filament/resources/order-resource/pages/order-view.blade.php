@@ -2,47 +2,45 @@
 
     <div class="flex justify-between items-start space-x-6">
         <!-- Bagian Kiri -->
-        <div class="w-[70%] mr-2">
-            <h1 class="text-xl font-bold">{{ $order->invoice_code }}</h1>
-            <table class="w-full mt-2 border-collapse border border-gray-300">
+        <div class="w-[60%] mr-2">
+            <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-200">{{ $order->invoice_code }}</h1>
+            <table class="w-full mt-4 border-collapse border border-gray-300 dark:border-gray-700 shadow-sm">
                 <thead>
-                    <tr class="bg-gray-100">
-                        <th class="border border-gray-200 px-4 py-2 w-[10%]">No</th>
-                        <th class="border border-gray-200 px-4 py-2 w-[30%]">Nama</th>
-                        <th class="border border-gray-200 px-4 py-2 w-[10%]">Jumlah</th>
-                        <th class="border border-gray-200 px-4 py-2 w-[25%]">Harga</th>
-                        <th class="border border-gray-200 px-4 py-2 w-[25%]">Total</th>
+                    <tr class="bg-gray-200 dark:bg-gray-800">
+                        <th class="border border-gray-300 dark:border-gray-700 px-4 py-2 w-[10%]">No</th>
+                        <th class="border border-gray-300 dark:border-gray-700 px-4 py-2 w-[30%]">Nama</th>
+                        <th class="border border-gray-300 dark:border-gray-700 px-4 py-2 w-[10%]">Jumlah</th>
+                        <th class="border border-gray-300 dark:border-gray-700 px-4 py-2 w-[25%]">Harga</th>
+                        <th class="border border-gray-300 dark:border-gray-700 px-4 py-2 w-[25%]">Total</th>
                     </tr>
                 </thead>
                 <tbody>
-					<?php $totalPrice = 0; ?>
-					@foreach ($order->sellingInvoiceDetail as $index => $detailOrder)
-					<?php $totalPrice += $detailOrder->quantity * $detailOrder->product_sell_price ?>
-                    <tr>
-                        <td class="border border-gray-200 px-4 py-2">{{ $index + 1 }}</td>
-                        <td class="border border-gray-200 px-4 py-2">{{ $detailOrder->product_name }}</td>
-                        <td class="border border-gray-200 px-4 py-2">{{ $detailOrder->quantity }}</td>
-                        <td class="border border-gray-200 px-4 py-2">Rp {{ number_format($detailOrder->product_sell_price, 0, ',', '.') }}</td>
-                        <td class="border border-gray-200 px-4 py-2">Rp {{ number_format($detailOrder->quantity * $detailOrder->product_sell_price, 0, ',', '.') }}</td>
+                    <?php $totalPrice = 0; ?>
+                    @foreach ($order->sellingInvoiceDetail as $index => $detailOrder)
+                    <?php $totalPrice += $detailOrder->quantity * $detailOrder->product_sell_price ?>
+                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <td class="border border-gray-300 dark:border-gray-700 px-4 py-2 text-center">{{ $index + 1 }}</td>
+                        <td class="border border-gray-300 dark:border-gray-700 px-4 py-2">{{ $detailOrder->product_name }}</td>
+                        <td class="border border-gray-300 dark:border-gray-700 px-4 py-2 text-center">{{ $detailOrder->quantity }}</td>
+                        <td class="border border-gray-300 dark:border-gray-700 px-4 py-2 text-right">Rp {{ number_format($detailOrder->product_sell_price, 0, ',', '.') }}</td>
+                        <td class="border border-gray-300 dark:border-gray-700 px-4 py-2 text-right">Rp {{ number_format($detailOrder->quantity * $detailOrder->product_sell_price, 0, ',', '.') }}</td>
                     </tr>
-					@endforeach
+                    @endforeach
                 </tbody>
             </table>
-            <div class="mt-2">
-                <p><strong>Total Harga:</strong> Rp {{ number_format($totalPrice, 0, ',', '.') }}</p>
-                <p><strong>Kasir:</strong> {{ $order->cashier_name }}</p>
-                <p><strong>Status:</strong> {{ $order->order_status }}</p>
+            <div class="mt-4">
+                <p class="text-lg"><strong>Total Harga:</strong> Rp {{ number_format($totalPrice, 0, ',', '.') }}</p>
+                <p class="text-lg"><strong>Kasir:</strong> {{ $order->cashier_name }}</p>
+                <p class="text-lg"><strong>Status:</strong> {{ $order->order_status == null ? 'Menunggu Pembayaran' : $order->order_status }}</p>
             </div>
         </div>
-	
+    
         <!-- Bagian Kanan -->
-        <div class="w-[25%] bg-gray-100 p-4 rounded-md">
-            <p><strong>Pelanggan:</strong> {{ $order->recipient_name }}</p>
-            <p><strong>Nomor HP:</strong> {{ $order->recipient_phone }}</p>
-            <p><strong>Tanggal Pengambilan:</strong> {{ $order->order_completed }}</p>
-            <p><strong>Metode Pembayaran:</strong> {{ $order->recipient_bank }}</p>
-            <p><strong>Bukti Pembayaran:</strong> <a href="#" class="text-blue-500 underline">{{ $order->recipient_payment }}</a></p>
-            <p><strong>Catatan:</strong> Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+        <div class="w-[40%] bg-gray-100 dark:bg-gray-800 p-4 rounded-md shadow-sm">
+            <p class="text-lg"><strong>Pelanggan:</strong> {{ $order->recipient_name }}</p>
+            <p class="text-lg"><strong>Nomor HP:</strong> {{ $order->recipient_phone }}</p>
+            <p class="text-lg"><strong>Transaksi Selesai:</strong> {{ date('d F Y',strtotime($order->order_completed)) }}</p>
+            <p class="text-lg uppercase"><strong>Metode Pembayaran:</strong> {{ $order->recipient_payment === 'other_qris' ? 'qris' : $order->recipient_payment }}</p>
         </div>
     </div>
 

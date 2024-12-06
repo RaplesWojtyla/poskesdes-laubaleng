@@ -32,6 +32,18 @@ class SellingInvoice extends Model
         'snap_token'
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::updating(function ($model) {
+            if ($model->isDirty('order_status') && $model->order_status !== 'Menunggu Pengambilan') {
+                $model->order_completed = now();
+                $model->cashier_name = auth()->user()->name; // Set the cashier_name to the current admin's name
+            }
+        });
+    }
+
     public function sellingInvoiceDetail() {
         return $this->hasMany(SellingInvoiceDetail::class, 'id_selling_invoice');
     }

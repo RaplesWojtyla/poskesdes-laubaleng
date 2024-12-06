@@ -5,6 +5,9 @@ module.exports = {
     "./resources/**/*.js",
     "./resources/**/*.vue",
     'node_modules/preline/dist/*.js',
+    './app/Filament/**/*.php',
+    './resources/views/filament/**/*.blade.php',
+    './vendor/filament/**/*.blade.php',
   ],
   theme: {
     extend: {},

@@ -30,13 +30,14 @@ class ListOrders extends ListRecords
     {
         return [
             null => Tab::make('All'),
-            'Menunggu Konfirmasi' => Tab::make()->query(fn ($query) => $query->where('order_status', 'Menunggu Konfirmasi')), 
+            'Pembayaran Berhasil' => Tab::make()->query(fn ($query) => $query->where('payment_status', 'Pembayaran Berhasil')), 
+            'Menunggu Pembayaran' => Tab::make()->query(fn ($query) => $query->where('payment_status', 'Menunggu Pembayaran')), 
+            'Pembayaran Gagal' => Tab::make()->query(fn ($query) => $query->where('payment_status', 'Pembayaran Gagal')), 
+            'Pengambilan Berhasil' => Tab::make()->query(fn ($query) => $query->where('order_status', 'Pengambilan Berhasil')), 
             'Menunggu Pengambilan' => Tab::make()->query(fn ($query) => $query->where('order_status', 'Menunggu Pengambilan')), 
-            'Menunggu Pengembalian' => Tab::make()->query(fn ($query) => $query->where('order_status', 'Menunggu Pengembalian')), 
-            'Pengembalian' => Tab::make()->query(fn ($query) => $query->where('order_status', 'Pengembalian')), 
-            'Gagal' => Tab::make()->query(fn ($query) => $query->where('order_status', 'Gagal')), 
-            'Berhasil' => Tab::make()->query(fn ($query) => $query->where('order_status', 'Berhasil')), 
-            'Transaksi Offline' => Tab::make()->query(fn ($query) => $query->where('order_status', 'Offline')), 
+            'Pengambilan Gagal' => Tab::make()->query(fn ($query) => $query->where('order_status', 'Pengambilan Gagal')), 
+            'Dibatalkan' => Tab::make()->query(fn ($query) => $query->where('order_status', 'Dibatalkan')), 
+            'Refund' => Tab::make()->query(fn ($query) => $query->where('order_status', 'Refund')), 
         ];
     }
 }
