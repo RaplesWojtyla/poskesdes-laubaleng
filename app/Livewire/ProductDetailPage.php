@@ -25,7 +25,13 @@ class ProductDetailPage extends Component
 
     public function increaseQuantity()
     {
+        $productDetail = ProductDetail::where('id_product', $this->id_product)->first();
         ++$this->quantity;
+
+        if ($this->quantity > $productDetail->stock) 
+        {
+            $this->quantity = $productDetail->stock;
+        }
     }
 
     public function decreaseQuantity()

@@ -3,6 +3,8 @@
 namespace App\Livewire;
 
 use App\Helpers\CartManagement;
+use App\Models\Product;
+use App\Models\ProductDetail;
 use App\Models\SellingInvoice;
 use App\Models\SellingInvoiceDetail;
 use Illuminate\Support\Facades\DB;
@@ -90,6 +92,9 @@ class CheckoutPage extends Component
                     'quantity' => $cartItem->quantity,
                     'product_sell_price' => $cartItem->product->product_sell_price,
                 ]);
+
+                ProductDetail::where('id_product', $cartItem->id_product)
+                    ->decrement('stock', $cartItem->quantity);
 
                 $params['item_details'][] = [
                     'id' => $cartItem->id_product,

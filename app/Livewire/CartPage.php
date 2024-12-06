@@ -21,7 +21,7 @@ class CartPage extends Component
 
     public function mount()
     {
-        if (auth()->check())
+        if (auth()->check() && auth()->user()->role == 'user')
         {
             $this->id_customer = auth()->user()->customer->id_customer;
             $this->cartItems = CartManagement::getCartItems($this->id_customer);

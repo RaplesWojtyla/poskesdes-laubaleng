@@ -142,7 +142,7 @@
           </thead>
           <tbody>
             @foreach($orderDetail->sellingInvoiceDetail as $detail)
-            <tr>
+            <tr wire:key="{{ $detail->product->id_product }}">
               <td class="py-4">
                 <div class="flex items-center">
                   <img class="h-16 w-16 mr-4" src="{{ url('storage', $detail->product->productDescription->product_img) }}" alt="Product image">

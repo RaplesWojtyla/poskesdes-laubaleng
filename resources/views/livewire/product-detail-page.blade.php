@@ -36,6 +36,9 @@
                 <span>Rp {{ number_format($productDetail->product->product_sell_price, '0', ',', '.') }}</span>
                 {{-- <span class="text-base font-normal text-gray-500 line-through dark:text-gray-400">$1800.99</span> --}}
               </p>
+              <p class="max-w-md text-gray-700 underline dark:text-gray-400">
+                <strong>Stock: {{ $productDetail->stock }}</strong>
+              </p>
               <p class="max-w-md text-gray-700 dark:text-gray-400">
                 {!! Str::markdown($productDetail->product->productDescription->deskripsi) !!}</p>
             </div>
@@ -53,7 +56,7 @@
             </div>
             <div class="flex flex-wrap items-center gap-4">
               @guest
-              <a href="/login" class="w-full p-4 bg-red-500 rounded-md lg:w-2/5 dark:text-gray-200 text-gray-50 hover:bg-red-600 dark:bg-red-500 dark:hover:bg-red-700">
+              <a wire:navigate href="/login" class="w-full p-4 bg-red-500 rounded-md lg:w-2/5 dark:text-gray-200 text-gray-50 hover:bg-red-600 dark:bg-red-500 dark:hover:bg-red-700">
                 Log in to add to cart </a>
               @endguest
               @auth

@@ -40,14 +40,17 @@ class CartManagement
 
 	static function increaseQuantity($id_customer, $id_product)
 	{
-		$cartItems = Carts::where('id_customer', $id_customer)
+		$cartItem = Carts::where('id_customer', $id_customer)
 			->where('id_product', $id_product)
 			->first();
 		
-		++$cartItems->quantity;
-		$cartItems->save();
+        if ($cartItem->product->productDetail->first()->stock >= $cartItem->quantity + 1)
+        {
+            ++$cartItem->quantity;
+            $cartItem->save();
+        }
 
-		return Carts::where('id_customer', $id_customer)->get();
+		return CartManagement::getCartItems($id_customer);
 	}
 
 	static function decreaseQuantity($id_customer, $id_product)
@@ -66,7 +69,7 @@ class CartManagement
 			$cartItems->delete();
 		}
 
-		return Carts::where('id_customer', $id_customer)->get();
+		return CartManagement::getCartItems($id_customer);
 	}
 
     // Remove items from cart
@@ -77,19 +80,22 @@ class CartManagement
             ->where('id_product', $id_product)
             ->delete();
 
-        return Carts::where('id_customer', $id_customer)->get();
+        return CartManagement::getCartItems($id_customer);
     }
 
     // Clear all cart items
     static public function clearCartItems($id_customer)
     {
         Carts::where('id_customer', $id_customer)->delete();
+
+        return CartManagement::getCartItems($id_customer);
     }
 
     // Get all cart items
     static public function getCartItems($id_customer)
     {
         return Carts::where('id_customer', $id_customer)->get();
+        
     }
 	
 	// Calculate Total Price All Items From Cart
