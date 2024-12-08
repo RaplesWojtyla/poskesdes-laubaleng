@@ -18,10 +18,12 @@
               @forelse($cartItems as $cartItem)
               <tr wire:key="{{ $cartItem->id_product }}">
                 <td class="py-4">
-                  <div class="flex items-center">
-                    <img class="h-16 w-16 mr-4" src="{{ url('storage', $cartItem->product->productDescription->product_img) }}" alt="Product image">
-                    <span class="font-semibold">{{ $cartItem->product->product_name }}</span>
-                  </div>
+                  <a href="/products/{{ $cartItem->id_product }}">
+                    <div class="flex items-center">
+                      <img class="h-16 w-16 mr-4" src="{{ url('storage', $cartItem->product->productDescription->product_img) }}" alt="Product image">
+                      <span class="font-semibold">{{ $cartItem->product->product_name }}</span>
+                    </div>
+                  </a>
                 </td>
                 <td class="py-4">Rp {{ number_format($cartItem->product->product_sell_price, '2', ',', '.') }}</td>
                 <td class="py-4">

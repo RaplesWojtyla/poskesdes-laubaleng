@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Helpers\CartManagement;
 use App\Livewire\Partials\Navbar;
 use App\Models\ProductDetail;
+use Illuminate\Support\Facades\DB;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -58,6 +59,8 @@ class ProductDetailPage extends Component
     public function render()
     {
         $productDetail = ProductDetail::where('id_product', $this->id_product)->first();
+        // $piw = DB::table('vw_product')->where('category', 'Demam')->get();
+        // dd($piw);
 
         return view('livewire.product-detail-page', [
             'productDetail' => $productDetail,
