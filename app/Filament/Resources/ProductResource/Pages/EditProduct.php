@@ -41,10 +41,10 @@ class EditProduct extends EditRecord
         $data['description']['dosage'] = $description->dosage;
         $data['description']['NIE'] = $description->NIE;
         $data['description']['product_img'] = $description->product_img;
-        $data['detail']['id_product_detail'] = $detail->id_product_detail;
-        $data['detail']['stock'] = $detail->stock;
-        $data['detail']['exp_date'] = $detail->exp_date;
-        $data['detail']['product_buy_price'] = $detail->product_buy_price;
+        // $data['detail']['id_product_detail'] = $detail->id_product_detail;
+        // $data['detail']['stock'] = $detail->stock;
+        // $data['detail']['exp_date'] = $detail->exp_date;
+        // $data['detail']['product_buy_price'] = $detail->product_buy_price;
 
         return $data;
     }
@@ -57,19 +57,19 @@ class EditProduct extends EditRecord
                 $description = $product->productDescription;
                 $detail = $product->productDetail->first();
 
-                if ($data['product_sell_price'] < 1) 
-                {
-                    throw ValidationException::withMessages([
-                        'product_sell_price' => 'Harga jual produk tidak boleh kurang dari atau sama dengan 0'
-                    ]);
-                }
+                // if ($data['product_sell_price'] < 1) 
+                // {
+                //     throw ValidationException::withMessages([
+                //         'product_sell_price' => 'Harga jual produk tidak boleh kurang dari atau sama dengan 0'
+                //     ]);
+                // }
                 
-                if ($data['detail']['product_buy_price'] < 1) 
-                {
-                    throw ValidationException::withMessages([
-                        'product_sell_price' => 'Harga beli produk tidak boleh kurang dari atau sama dengan 0'
-                    ]);
-                }
+                // if ($data['detail']['product_buy_price'] < 1) 
+                // {
+                //     throw ValidationException::withMessages([
+                //         'product_sell_price' => 'Harga beli produk tidak boleh kurang dari atau sama dengan 0'
+                //     ]);
+                // }
 
                 $description->update([
                     'id_category' => $data['description']['id_category'],
@@ -85,14 +85,7 @@ class EditProduct extends EditRecord
                     'product_img' => $data['description']['product_img'],
                 ]);
 
-                $detail->update([
-                    'exp_date' => $data['detail']['exp_date'],
-                    'stock' => $data['detail']['stock'],
-                    'product_buy_price' => $data['detail']['product_buy_price'],
-                ]);
-
                 unset($data['description'], $data['detail']);
-                // dd($data);
                 
                 return $data;
             });

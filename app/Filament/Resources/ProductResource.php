@@ -89,10 +89,10 @@ class ProductResource extends Resource
                             ->required()
                             ->searchable(),
 
-                        TextInput::make('detail.stock')
-                            ->label('Stok Obat')
-                            ->numeric()
-                            ->required(),
+                        // TextInput::make('detail.stock')
+                        //     ->label('Stok Obat')
+                        //     ->numeric()
+                        //     ->required(),
                         
                         Select::make('status')
                             ->label('Status')
@@ -103,21 +103,12 @@ class ProductResource extends Resource
                             ])
                             ->required()
                             ->searchable(),
-                        
-                        DatePicker::make('detail.exp_date')
-                            ->label('Tanggal Kadaluarsa')
-                            ->required(),
-
-                        TextInput::make('detail.product_buy_price')
-                            ->numeric()
-                            ->required()
-                            ->prefix('IDR'),
 
                         TextInput::make('product_sell_price')
                             ->numeric()
                             ->required()
                             ->prefix('IDR'),
-                    ])->columns(4),
+                    ])->columns(3),
 
                     Section::make('Deskripsi Obat')->schema([
                         MarkdownEditor::make('description.deskripsi')
@@ -185,12 +176,22 @@ class ProductResource extends Resource
                     ->label('Nomor Izin Edar')
                     ->searchable(),
                 
-                TextColumn::make('productDetail.stock')
-                    ->label('Stock Obat')
+                TextColumn::make('detail.stock')
+                    ->label('Total Stock')
+                    ->getStateUsing(function (Product $record) {
+                        return $record->total_stock;
+                    })
                     ->searchable(),
                 
-                TextColumn::make('productDetail.exp_date')
+                // TextColumn::make('productDetail.exp_date')
+                //     ->label('Tanggal Kadaluarsa')
+                //     ->searchable(),
+
+                TextColumn::make('nearest_exp_date')
                     ->label('Tanggal Kadaluarsa')
+                    ->getStateUsing(function (Product $record) {
+                        return $record->productDetail->where('stock', '>', 0)->sortBy('exp_date')->first()->exp_date ?? 'N/A';
+                    })
                     ->searchable(),
                 
                 TextColumn::make('status')
@@ -251,7 +252,7 @@ class ProductResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            'productDetail' => RelationManagers\ProductDetailRelationManager::class,
         ];
     }
 

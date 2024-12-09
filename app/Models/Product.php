@@ -33,4 +33,8 @@ class Product extends Model
     public function cart() {
         return $this->hasMany(Carts::class, 'id_product');
     }
+
+    public function getTotalStockAttribute() {
+        return $this->productDetail->sum('stock');
+    }
 }
