@@ -28,7 +28,7 @@ return new class extends Migration
             FROM 
                 carts c
             JOIN 
-                vw_product vp ON c.id_product = vp.id_product;
+                vw_products vp ON c.id_product = vp.id_product;
         ";
 
         DB::unprepared($sql);

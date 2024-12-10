@@ -220,7 +220,7 @@
           // Optional
           onError: function(result){
             // /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-            window.location.href = '/cancel';
+            window.location.href = '/cancel?order_id={{ $orderDetail->invoice_code }}';
           },
           onClose: function() {
             // For example: when customer close the payment screen

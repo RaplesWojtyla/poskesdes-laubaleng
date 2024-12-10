@@ -20,7 +20,6 @@ return new class extends Migration
                 p.id_product,
                 p.product_name,
                 pd.stock,
-                s.supplier,
                 pdesc.product_img
             FROM 
                 products p
@@ -28,8 +27,6 @@ return new class extends Migration
                 products_description pdesc ON p.id_product_description = pdesc.id_product_description
             JOIN
                 products_detail pd ON p.id_product = pd.id_product
-            JOIN
-                suppliers s ON pdesc.id_supplier = s.id_supplier
             WHERE 
                 pd.exp_date <= NOW();
         ";

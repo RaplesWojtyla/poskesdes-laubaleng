@@ -20,7 +20,6 @@ class ProductDescription extends Model
         'id_category',
         'id_unit',
         'golongan_obat',
-        'id_supplier',
         'deskripsi',
         'indication',
         'side_effect',
@@ -40,9 +39,5 @@ class ProductDescription extends Model
 
     public function unit() {
         return $this->belongsTo(Unit::class, 'id_unit');
-    }
-
-    public function supplier() {
-        return $this->belongsTo(Supplier::class, 'id_supplier');
     }
 }

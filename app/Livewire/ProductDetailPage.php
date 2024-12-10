@@ -26,7 +26,10 @@ class ProductDetailPage extends Component
 
     public function increaseQuantity()
     {
-        $productDetail = ProductDetail::where('id_product', $this->id_product)->first();
+        $productDetail = ProductDetail::where('id_product', $this->id_product)
+            ->where('stock', '>', 0)
+            ->orderBy('exp_date')->first();
+
         ++$this->quantity;
 
         if ($this->quantity > $productDetail->stock) 
@@ -58,8 +61,10 @@ class ProductDetailPage extends Component
 
     public function render()
     {
-        $productDetail = ProductDetail::where('id_product', $this->id_product)->first();
-        // $piw = DB::table('vw_product')->where('category', 'Demam')->get();
+        $productDetail = ProductDetail::where('id_product', $this->id_product)
+                            ->where('stock', '>', 0)
+                            ->orderBy('exp_date')->first();
+        // $piw = DB::table('vw_products')->where('category', 'Demam')->get();
         // dd($piw);
 
         return view('livewire.product-detail-page', [

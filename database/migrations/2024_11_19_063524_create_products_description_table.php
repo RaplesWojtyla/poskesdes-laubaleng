@@ -16,7 +16,6 @@ return new class extends Migration
             $table->uuid('id_category');
             $table->uuid('id_unit');
             $table->enum('golongan_obat', ['Bebas', 'Bebas Terbatas', 'Keras', 'Narkotika']);
-            $table->uuid('id_supplier');
             $table->text('deskripsi');
             $table->text('indication');
             $table->text('side_effect');
@@ -34,12 +33,6 @@ return new class extends Migration
             $table->foreign('id_unit')
                 ->references('id_unit')
                 ->on('units')
-                ->cascadeOnUpdate()
-                ->restrictOnDelete();
-            
-            $table->foreign('id_supplier')
-                ->references('id_supplier')
-                ->on('suppliers')
                 ->cascadeOnUpdate()
                 ->restrictOnDelete();
         });

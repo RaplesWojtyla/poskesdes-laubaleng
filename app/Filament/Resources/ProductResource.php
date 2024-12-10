@@ -6,7 +6,6 @@ use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\Supplier;
 use App\Models\Unit;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -82,17 +81,6 @@ class ProductResource extends Resource
                         TextInput::make('description.NIE')
                             ->label('Nomor Izin Edar')
                             ->required(),
-                        
-                        Select::make('description.id_supplier')
-                            ->label('Supplier')
-                            ->options(Supplier::all()->pluck('supplier', 'id_supplier'))
-                            ->required()
-                            ->searchable(),
-
-                        // TextInput::make('detail.stock')
-                        //     ->label('Stok Obat')
-                        //     ->numeric()
-                        //     ->required(),
                         
                         Select::make('status')
                             ->label('Status')
@@ -226,7 +214,6 @@ class ProductResource extends Resource
                             $data['description']['id_unit'] = $description->unit->id_unit;
                             $data['description']['golongan_obat'] = $description->golongan_obat;
                             $data['description']['type'] = $description->type;
-                            $data['description']['id_supplier'] = $description->supplier->id_supplier;
                             $data['description']['deskripsi'] = $description->deskripsi;
                             $data['description']['indication'] = $description->indication;
                             $data['description']['side_effect'] = $description->side_effect;

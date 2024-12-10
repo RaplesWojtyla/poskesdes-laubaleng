@@ -55,7 +55,11 @@ class ProductsPage extends Component
     public function render()
     {
         $categories = Category::all();
-        $products = Product::query()->where('status', 'aktif');
+        $products = Product::query()
+            ->where('status', 'aktif')
+            ->whereHas('productDetail', function($query) {
+                $query->where('stock', '>', 0);
+            });
         
         // Filtering by categories
         if(!empty($this->selected_categories)) 

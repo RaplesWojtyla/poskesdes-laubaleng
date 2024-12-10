@@ -34,7 +34,6 @@ class EditProduct extends EditRecord
         $data['description']['id_unit'] = $description->unit->id_unit;
         $data['description']['golongan_obat'] = $description->golongan_obat;
         $data['description']['type'] = $description->type;
-        $data['description']['id_supplier'] = $description->supplier->id_supplier;
         $data['description']['deskripsi'] = $description->deskripsi;
         $data['description']['indication'] = $description->indication;
         $data['description']['side_effect'] = $description->side_effect;
@@ -75,7 +74,6 @@ class EditProduct extends EditRecord
                     'id_category' => $data['description']['id_category'],
                     'id_unit' => $data['description']['id_unit'],
                     'golongan_obat' => $data['description']['golongan_obat'],
-                    'id_supplier' => $data['description']['id_supplier'],
                     'deskripsi' => $data['description']['deskripsi'],
                     'indication' => $data['description']['indication'],
                     'side_effect' => $data['description']['side_effect'],

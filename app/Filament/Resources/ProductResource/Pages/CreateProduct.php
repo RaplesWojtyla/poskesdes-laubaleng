@@ -29,7 +29,6 @@ class CreateProduct extends CreateRecord
                     'id_category' => $data['description']['id_category'],
                     'id_unit' => $data['description']['id_unit'],
                     'golongan_obat' => $data['description']['golongan_obat'],
-                    'id_supplier' => $data['description']['id_supplier'],
                     'deskripsi' => $data['description']['deskripsi'],
                     'indication' => $data['description']['indication'],
                     'side_effect' => $data['description']['side_effect'],
@@ -39,19 +38,19 @@ class CreateProduct extends CreateRecord
                     'product_img' => $data['description']['product_img'],
                 ]);
 
-                $product_detail = [
-                    'id_product_detail' => $id_detail,
-                    'id_product' => $id_product,
-                    'exp_date' => $data['detail']['exp_date'],
-                    'stock' => $data['detail']['stock'],
-                    'product_buy_price' => $data['detail']['product_buy_price'],
-                ];
+                // $product_detail = [
+                //     'id_product_detail' => $id_detail,
+                //     'id_product' => $id_product,
+                //     'exp_date' => $data['detail']['exp_date'],
+                //     'stock' => $data['detail']['stock'],
+                //     'product_buy_price' => $data['detail']['product_buy_price'],
+                // ];
 
                 unset($data['description'], $data['detail']);
                 $data['id_product'] = $id_product;
                 $data['id_product_description'] = $id_description;
 
-                session()->put('product_detail_data', $product_detail);
+                // session()->put('product_detail_data', $product_detail);
 
                 return $data;
             });
@@ -67,26 +66,26 @@ class CreateProduct extends CreateRecord
     }
 
     public static function afterCreate() {
-        try {
-            DB::transaction(function()  {
-                $product_detail = session()->pull('product_detail_data');
+        // try {
+        //     DB::transaction(function()  {
+        //         $product_detail = session()->pull('product_detail_data');
 
-                ProductDetail::create([
-                    'id_product_detail' => $product_detail['id_product_detail'],
-                    'id_product' => $product_detail['id_product']       ,
-                    'exp_date' => $product_detail['exp_date'],
-                    'stock' => $product_detail['stock'],
-                    'product_buy_price' => $product_detail['product_buy_price'],
-                ]);
-            });
-        } catch (Exception $e) {
-            Notification::make()
-                ->title('Error')
-                ->body('Gagal menyimpan data obat: ' . $e->getMessage())
-                ->danger()
-                ->send();
+        //         ProductDetail::create([
+        //             'id_product_detail' => $product_detail['id_product_detail'],
+        //             'id_product' => $product_detail['id_product']       ,
+        //             'exp_date' => $product_detail['exp_date'],
+        //             'stock' => $product_detail['stock'],
+        //             'product_buy_price' => $product_detail['product_buy_price'],
+        //         ]);
+        //     });
+        // } catch (Exception $e) {
+        //     Notification::make()
+        //         ->title('Error')
+        //         ->body('Gagal menyimpan data obat: ' . $e->getMessage())
+        //         ->danger()
+        //         ->send();
             
-            throw $e;
-        }
+        //     throw $e;
+        // }
     }
 }

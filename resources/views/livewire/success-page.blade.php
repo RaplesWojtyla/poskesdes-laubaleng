@@ -104,22 +104,18 @@
         snap.pay('{{ $snapToken }}', {
           // Optional
           onSuccess: function(result){
-            // /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
             console.log('onSuccess' + JSON.stringify(result));
             window.location.href = '/payment-success?order_id=' + result.order_id;
           },
           // Optional
           onPending: function(result){
-            // /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
             // window.location.href = '/success?order_id=' + result.order_id;
           },
           // Optional
           onError: function(result){
-            // /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-            window.location.href = '/cancel?' + result.order_id;
+            window.location.href = '/cancel?order_id={{ $transaction->invoice_code }}';
           },
           onClose: function() {
-            // For example: when customer close the payment screen
             // window.location.href = '/success?order_id=' + result.order_id;
           },
         });
