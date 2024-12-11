@@ -144,10 +144,12 @@
             @foreach($orderDetail->sellingInvoiceDetail as $detail)
             <tr wire:key="{{ $detail->product->id_product }}">
               <td class="py-4">
-                <div class="flex items-center">
-                  <img class="h-16 w-16 mr-4" src="{{ url('storage', $detail->product->productDescription->product_img) }}" alt="Product image">
-                  <span class="font-semibold">{{ $detail->product_name }}</span>
-                </div>
+                <a href="/products/{{ $detail->product->id_product }}">
+                  <div class="flex items-center">
+                    <img class="h-16 w-16 mr-4" src="{{ url('storage', $detail->product->productDescription->product_img) }}" alt="Product image">
+                    <span class="font-semibold">{{ $detail->product_name }}</span>
+                  </div>
+                </a>
               </td>
               <td class="py-4">Rp {{ number_format($detail->product_sell_price, 2, ',', '.') }}</td>
               <td class="py-4">

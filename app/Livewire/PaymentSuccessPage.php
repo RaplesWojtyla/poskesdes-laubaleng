@@ -17,11 +17,9 @@ class PaymentSuccessPage extends Component
  
         $transaction = SellingInvoice::where('invoice_code', $request->order_id);
 
-        $totalPrice = $transaction->first()->sellingInvoiceDetail->sum(function ($item) {
-            return $item->product_sell_price * $item->quantity;
-        });
+        $totalPrice = $transaction->first()->getTotalInvoicePrice();
         
-        if (($respons['transaction_status'] == 'settlement' || $request->transaction_status == 'settlement') && $transaction->first()->payment_status == 'Menunggu Pembayaran')
+        if (($request->transaction_status == 'settlement' || $respons['transaction_status'] == 'settlement') && $transaction->first()->payment_status == 'Menunggu Pembayaran')
         {
             $transaction->update([
                 'payment_status' => 'Pembayaran Berhasil',

@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\Models\Product;
 use App\Models\Carts;
+use App\Models\ProductDetail;
 use Illuminate\Support\Facades\Auth;
 
 class CartManagement 
@@ -40,11 +41,15 @@ class CartManagement
 
 	static function increaseQuantity($id_customer, $id_product)
 	{
+        $productDetail = ProductDetail::where('id_product', $id_product)
+            ->where('stock', '>', 0)
+            ->orderBy('exp_date')->first();
+
 		$cartItem = Carts::where('id_customer', $id_customer)
 			->where('id_product', $id_product)
 			->first();
-		
-        if ($cartItem->product->productDetail->first()->stock >= $cartItem->quantity + 1)
+            
+        if ($productDetail->stock >= $cartItem->quantity + 1)
         {
             ++$cartItem->quantity;
             $cartItem->save();

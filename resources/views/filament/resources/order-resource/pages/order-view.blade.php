@@ -31,7 +31,7 @@
             <div class="mt-4">
                 <p class="text-lg"><strong>Total Harga:</strong> Rp {{ number_format($totalPrice, 0, ',', '.') }}</p>
                 <p class="text-lg"><strong>Kasir:</strong> {{ $order->cashier_name }}</p>
-                <p class="text-lg"><strong>Status:</strong> {{ $order->order_status == null ? 'Menunggu Pembayaran' : $order->order_status }}</p>
+                <p class="text-lg"><strong>Status:</strong> {{ $order->order_status === null ? 'Menunggu Pembayaran' : $order->order_status }}</p>
             </div>
         </div>
     
@@ -39,7 +39,7 @@
         <div class="w-[40%] bg-gray-100 dark:bg-gray-800 p-4 rounded-md shadow-sm">
             <p class="text-lg"><strong>Pelanggan:</strong> {{ $order->recipient_name }}</p>
             <p class="text-lg"><strong>Nomor HP:</strong> {{ $order->recipient_phone }}</p>
-            <p class="text-lg"><strong>Transaksi Selesai:</strong> {{ date('d F Y',strtotime($order->order_completed)) }}</p>
+            <p class="text-lg"><strong>Transaksi Selesai:</strong> {{ $order->order_completed !== null ? date('d F Y',strtotime($order->order_completed)) : '-' }}</p>
             <p class="text-lg uppercase"><strong>Metode Pembayaran:</strong> {{ $order->recipient_payment === 'other_qris' ? 'qris' : $order->recipient_payment }}</p>
         </div>
     </div>
