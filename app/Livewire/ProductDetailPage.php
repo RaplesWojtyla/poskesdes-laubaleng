@@ -47,9 +47,9 @@ class ProductDetailPage extends Component
 
     public function addToCart($id_product)
     {
-        $countItems = CartManagement::addItemsToCart(auth()->user()->customer->id_customer, $id_product, $this->quantity);
+        $countItems = CartManagement::addItemsToCart(auth()->user()->id_user, $id_product, $this->quantity);
 
-        $this->dispatch('updateCartCount', countItems: $countItems)->to(Navbar::class);
+        $this->dispatch('updateCartCount', $countItems)->to(Navbar::class);
 
         $this->alert('success', 'Obat Berhasil Ditambahkan ke dalam Keranjang!', [
             'position' =>  'bottom-end',
@@ -63,12 +63,13 @@ class ProductDetailPage extends Component
     {
         $productDetail = ProductDetail::where('id_product', $this->id_product)
                             ->where('stock', '>', 0)
-                            ->orderBy('exp_date')->first();
+                            ->orderBy('exp_date');
         // $piw = DB::table('vw_products')->where('category', 'Demam')->get();
         // dd($piw);
 
         return view('livewire.product-detail-page', [
-            'productDetail' => $productDetail,
+            'productDetail' => $productDetail->first(),
+            'totalStock' => $productDetail->sum('stock')
         ]);
     }
 

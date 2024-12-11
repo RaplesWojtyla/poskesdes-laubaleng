@@ -1,9 +1,7 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -18,7 +16,7 @@ return new class extends Migration
             CREATE VIEW vw_cart AS
             SELECT 
                 c.id_cart,
-                c.id_customer,
+                c.id_user,
                 vp.id_product,
                 vp.product_name,
                 vp.product_sell_price,

@@ -53,12 +53,19 @@ class User extends Authenticatable implements FilamentUser
         'email_verified_at' => 'datetime',
     ];
 
-    public function customer() {
+    public function customer() 
+    {
         return $this->hasOne(Customer::class, 'id_user');
     }
 
-    public function cashier() {
+    public function cashier() 
+    {
         return $this->hasOne(Cashier::class, 'id_user');
+    }
+
+    public function cart() 
+    {
+        return $this->hasMany(Carts::class, 'id_user');
     }
 
     public function canAccessPanel(Panel $panel): bool

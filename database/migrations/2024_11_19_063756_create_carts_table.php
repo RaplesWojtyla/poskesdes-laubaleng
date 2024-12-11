@@ -11,15 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('carts');
+        
         Schema::create('carts', function (Blueprint $table) {
             $table->uuid('id_cart')->primary();
-            $table->uuid('id_customer');
+            $table->uuid('id_user');
             $table->uuid('id_product');
             $table->integer('quantity');
 
-            $table->foreign('id_customer')
-                ->references('id_customer')
-                ->on('customers')
+            $table->foreign('id_user')
+                ->references('id_user')
+                ->on('users')
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
             $table->foreign('id_product')

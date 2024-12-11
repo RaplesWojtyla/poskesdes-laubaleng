@@ -8,15 +8,15 @@ use Livewire\Component;
 
 class Navbar extends Component
 {
-    public $id_customer;
+    public $id_user;
     public $countItems = 0;
 
     public function mount()
     {
         if (auth()->check() && auth()->user()->role == 'user') 
         {
-            $this->id_customer = auth()->user()->customer->id_customer;
-            $this->countItems = count(CartManagement::getCartItems($this->id_customer));
+            $this->id_user = auth()->user()->id_user;
+            $this->countItems = count(CartManagement::getCartItems($this->id_user));
         }
         else
         {

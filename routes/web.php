@@ -61,6 +61,11 @@ Route::middleware(['auth', 'hasRole:cashier'])->group(function () {
     {
         return view('cashier.index');
     });
+	
+	Route::get('/logout', function () {
+		auth()->logout();
+		return redirect()->to('/');
+	});
 });
 
 // Route::middleware(['auth', 'owner'])->group(function () {

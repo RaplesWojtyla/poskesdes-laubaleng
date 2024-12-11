@@ -5,14 +5,13 @@ namespace App\Helpers;
 use App\Models\Product;
 use App\Models\Carts;
 use App\Models\ProductDetail;
-use Illuminate\Support\Facades\Auth;
 
 class CartManagement 
 {
     // Add items to cart
-    static public function addItemsToCart($id_customer, $id_product, $quantity = 1)
+    static public function addItemsToCart($id_user, $id_product, $quantity = 1)
     {
-        $cartItem = Carts::where('id_customer', $id_customer)
+        $cartItem = Carts::where('id_user', $id_user)
                         ->where('id_product', $id_product)
                         ->first();
 
@@ -29,23 +28,23 @@ class CartManagement
 			{
                 Carts::create([
                     'id_cart' => (string) \Illuminate\Support\Str::uuid(),
-                    'id_customer' => $id_customer,
+                    'id_user' => $id_user,
                     'id_product' => $id_product,
                     'quantity' => $quantity,
                 ]);
             }
         }
 
-        return Carts::where('id_customer', $id_customer)->count();
+        return Carts::where('id_user', $id_user)->count();
     }
 
-	static function increaseQuantity($id_customer, $id_product)
+	static function increaseQuantity($id_user, $id_product)
 	{
         $productDetail = ProductDetail::where('id_product', $id_product)
             ->where('stock', '>', 0)
             ->orderBy('exp_date')->first();
 
-		$cartItem = Carts::where('id_customer', $id_customer)
+		$cartItem = Carts::where('id_user', $id_user)
 			->where('id_product', $id_product)
 			->first();
             
@@ -55,12 +54,12 @@ class CartManagement
             $cartItem->save();
         }
 
-		return CartManagement::getCartItems($id_customer);
+		return CartManagement::getCartItems($id_user);
 	}
 
-	static function decreaseQuantity($id_customer, $id_product)
+	static function decreaseQuantity($id_user, $id_product)
 	{
-		$cartItems = Carts::where('id_customer', $id_customer)
+		$cartItems = Carts::where('id_user', $id_user)
 			->where('id_product', $id_product)
 			->first();
 		
@@ -74,32 +73,32 @@ class CartManagement
 			$cartItems->delete();
 		}
 
-		return CartManagement::getCartItems($id_customer);
+		return CartManagement::getCartItems($id_user);
 	}
 
     // Remove items from cart
-    static public function removeItemsFromCart($id_customer, $id_product)
+    static public function removeItemsFromCart($id_user, $id_product)
     {
 
-        Carts::where('id_customer', $id_customer)
+        Carts::where('id_user', $id_user)
             ->where('id_product', $id_product)
             ->delete();
 
-        return CartManagement::getCartItems($id_customer);
+        return CartManagement::getCartItems($id_user);
     }
 
     // Clear all cart items
-    static public function clearCartItems($id_customer)
+    static public function clearCartItems($id_user)
     {
-        Carts::where('id_customer', $id_customer)->delete();
+        Carts::where('id_user', $id_user)->delete();
 
-        return CartManagement::getCartItems($id_customer);
+        return CartManagement::getCartItems($id_user);
     }
 
     // Get all cart items
-    static public function getCartItems($id_customer)
+    static public function getCartItems($id_user)
     {
-        return Carts::where('id_customer', $id_customer)->get();
+        return Carts::where('id_user', $id_user)->get();
         
     }
 	

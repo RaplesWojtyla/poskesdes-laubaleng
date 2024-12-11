@@ -20,15 +20,13 @@ class Customer extends Model
         'no_telp'
     ];
 
-    public function cart() {
-        return $this->hasMany(Carts::class, 'id_customer');
-    }
-
-    public function user() {
+    public function user() 
+    {
         return $this->belongsTo(User::class, 'id_user');
     }
 
-    public function sellingInvoice() {
+    public function sellingInvoice() 
+    {
         return $this->hasMany(SellingInvoice::class, 'id_customer');
     }
 }

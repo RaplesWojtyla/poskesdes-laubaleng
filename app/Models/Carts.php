@@ -17,13 +17,13 @@ class Carts extends Model
     
     protected $fillable = [
         'id_cart',
-        'id_customer',
+        'id_user',
         'id_product',
         'quantity'
     ];
 
-    public function customer() {
-        return $this->belongsTo(Customer::class, 'id_customer');
+    public function user() {
+        return $this->belongsTo(User::class, 'id_user');
     }
 
     public function product() {

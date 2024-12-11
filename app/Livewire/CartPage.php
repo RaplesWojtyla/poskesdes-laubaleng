@@ -15,7 +15,7 @@ class CartPage extends Component
 {
     use LivewireAlert;
 
-    public $id_customer;
+    public $id_user;
     public $cartItems = [];
     public $totalPrice = 0;
 
@@ -23,8 +23,8 @@ class CartPage extends Component
     {
         if (auth()->check() && auth()->user()->role == 'user')
         {
-            $this->id_customer = auth()->user()->customer->id_customer;
-            $this->cartItems = CartManagement::getCartItems($this->id_customer);
+            $this->id_user = auth()->user()->id_user;
+            $this->cartItems = CartManagement::getCartItems($this->id_user);
             $this->totalPrice = CartManagement::calcTotalPriceAllCartItems($this->cartItems);
         }
         else
@@ -36,13 +36,13 @@ class CartPage extends Component
 
     public function increaseQuantity($id_product)
     {
-        $this->cartItems = CartManagement::increaseQuantity($this->id_customer, $id_product);
+        $this->cartItems = CartManagement::increaseQuantity($this->id_user, $id_product);
         $this->totalPrice = CartManagement::calcTotalPriceAllCartItems($this->cartItems);
     }
 
     public function decreaseQuantity($id_product)
     {
-        $this->cartItems = CartManagement::decreaseQuantity($this->id_customer, $id_product);
+        $this->cartItems = CartManagement::decreaseQuantity($this->id_user, $id_product);
         $this->totalPrice = CartManagement::calcTotalPriceAllCartItems($this->cartItems);
         
         $this->dispatch('updateCartCount', count($this->cartItems))->to(Navbar::class);
@@ -50,7 +50,7 @@ class CartPage extends Component
     
     public function removeItem($id_product)
     {
-        $this->cartItems = CartManagement::removeItemsFromCart($this->id_customer, $id_product);
+        $this->cartItems = CartManagement::removeItemsFromCart($this->id_user, $id_product);
         $this->totalPrice = CartManagement::calcTotalPriceAllCartItems($this->cartItems);
 
         $this->dispatch('updateCartCount', count($this->cartItems))->to(Navbar::class);
