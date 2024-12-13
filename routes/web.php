@@ -6,6 +6,7 @@ use App\Livewire\Auth\RegisterPage;
 use App\Livewire\Auth\ResetPasswordPage;
 use App\Livewire\CancelPage;
 use App\Livewire\CartPage;
+use App\Livewire\Cashier\LiveCart;
 use App\Livewire\CategoriesPage;
 use App\Livewire\CheckoutPage;
 use App\Livewire\HomePage;
@@ -57,12 +58,14 @@ Route::middleware(['auth', 'hasRole:user'])->group(function () {
 });
 
 Route::middleware(['auth', 'hasRole:cashier'])->group(function () {
-	Route::get('/cashier', function()
+	Route::get('/', function()
     {
         return view('cashier.index');
     });
+
+	Route::get('/checkout', [LiveCart::class, 'checkout'])->name('cashier.checkout');
 	
-	Route::get('/logout', function () {
+	Route::post('/logout', function () {
 		auth()->logout();
 		return redirect()->to('/');
 	});

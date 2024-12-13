@@ -17,8 +17,8 @@ module.exports = {
         'Inter': ['Inter', 'sans-serif'],
       },
       colors: {
-        mainColor: '#1A8889',
-        secondaryColor: '#F7A623',
+        mainColor: '#2685B6',
+        secondaryColor: '#079802',
         tertiaryColor: '#A7D3D4',
         semiBlack: 'rgba(0,0,0,0.4)',
         lightGrey: '#EDEDED',

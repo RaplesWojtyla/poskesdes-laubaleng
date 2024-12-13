@@ -31,19 +31,19 @@ class ShowProducts extends Component
 
     public function AddedToCart($product)
     {
-        $existingCart = Carts::where('id_customer', auth()->user()->cashier->id_cashier)
+        $existingCart = Carts::where('id_user', auth()->user()->id_user)
         ->where('id_product', $product['id_product'])
         ->first();
 
         if (!$existingCart) {
             Carts::create([
                 "cart_id" => \Illuminate\Support\Str::uuid(),
-                'id_customer' => auth()->user()->cashier->id_cashier,
+                'id_user' => auth()->user()->id_user,
                 'id_product' => $product['id_product'],
                 'quantity' => 1
             ]);
         }
-        $this->dispatch('productAddedToCart', auth()->user()->cashier->id_cashier, $product['id_product']);
+        $this->dispatch('productAddedToCart', auth()->user()->id_user, $product['id_product']);
     }
 
     public function search_product()
@@ -81,20 +81,14 @@ class ShowProducts extends Component
 
             switch ($filterType) {
                 case 'unit':
-                    $filters->whereHas('description.unit', function ($query) use ($filterId) {
-                        $query->where('unit_id', $filterId);
-                    });
-                    break;
-
-                case 'group':
-                    $filters->whereHas('description.group', function ($query) use ($filterId) {
-                        $query->where('group_id', $filterId);
+                    $filters->whereHas('productDescription.unit', function ($query) use ($filterId) {
+                        $query->where('id_unit', $filterId);
                     });
                     break;
 
                 case 'category':
-                    $filters->whereHas('description.category', function ($query) use ($filterId) {
-                        $query->where('category_id', $filterId);
+                    $filters->whereHas('productDescription.category', function ($query) use ($filterId) {
+                        $query->where('id_category', $filterId);
                     });
                     break;
             }
@@ -139,7 +133,6 @@ class ShowProducts extends Component
     {
         $product = $this->search_product();
         $this->categories = Category::orderBy('category')->get();
-        // $this->groups = Group::on('cashier')->orderBy('group')->get();
         $this->units = Unit::orderBy('unit')->get();
 
         return view('livewire.cashier.show-products', [

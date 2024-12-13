@@ -62,10 +62,9 @@
 
         <livewire:cashier.show-products/>
         
-
-        {{-- CART START 
+        {{-- LIVE CART START --}}
         <livewire:cashier.live-cart/> 
-        {{-- CART END --}}
+        {{-- LIVE CART END --}}
 
         <form action="/cashier/hapuskeranjang" method="POST" class="w-screen h-screen opacity-0 absolute top-0 backdrop-blur-md z-50 hidden flex justify-center items-center transition duration-300 ease-in-out backdrop-brightness-50" id="cartAlertPopUp">
             @csrf

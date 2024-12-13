@@ -23,10 +23,11 @@ class LiveCart extends Component
     public function productAddedToCart($user, $product)
     {
         $existingCart = Carts::where('id_user', $user)
-        ->where('id_product', $product)
-        ->first();
+                        ->where('id_product', $product)
+                        ->first();
 
-        if (!$existingCart) {
+        if (!$existingCart) 
+        {
             Carts::create([
                 "id_cart" => \Illuminate\Support\Str::uuid(),
                 'id_user' => auth()->user()->id_user,
@@ -39,15 +40,9 @@ class LiveCart extends Component
     }
 
 
-    public function decrementButton($cart, $detail_product) 
+    public function decrementButton($cart) 
     {
-        if($cart['quantity'] > $detail_product['product_stock']) 
-        {
-            Carts::where('id_cart', $cart['id_cart'])->update([
-                'quantity'=> $detail_product['product_stock'],
-            ]);
-        }
-        else if($cart['quantity'] <= $detail_product['product_stock'] && $cart['quantity'] > 1) 
+        if($cart['quantity'] > 1) 
         {
             Carts::where('id_cart', $cart['id_cart'])->update([
                 'quantity'=> $cart['quantity'] - 1,
@@ -61,22 +56,28 @@ class LiveCart extends Component
         $this->cartItems = Carts::where('id_user', auth()->user()->id_user)->get();
     }
 
-        public function incrementButton($cart, $detail_product) {
-            if($cart['quantity'] > $detail_product) {
-                Carts::where('id_cart', $cart['id_cart'])->update([
-                    'quantity'=> $detail_product,
-                ]);
-            }else if($cart['quantity'] <= $detail_product && $cart['quantity'] >= 1) {
-                Carts::where('id_cart', $cart['id_cart'])->update([
-                    'quantity'=> $cart['quantity'] + 1,
-                ]);
-            }else{
-                Carts::where('id_cart', $cart['id_cart'])->update([
-                    'quantity'=> 1,
-                ]);
-            }
-            $this->cartItems = Carts::where('id_user', auth()->user()->id_user)->get();
+    public function incrementButton($cart, $detail_product) 
+    {
+        if($cart['quantity'] > $detail_product) 
+        {
+            Carts::where('id_cart', $cart['id_cart'])->update([
+                'quantity'=> $detail_product,
+            ]);
         }
+        else if($cart['quantity'] < $detail_product) 
+        {
+            Carts::where('id_cart', $cart['id_cart'])->update([
+                'quantity'=> $cart['quantity'] + 1,
+            ]);
+        }
+        
+        $this->cartItems = Carts::where('id_user', auth()->user()->id_user)->get();
+    }
+
+    public function checkout()
+    {
+        
+    }
 
     public function render()
     {

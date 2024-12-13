@@ -23,7 +23,7 @@
 
                     @foreach ($categories as $category)
                         <input type="hidden" name="" id="" value="">
-                        <button wire:click="applyFilter('category', '{{ $category->category_id }}')"
+                        <button wire:click="applyFilter('category', '{{ $category->id_category }}')"
                             class="flex rounded-md px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer"
                             role="menuitem">
                             {{ $category -> category }}
@@ -46,7 +46,7 @@
                 <div class="py-2 p-2" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-button">
 
                     @foreach ($units as $unit)
-                        <button wire:click="applyFilter('unit', '{{ $unit->unit_id }}')"
+                        <button wire:click="applyFilter('unit', '{{ $unit->id_unit }}')"
                             class="flex rounded-md px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer"
                             role="menuitem">
                             {{ $unit->unit }}
@@ -57,34 +57,9 @@
             </div>
         </div>
         {{-- UNIT END --}}
-
-        {{-- GROUP START --}}
-        <div class="relative inline-block text-left">
-            <button id="dropdown-button2"
-                class="inline-flex justify-center gap-2 items-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-md focus:outline-none focus:ring-2  focus:ring-mainColor">
-                Golongan
-                <i class="fa-solid fa-chevron-down"></i>
-            </button>
-            {{--
-            <div id="dropdown-menu2"
-                class="origin-top-right absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden">
-                <div class="py-2 p-2" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-button">
-
-                    @foreach ($groups as $group)
-                        <button wire:click="applyFilter('group', '{{ $group->group_id }}')"
-                            class="flex rounded-md px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer"
-                            role="menuitem">
-                            {{ $group->group }}
-                        </button>
-                    @endforeach
-
-                </div>
-            </div> --}}
-        </div>
-        {{-- GROUP END --}}
-
     </div>
     {{-- FILTER SECTION END --}}
+    
     @if ($selectedFilters)
     <div class="flex gap-5">
         @foreach($selectedFilters as $filterKey => $value)
@@ -125,19 +100,20 @@
             @endif
 
             <div class="flex flex-col">
-                <p> <span class="text-secondaryColor font-bold leading-tight break-all">Rp. {{
-                        number_format($item->product_sell_price,
-                        0,
-                        ',', '.') }}</span> / </p>
-                <p> {{ $item->productDescription->unit->unit }}</p>
-                <p class="font-semibold leading-tight break-all">Stok : {{
-                    $item->productDetail->sum('stock') }}</p>
+                <p> 
+                    <span class="text-secondaryColor font-bold leading-tight break-all">
+                        Rp. {{ number_format($item->product_sell_price, 0, ',', '.') }}
+                    </span> 
+                    / 
+                </p>
+                <p> {{ $item->productDescription->unit->unit }} </p>
+                <p class="font-semibold leading-tight break-all">
+                    Stok : {{ $item->productDetail->sum('stock') }}
+                </p>
             </div>
             @auth
             @if ($item->status == 'Aktif')
-                    <button wire:click="AddedToCart({{ $item }})" type="button"
-                        class="text-white font-semibold bg-mainColor w-full py-1 rounded-md">Tambah</button>
-                {{-- <livewire:buttonAddCartCashier :user="auth()->user()->user_id" :product="$item->product_id" /> --}}
+                    <button wire:click="AddedToCart({{ $item }})" type="button" class="text-white font-semibold bg-mainColor w-full py-1 rounded-md">Tambah</button>
             @else
             <button type="button" disabled
                 class="text-mediumGrey font-semibold bg-lightGrey w-full py-1 rounded-md">Tambah</button>
