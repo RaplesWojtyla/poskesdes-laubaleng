@@ -16,7 +16,7 @@ return new class extends Migration
             $table->uuid('id_selling_invoice')->primary();
             $table->string('invoice_code', 20)->unique();
             $table->string('cashier_name', 100)->nullable();
-            $table->char('id_customer', 36)->nullable();
+            $table->char('id_user', 36)->nullable();
             $table->string('recipient_name', 100)->nullable();
             $table->string('recipient_phone', 14)->nullable();
             $table->string('recipient_payment', 100);
@@ -30,9 +30,9 @@ return new class extends Migration
             $table->string('snap_token', 255)->nullable();
             $table->timestamps();
 
-            $table->foreign('id_customer')
-                ->references('id_customer')
-                ->on('customers')
+            $table->foreign('id_user')
+                ->references('id_user')
+                ->on('users')
                 ->cascadeOnUpdate()
                 ->restrictOnDelete();
         });

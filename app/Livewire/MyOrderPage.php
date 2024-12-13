@@ -15,7 +15,7 @@ class MyOrderPage extends Component
 
     public function render()
     {
-        $myOrders = SellingInvoice::where('id_customer', auth()->user()->customer->id_customer)->latest()->paginate(10);
+        $myOrders = SellingInvoice::where('id_user', auth()->user()->id_user)->latest()->paginate(10);
         // $totalPrice = CartManagement::calcTotalPriceAllCartItems($myOrders);
         return view('livewire.my-order-page', [
             'myOrders' => $myOrders    

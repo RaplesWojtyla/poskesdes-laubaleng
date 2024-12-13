@@ -44,7 +44,7 @@ Route::middleware('guest')->group(function () {
 Route::get('/cart', action: CartPage::class);
 
 Route::middleware(['auth', 'hasRole:user'])->group(function () {
-	// Route::get('/poskesdeslaubaleng', HomePage::class);
+	// Route::get('/', HomePage::class);
 	Route::get('/checkout', action: CheckoutPage::class);
 	Route::get('/orders', action: MyOrderPage::class);
 	Route::get('/my-orders/{id_selling_invoice}', action: MyOrderDetailPage::class);	
@@ -58,12 +58,12 @@ Route::middleware(['auth', 'hasRole:user'])->group(function () {
 });
 
 Route::middleware(['auth', 'hasRole:cashier'])->group(function () {
-	Route::get('/', function()
+	Route::get('/cashier', function()
     {
         return view('cashier.index');
     });
 
-	Route::get('/checkout', [LiveCart::class, 'checkout'])->name('cashier.checkout');
+	Route::get('/cashier/checkout', [LiveCart::class, 'checkout'])->name('cashier.checkout');
 	
 	Route::post('/logout', function () {
 		auth()->logout();

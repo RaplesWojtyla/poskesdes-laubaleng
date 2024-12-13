@@ -49,21 +49,21 @@ class CheckoutPage extends Component
         
         DB::beginTransaction();
         try {
-            $cartItems = CartManagement::getCartItems(auth()->user()->customer->id_customer);
+            $cartItems = CartManagement::getCartItems(auth()->user()->id_user);
             $totalPrice = CartManagement::calcTotalPriceAllCartItems($cartItems);
             $id_selling_invoice = \Illuminate\Support\Str::uuid();
 
             $lastInvoice = SellingInvoice::latest()->first();
             $currInvoice = $lastInvoice ? (int)substr($lastInvoice->invoice_code, 4) + 1 : 1;
-            $invoiceCode = 'INV-' . str_pad($currInvoice, 5, '0', STR_PAD_LEFT);
-            // $invoiceCode = 'INV-00036';
+            // $invoiceCode = 'INV-' . str_pad($currInvoice, 5, '0', STR_PAD_LEFT);
+            $invoiceCode = 'INV-00041';
 
             $resepDokterPath = isset($this->resepDokter) ? $this->resepDokter->store('resep_dokter', 'public') : '';
 
             SellingInvoice::create([
                 'id_selling_invoice' => $id_selling_invoice,
                 'invoice_code' => $invoiceCode,
-                'id_customer' => auth()->user()->customer->id_customer,
+                'id_user' => auth()->user()->id_user,
                 'recipient_name' => $this->recipientName,
                 'recipient_phone' => $this->phone,
                 'recipient_payment' => $this->paymentMethod,
@@ -112,7 +112,7 @@ class CheckoutPage extends Component
                 ->update(['snap_token' => $snapToken]);
 
             // session()->flash('snap_token', $snapToken);
-            CartManagement::clearCartItems(auth()->user()->customer->id_customer);
+            CartManagement::clearCartItems(auth()->user()->id_user);
             
             DB::commit();
             return redirect()->to('/success?order_id=' . $invoiceCode);
@@ -127,7 +127,7 @@ class CheckoutPage extends Component
 
     public function render()
     {
-        $cartItems = CartManagement::getCartItems(auth()->user()->customer->id_customer);
+        $cartItems = CartManagement::getCartItems(auth()->user()->id_user);
         $totalPrice = CartManagement::calcTotalPriceAllCartItems($cartItems);
         $this->requiresPrescription = $cartItems->contains(function ($cartItem) {
             return $cartItem->product->productDescription->type === 'Resep dokter';

@@ -18,7 +18,7 @@ class SellingInvoice extends Model
         'id_selling_invoice',
         'invoice_code',
         'cashier_name',
-        'id_customer',
+        'id_user',
         'recipient_name',
         'recipient_phone',
         'recipient_payment',
@@ -48,8 +48,8 @@ class SellingInvoice extends Model
         return $this->hasMany(SellingInvoiceDetail::class, 'id_selling_invoice');
     }
 
-    public function customer() {
-        return $this->belongsTo(Customer::class, 'id_customer');
+    public function user() {
+        return $this->belongsTo(User::class, 'id_user');
     }
 
     public function getTotalInvoicePrice() {
