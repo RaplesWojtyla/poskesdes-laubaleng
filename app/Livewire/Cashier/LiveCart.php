@@ -72,9 +72,9 @@ class LiveCart extends Component
                 'invoice_code' => $invoiceCode,
                 'id_user' => auth()->user()->id_user,
                 'cashier_name' => auth()->user()->name,
-                'recipient_payment' => 'Offline',
+                'recipient_payment' => 'Cash',
                 'payment_status' => 'Pembayaran Berhasil',
-                'order_status' => 'Pengambilan Berhasil',
+                'order_status' => 'Offline',
                 'order_date' => now(),              
                 'order_completed' => now(),                      
             ]);

@@ -14,7 +14,7 @@ class CashierController extends Controller
         $histories = SellingInvoice::where('cashier_name', auth()->user()->name)
             ->where(function ($query) {
                 $query->where('order_status', 'Pengambilan Berhasil')
-                    ->orWhere('recipient_payment', 'Offline')
+                    ->orWhere('order_status', 'Offline')
                     ->orWhere('order_status', 'Pengambilan Gagal')
                     ->orWhere('order_status', 'Dibatalkan')
                     ->orWhere('order_status', 'Refund');
@@ -80,7 +80,7 @@ class CashierController extends Controller
             // }
 
             // Ubah status menjadi 'Berhasil'
-            $order->order_status = 'Pengambilan Berhasil';
+            $order->order_status = 'Offline';
             $order->save();
 
             DB::commit();

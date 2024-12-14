@@ -56,7 +56,7 @@
 								$order_status = '';
 								if ($history->order_status == 'Pengambilan Gagal') $order_status = '<span class="bg-red-600 py-1 px-3 rounded text-white shadow">Pengambilan Gagal</span>';
 								elseif ($history->order_status == 'Refund') $order_status = '<span class="bg-yellow-500 py-1 px-3 rounded text-white shadow">Refund</span>';
-								elseif ($history->order_status == 'Pengambilan Berhasil' && $history->recipient_payment == 'Offline') $order_status = '<span class="bg-green-500 py-1 px-3 rounded text-white shadow">Offline</span>';
+								elseif ($history->order_status == 'Offline') $order_status = '<span class="bg-green-500 py-1 px-3 rounded text-white shadow">Offline</span>';
 								elseif ($history->order_status == 'Pengambilan Berhasil') $order_status = '<span class="bg-green-500 py-1 px-3 rounded text-white shadow">Pengambilan Berhasil</span>';
 								elseif ($history->order_status == 'Dibatalkan') $order_status = '<span class="bg-red-500 py-1 px-3 rounded text-white shadow">Dibatalkan</span>';
 							@endphp
@@ -88,7 +88,7 @@
     
                                             <div class="flex gap-2 items-center">
                                                 {{-- GREEN = BERHASIL, YELLOW = REFUND, RED = GAGAL --}}
-                                                @if ( $history->order_status == 'Pengambilan Berhasil' || $history->recipient_payment == 'Offline')
+                                                @if ( $history->order_status == 'Pengambilan Berhasil' || $history->order_status == 'Offline')
                                                 <i class="text-green-600 fa-solid fa-circle"></i>
                                                 @elseif ($history->order_status == 'Refund')
                                                     <i class="text-yellow-600 fa-solid fa-circle"></i>
