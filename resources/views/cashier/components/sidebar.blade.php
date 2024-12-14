@@ -16,15 +16,11 @@
             <i class="mr-4 w-4 fa-solid fa-cart-plus"></i>
             Produk
         </a>
-        <a href="/cashier/pesanan-online" class="hover:text-mainColor">
-            <i class="mr-4 w-4 fa-solid fa-cart-shopping"></i>
-            Pesanan Online
-        </a>
-        <a href="/cashier/pesanan-pending" class="hover:text-mainColor">
+        <a href="/cashier/pending-orders" class="hover:text-mainColor">
             <i class="mr-4 w-4 fa-solid fa-spinner"></i>
             Pesanan Pending
         </a>
-        <a href="/cashier/riwayat-transaksi" class="hover:text-mainColor">
+        <a href="/cashier/history-transaction" class="hover:text-mainColor">
             <i class="mr-4 w-4 fa-solid fa-clock-rotate-left"></i>
             Riwayat Transaksi
         </a>

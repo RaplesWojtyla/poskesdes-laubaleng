@@ -21,7 +21,7 @@ return new class extends Migration
             BEGIN
                 IF (
                     OLD.invoice_code <> NEW.invoice_code OR
-                    OLD.id_customer <> NEW.id_customer OR
+                    OLD.id_user <> NEW.id_user OR
                     OLD.recipient_name <> NEW.recipient_name OR
                     OLD.recipient_phone <> NEW.recipient_phone OR
                     OLD.order_date <> NEW.order_date OR

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CashierController;
 use App\Livewire\Auth\ForgotPasswordPage;
 use App\Livewire\Auth\LoginPage;
 use App\Livewire\Auth\RegisterPage;
@@ -61,9 +62,14 @@ Route::middleware(['auth', 'hasRole:cashier'])->group(function () {
 	Route::get('/cashier', function()
     {
         return view('cashier.index');
-    });
+    })->name('cashier.dashboard');
 
 	Route::get('/cashier/checkout', [LiveCart::class, 'checkout'])->name('cashier.checkout');
+	Route::post('/cashier/clear-cart', [LiveCart::class, 'clearCart'])->name('cashier.clearCart');
+	Route::get('/cashier/pending-orders', [CashierController::class, 'pendingOrders'])->name('cashier.pendingOrders');
+	Route::get('/cashier/order-failed/{id_selling_invoice}', [CashierController::class, 'failOrder'])->name('failOrder');
+	Route::get('/cashier/order-completed/{id_selling_invoice}', [CashierController::class, 'successOrder'])->name('successOrder');
+	Route::get('/cashier/history-transaction', [CashierController::class, 'historyTransaction'])->name('cashier.historyTransaction');
 	
 	Route::post('/logout', function () {
 		auth()->logout();

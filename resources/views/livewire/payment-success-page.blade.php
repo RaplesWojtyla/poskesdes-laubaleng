@@ -16,25 +16,31 @@
                     </div>
                 </div>
                 <div class="flex flex-wrap items-center pb-4 mb-10 border-b border-gray-200 dark:border-gray-700">
-                    <div class="w-full px-4 mb-4 md:w-1/4">
+                    <div class="w-full px-4 mb-4 md:w-1/5">
                         <p class="mb-2 text-sm leading-5 text-gray-600 dark:text-gray-400 ">
                             Kode Invoice: </p>
                         <p class="text-base font-semibold leading-4 text-gray-800 dark:text-gray-400">
                             {{ $transaction->invoice_code }}</p>
                     </div>
-                    <div class="w-full px-4 mb-4 md:w-1/4">
+                    <div class="w-full px-4 mb-4 md:w-1/5">
                         <p class="mb-2 text-sm leading-5 text-gray-600 dark:text-gray-400 ">
                             Tanggal Transaksi: </p>
                         <p class="text-base font-semibold leading-4 text-gray-800 dark:text-gray-400">
                         {{ date('d F Y',strtotime($transaction->order_date)) }}</p>
                     </div>
-                    <div class="w-full px-4 mb-4 md:w-1/4">
+                    <div class="w-full px-4 mb-4 md:w-1/5">
+                        <p class="mb-2 text-sm leading-5 text-gray-600 dark:text-gray-400 ">
+                            Deadline Pengambilan: </p>
+                        <p class="text-base font-semibold leading-4 text-gray-800 dark:text-gray-400">
+                            {{ date('d F Y', strtotime($transaction->order_date . ' +3 days')) }}</p>
+                    </div>
+                    <div class="w-full px-4 mb-4 md:w-1/5">
                         <p class="mb-2 text-sm font-medium leading-5 text-gray-800 dark:text-gray-400 ">
                             Total: </p>
                         <p class="text-base font-semibold leading-4 text-blue-600 dark:text-gray-400">
                             Rp {{ number_format($totalPrice, '2', ',', '.')}}</p>
                     </div>
-                    <div class="w-full px-4 mb-4 md:w-1/4">
+                    <div class="w-full px-4 mb-4 md:w-1/5">
                         <p class="mb-2 text-sm leading-5 text-gray-600 dark:text-gray-400 ">
                             Metode Pembayaran: </p>
                         <p class="text-base font-semibold leading-4 uppercase text-gray-800 dark:text-gray-400 ">
@@ -75,12 +81,12 @@
                                     </div>
                                     <div class="flex flex-col items-center justify-start">
                                         <p class="text-lg font-semibold leading-6 text-gray-800 dark:text-gray-400">
-                                            @if($transaction->order_status == 'Menunggu Pembayaran')
+                                            @if($transaction->payment_status == 'Menunggu Pembayaran')
                                                 <span class="text-sm font-normal text-white bg-yellow-500 px-2 py-1 rounded">Menunggu Pembayaran</span>
-                                            @elseif($transaction->order_status == 'Menunggu Pengambilan')
+                                            @elseif($transaction->payment_status == 'Pembayaran Berhasil')
                                                 <span class="text-sm font-normal text-white bg-green-500 px-2 py-1 rounded">Pembayaran Berhasil</span>
                                             @else
-                                                <span class="text-sm font-normal text-white bg-red-500 px-2 py-1 rounded">{{ $transaction->order_status }}</span>
+                                                <span class="text-sm font-normal text-white bg-red-500 px-2 py-1 rounded">{{ $transaction->payment_status }}</span>
                                             @endif
                                         </p>
                                     </div>

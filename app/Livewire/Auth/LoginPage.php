@@ -24,10 +24,15 @@ class LoginPage extends Component
             return;
         }
         
-        if ($this->email == 'poskesdeslaubaleng@gmail.com') 
+        if (auth()->check() && auth()->user()->role == 'owner') 
         {
             return redirect()->to('/admin');
         }
+        else if (auth()->check() && auth()->user()->role == 'cashier')
+        {
+            return redirect()->to('/cashier');
+        }
+
         return redirect()->intended();
     }
 

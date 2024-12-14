@@ -2,7 +2,12 @@
 
 namespace App\Livewire\Cashier;
 
+use App\Helpers\CartManagement;
 use App\Models\Carts;
+use App\Models\ProductDetail;
+use App\Models\SellingInvoice;
+use App\Models\SellingInvoiceDetail;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class LiveCart extends Component
@@ -40,43 +45,73 @@ class LiveCart extends Component
     }
 
 
-    public function decrementButton($cart) 
+    public function decrementButton($product) 
     {
-        if($cart['quantity'] > 1) 
-        {
-            Carts::where('id_cart', $cart['id_cart'])->update([
-                'quantity'=> $cart['quantity'] - 1,
-            ]);
-        }
-        else 
-        {
-            Carts::where('id_cart', $cart['id_cart'])->delete();
-        }
-
-        $this->cartItems = Carts::where('id_user', auth()->user()->id_user)->get();
+        $this->cartItems = CartManagement::decreaseQuantity(auth()->user()->id_user, $product['id_product']);
     }
 
-    public function incrementButton($cart, $detail_product) 
+    public function incrementButton($product) 
     {
-        if($cart['quantity'] > $detail_product) 
-        {
-            Carts::where('id_cart', $cart['id_cart'])->update([
-                'quantity'=> $detail_product,
-            ]);
-        }
-        else if($cart['quantity'] < $detail_product) 
-        {
-            Carts::where('id_cart', $cart['id_cart'])->update([
-                'quantity'=> $cart['quantity'] + 1,
-            ]);
-        }
-        
-        $this->cartItems = Carts::where('id_user', auth()->user()->id_user)->get();
+        $this->cartItems = CartManagement::increaseQuantity(auth()->user()->id_user, $product['id_product']);
     }
 
     public function checkout()
     {
-        
+        DB::beginTransaction();
+        try {
+            $cartItems = CartManagement::getCartItems(auth()->user()->id_user);
+            $totalPrice = CartManagement::calcTotalPriceAllCartItems($cartItems);
+            $id_selling_invoice = \Illuminate\Support\Str::uuid();
+
+            $lastInvoice = SellingInvoice::latest()->first();
+            $currInvoice = $lastInvoice ? (int)substr($lastInvoice->invoice_code, 4) + 1 : 1;
+            $invoiceCode = 'INV-' . str_pad($currInvoice, 5, '0', STR_PAD_LEFT);
+
+            SellingInvoice::create([
+                'id_selling_invoice' => $id_selling_invoice,
+                'invoice_code' => $invoiceCode,
+                'id_user' => auth()->user()->id_user,
+                'cashier_name' => auth()->user()->name,
+                'recipient_payment' => 'Offline',
+                'payment_status' => 'Pembayaran Berhasil',
+                'order_status' => 'Pengambilan Berhasil',
+                'order_date' => now(),              
+                'order_completed' => now(),                      
+            ]);
+
+            foreach ($cartItems as $cartItem) {
+                SellingInvoiceDetail::create([
+                    'id_selling_invoice' => $id_selling_invoice,
+                    'product_name' => $cartItem->product->product_name,
+                    'product_type' => $cartItem->product->productDescription->type,
+                    'quantity' => $cartItem->quantity,
+                    'product_sell_price' => $cartItem->product->product_sell_price,
+                ]);
+                
+                ProductDetail::where('id_product', $cartItem->id_product)
+                    ->where('stock', '>', 0)
+                    ->orderBy('exp_date')
+                    ->first()
+                    ->decrement('stock', $cartItem->quantity);
+            }
+            CartManagement::clearCartItems(auth()->user()->id_user);
+            
+            DB::commit();
+            return redirect()->back()->with('success', 'Pembayaran Berhasil');
+        } 
+        catch (\Exception $e) {
+            DB::rollBack();
+            
+            return redirect()->back()->with('error', 'Transaksi Gagal');
+            // throw $e;
+        }
+    }
+
+    public function clearCart()
+    {
+        $this->cartItems = CartManagement::clearCartItems(auth()->user()->id_user);
+
+        return redirect()->back();
     }
 
     public function render()

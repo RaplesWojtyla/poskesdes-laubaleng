@@ -53,7 +53,7 @@
                                             <i class="text-mediumGrey fa-solid fa-plus"></i>
                                         </button>
                                     @else
-                                        <button wire:click="incrementButton({{ $item }}, {{ $item->product->productDetail()->sum('stock') }})">
+                                        <button wire:click="incrementButton({{ $item }})">
                                             <i class="text-mainColor fa-solid fa-plus"></i>
                                         </button>
                                     @endif
@@ -88,7 +88,7 @@
             </div>
         </div>
 
-        <a href="{{-- route('bayar_offline') --}}" class="w-full py-2 bg-mainColor text-white font-bold text-lg rounded-md text-center">Bayar</a>
+        <a href="{{ route('cashier.checkout') }}" class="w-full py-2 bg-mainColor text-white font-bold text-lg rounded-md text-center">Bayar</a>
     </div>
     {{-- TOTAL END --}}
     

@@ -66,7 +66,7 @@
         <livewire:cashier.live-cart/> 
         {{-- LIVE CART END --}}
 
-        <form action="/cashier/hapuskeranjang" method="POST" class="w-screen h-screen opacity-0 absolute top-0 backdrop-blur-md z-50 hidden flex justify-center items-center transition duration-300 ease-in-out backdrop-brightness-50" id="cartAlertPopUp">
+        <form action="/cashier/clear-cart" method="POST" class="w-screen h-screen opacity-0 absolute top-0 backdrop-blur-md z-50 hidden flex justify-center items-center transition duration-300 ease-in-out backdrop-brightness-50" id="cartAlertPopUp">
             @csrf
             <input type="hidden" name="hapus" value="semua">    
             <div class="bg-white h-fit w-[30%] rounded-lg shadow-sm shadow-semiBlack py-10 px-8 flex flex-col gap-4 items-center text-center">
