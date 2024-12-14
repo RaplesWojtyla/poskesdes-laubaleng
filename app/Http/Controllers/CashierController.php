@@ -79,7 +79,6 @@ class CashierController extends Controller
             //     }
             // }
 
-            // Ubah status menjadi 'Berhasil'
             $order->order_status = 'Offline';
             $order->save();
 
@@ -99,11 +98,12 @@ class CashierController extends Controller
             DB::beginTransaction();
             $order = SellingInvoice::findOrFail($id_selling_invoice);
 
-            DB::select("CALL order_fail(?, ?, ?)", array($id_selling_invoice, auth()->user()->username, "Telah Melewati Batas Waktu Pengambilan, Tidak Akan Dilakukan Refund!!"));
+            DB::select("CALL order_failed(?, ?, ?)", array($id_selling_invoice, auth()->user()->name, "Telah Melewati Batas Waktu Pengambilan, Tidak Akan Dilakukan Refund!!"));
 
-            foreach ($order->sellingInvoiceDetail as $detail) {
+            foreach ($order->sellingInvoiceDetail as $detail) 
+            {
                 $id_product = Product::where('product_name', $detail->product_name)->first()->id_product;
-                // dd($id_product);
+
                 DB::select("CALL stock_back(?, ?)", array($detail->quantity, $id_product));
             }
             DB::commit();
@@ -113,72 +113,6 @@ class CashierController extends Controller
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $ex) {
             return redirect()->back()->with('error', 'Pesanan tidak ditemukan.');
         }
-    }
-
-    public function updateStatus(Request $request, $id_selling_invoice)
-    {
-        try {
-            $order = SellingInvoice::findOrFail($id_selling_invoice);
-
-
-            if ($request->status == 'terima') {
-                DB::select("CALL order_success(?, ?)", array($id_selling_invoice, auth()->user()->username));
-
-                return redirect()->back()->with('success', 'Pesanan berhasil diterima.');
-            } else if ($request->status == 'tolak') {
-                try {
-                    $request->validate([
-                        'alasanTolak' => ['required', 'string', 'min:10', 'regex:/^[a-zA-Z0-9 ]+$/', 'max:255']
-                    ]);
-                    DB::beginTransaction();
-
-                    DB::select("CALL order_fail(?, ?, ?)", array($id_selling_invoice, auth()->user()->username, $request->alasanTolak));
-
-                    foreach ($order->sellingInvoiceDetail as $detail) {
-                        $id_product = Product::where('product_name', $detail->product_name)->first()->id_product;
-                        // dd($id_product);
-                        DB::select("CALL stock_back(?, ?)", array($detail->quantity, $id_product));
-                    }
-
-                    DB::commit();
-                    return redirect()->back()->with('success', 'Pesanan telah ditolak!.');
-                } catch (\Exception $e) {
-                    // throw $e;
-                    return redirect()->back()->with('error', 'Terjadi Kesalahan Penolakan');
-                }
-            } else if ($request->status == 'refund') {
-                try {
-                    DB::beginTransaction();
-                    $request->validate([
-                        'alasanRefund' => ['required', 'string', 'min:10', 'regex:/^[a-zA-Z0-9 ]+$/', 'max:255']
-                    ]);
-                    DB::select("CALL order_refund(?, ?, ?)", array($id_selling_invoice, auth()->user()->username, $request->alasanRefund));
-
-
-                    foreach ($order->sellingInvoiceDetail as $detail) {
-                        $id_product = Product::where('product_name', $detail->product_name)->first()->id_product;
-                        // dd($id_product);
-                        DB::select("CALL stock_back(?, ?)", array($detail->quantity, $id_product));
-                    }
-
-                    DB::commit();
-                    return redirect()->back()->with('success', 'Pesanan akan diproses untuk pengembalian.');
-                } catch (\Exception $e) {
-                    // throw $e;
-                    return redirect()->back()->with('error', 'Terjadi Kesalahan Refund');
-                }
-            }
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $ex) {
-            return redirect()->back()->with('error', 'Pesanan tidak ditemukan.');
-        }
-    }
-    public function informasi_pembayaran(Request $request)
-    {
-        return view('kasir.show-image', [
-            'title' => 'Bukti Pembayaran',
-            'root' => 'bukti-pembayaran',
-            'file' => $request->img,
-        ]);
     }
 
     public function resep_dokter(Request $request)

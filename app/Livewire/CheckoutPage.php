@@ -111,7 +111,7 @@ class CheckoutPage extends Component
             SellingInvoice::where('id_selling_invoice', $id_selling_invoice)
                 ->update(['snap_token' => $snapToken]);
 
-            // session()->flash('snap_token', $snapToken);
+            
             CartManagement::clearCartItems(auth()->user()->id_user);
             
             DB::commit();
