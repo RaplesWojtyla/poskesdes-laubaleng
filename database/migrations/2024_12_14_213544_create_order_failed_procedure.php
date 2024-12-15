@@ -21,8 +21,14 @@ return new class extends Migration
                 IN `comments` LONGTEXT
             )
             BEGIN
-                UPDATE selling_invoice SET order_status = 'Pengambilan Gagal', cashier_name = cashierName, reject_comment = comments
-                WHERE id_selling_invoice = invoiceID; 
+                UPDATE 
+                    selling_invoice 
+                SET 
+                    order_status = 'Pengambilan Gagal', 
+                    cashier_name = cashierName, 
+                    reject_reason = comments
+                WHERE 
+                    id_selling_invoice COLLATE utf8mb4_unicode_ci = invoiceID COLLATE utf8mb4_unicode_ci; 
             END;
         ";
 

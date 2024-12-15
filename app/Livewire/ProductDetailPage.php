@@ -63,13 +63,20 @@ class ProductDetailPage extends Component
     {
         $productDetail = ProductDetail::where('id_product', $this->id_product)
                             ->where('stock', '>', 0)
-                            ->orderBy('exp_date');
+                            ->orderBy('exp_date')->first();
         // $piw = DB::table('vw_products')->where('category', 'Demam')->get();
         // dd($piw);
 
+        if ($productDetail == null) 
+        {
+            $productDetail = ProductDetail::where('id_product', $this->id_product)
+                ->orderBy('exp_date')
+                ->first();
+        }
+        // dd($productDetail->first()); 
+
         return view('livewire.product-detail-page', [
-            'productDetail' => $productDetail->first(),
-            'totalStock' => $productDetail->sum('stock')
+            'productDetail' => $productDetail
         ]);
     }
 

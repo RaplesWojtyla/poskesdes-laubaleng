@@ -66,24 +66,24 @@ class CashierController extends Controller
         try {
             $order = SellingInvoice::findOrFail($id_selling_invoice);
 
-            // foreach ($order->sellingInvoiceDetail as $produk) 
-            // {
-            //     foreach (Product::where('product_name', $produk->product_name)->first()->productDetail as $detail) 
-            //     {
-            //         if ($detail->product_stock == 0) 
-            //         {
-            //             if (Product::where('product_name', $produk->product_name)->first()->productDetail()->count() > 1) {
-            //                 $detail->delete();
-            //             }
-            //         }
-            //     }
-            // }
+            foreach ($order->sellingInvoiceDetail as $produk) 
+            {
+                foreach (Product::where('product_name', $produk->product_name)->first()->productDetail as $detail) 
+                {
+                    if ($detail->product_stock == 0) 
+                    {
+                        if (Product::where('product_name', $produk->product_name)->first()->productDetail()->count() > 1) {
+                            $detail->delete();
+                        }
+                    }
+                }
+            }
 
             $order->order_status = 'Pengambilan Berhasil';
             $order->save();
 
             DB::commit();
-            // Redirect ke halaman atau tindakan yang sesuai
+
             return redirect()->back()->with('success', 'Status berhasil diperbarui.');
         } catch (\Exception $e) {
             DB::rollBack();
@@ -94,12 +94,12 @@ class CashierController extends Controller
 
     public function failOrder($id_selling_invoice)
     {
+        DB::beginTransaction();
         try {
-            DB::beginTransaction();
             $order = SellingInvoice::findOrFail($id_selling_invoice);
 
             DB::select("CALL order_failed(?, ?, ?)", array($id_selling_invoice, auth()->user()->name, "Telah Melewati Batas Waktu Pengambilan, Tidak Akan Dilakukan Refund!!"));
-
+            
             foreach ($order->sellingInvoiceDetail as $detail) 
             {
                 $id_product = Product::where('product_name', $detail->product_name)->first()->id_product;
@@ -108,7 +108,6 @@ class CashierController extends Controller
             }
             DB::commit();
 
-            // Redirect ke halaman atau tindakan yang sesuai
             return redirect()->back()->with('success', 'Status berhasil diperbarui.');
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $ex) {
             return redirect()->back()->with('error', 'Pesanan tidak ditemukan.');
@@ -117,7 +116,7 @@ class CashierController extends Controller
 
     public function resep_dokter(Request $request)
     {
-        return view('kasir.show-image', [
+        return view('cashier.show-image', [
             'title' => 'Resep Dokter',
             'root' => 'resep-dokter',
             'file' => $request->img,

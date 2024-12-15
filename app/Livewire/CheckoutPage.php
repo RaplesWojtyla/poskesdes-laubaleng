@@ -97,6 +97,7 @@ class CheckoutPage extends Component
                 ProductDetail::where('id_product', $cartItem->id_product)
                     ->where('stock', '>', 0)
                     ->orderBy('exp_date')
+                    ->first()
                     ->decrement('stock', $cartItem->quantity);
 
                 $params['item_details'][] = [

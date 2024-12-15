@@ -17,13 +17,13 @@ return new class extends Migration
 
             CREATE PROCEDURE stock_back(
                 IN quantity INT, 
-                IN id_product CHAR(36)
+                IN id_product_param CHAR(36)
             )
             BEGIN 
                 UPDATE products_detail
                 SET stock = stock + quantity
-                WHERE id_product = id_product
-                ORDER BY product_expired LIMIT 1;
+                WHERE id_product COLLATE utf8mb4_unicode_ci = id_product_param COLLATE utf8mb4_unicode_ci
+                ORDER BY exp_date LIMIT 1;
             END;
         ";
 

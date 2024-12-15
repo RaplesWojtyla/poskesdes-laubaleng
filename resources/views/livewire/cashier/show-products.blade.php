@@ -106,9 +106,11 @@
                     </span> 
                     / 
                 </p>
-                <p> {{ $item->productDescription->unit->unit }} </p>
+                <p> 
+                    {{ $item->productDescription->unit->unit }} 
+                </p>
                 <p class="font-semibold leading-tight break-all">
-                    Stok : {{ $item->productDetail->sum('stock') }}
+                    Stok : {{ $item->productDetail->where('stock', '>', 0)->sortBy('exp_date')->first()->stock }}
                 </p>
             </div>
             @auth

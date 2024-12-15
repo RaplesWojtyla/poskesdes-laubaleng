@@ -76,6 +76,7 @@
                                 // Mendapatkan waktu sekarang dan order_date + 3 hari
                                     $now = now();
                                     $deadline = $orderDate->addDays(3);
+                                    // $deadline = $orderDate->addMinutes(1);
                                     // @dd($now->diffAsCarbonInterval($deadline));
                             
                                 // Menghitung selisih waktu dalam bentuk CarbonInterval
@@ -87,7 +88,7 @@
                                     $minutes = $difference->format('%i');
                                 @endphp
                                 @if($now->gt($deadline))
-                                    <p>Masa Pengambilan Telah Lewat</p>
+                                    <p><span class="bg-red-500 py-1 px-3 rounded text-white shadow">Masa Pengambilan Telah Lewat</span></p>
                                 @else
                                     <p>Sisa {{ $days }} hari, {{ $hours }} jam, {{ $minutes }} menit</p>
                                 @endif
