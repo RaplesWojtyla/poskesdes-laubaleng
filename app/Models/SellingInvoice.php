@@ -32,6 +32,8 @@ class SellingInvoice extends Model
         'snap_token'
     ];
 
+    protected $appends = ['total_invoice_price'];
+
     protected static function boot()
     {
         parent::boot();
@@ -53,6 +55,12 @@ class SellingInvoice extends Model
     }
 
     public function getTotalInvoicePrice() {
+        return $this->sellingInvoiceDetail->sum(function($detail) {
+            return $detail->getTotalPrice();
+        });
+    }
+    
+    public function getTotalInvoicePriceAttribute() {
         return $this->sellingInvoiceDetail->sum(function($detail) {
             return $detail->getTotalPrice();
         });

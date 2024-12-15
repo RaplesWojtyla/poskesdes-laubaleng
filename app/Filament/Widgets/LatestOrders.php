@@ -26,11 +26,6 @@ class LatestOrders extends BaseWidget
                     ->label('Kode Invoice')
                     ->searchable()
                     ->sortable(),
-
-                TextColumn::make('recipient_name')
-                    ->label('Nama Penerima')
-                    ->sortable()
-                    ->searchable(),
                 
                 TextColumn::make('order_date')
                     ->label('Tanggal Transaksi')
@@ -38,7 +33,7 @@ class LatestOrders extends BaseWidget
                     ->sortable(),
                 
                     TextColumn::make('payment_status')
-                    ->label('Status Transaksi')
+                    ->label('Status Pembayaran')
                     ->badge()
                     ->color(fn (string $state): string => match($state) {
                         'Pembayaran Berhasil' => 'success',
@@ -52,13 +47,17 @@ class LatestOrders extends BaseWidget
                         ->badge()
                         ->color(fn (string $state): string => match($state) {
                             'Pengambilan Berhasil' => 'success',
-                            'Menunggu Pengambilan' => 'warning',
+                            'Menunggu Pengambilan' => 'info',
                             'Pengambilan Gagal' => 'danger',
                             'Dibatalkan' => 'danger',
-                            'Refund' => 'info',
+                            'Offline' => 'success',
                         })
                         ->searchable()
-                        ->sortable()
+                        ->sortable(),
+
+                    TextColumn::make('total_invoice_price')
+                        ->label('Total')
+                        ->sortable(),
             ])
             ->actions([
                 Action::make('Detail')

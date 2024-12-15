@@ -12,10 +12,17 @@ class OrderStats extends BaseWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('Obat', Product::query()->count()),
-            Stat::make('Transaksi Berhasil', SellingInvoice::query()->where('order_status', 'Pengambilan Berhasil')->count()),
+            Stat::make('Transaksi Online', SellingInvoice::query()->where('order_status', 'Pengambilan Berhasil')->count()),
+            Stat::make('Transaksi Offline', SellingInvoice::query()->where('order_status', 'Offline')->count()),
             Stat::make('Menunggu Pengambilan', SellingInvoice::query()->where('order_status', 'Menunggu Pengambilan')->count()),
-            Stat::make('Pengembalian', SellingInvoice::query()->where('payment_status', 'Refund')->count()),
+            // Stat::make('Pengambilan Gagal', SellingInvoice::query()->where('order_status', 'Pengambilan Gagal')->count()),
+            Stat::make('Total Pemasukan', 'Rp ' . number_format(SellingInvoice::query()
+                ->where('payment_status', 'Pembayaran Berhasil')
+                ->get()
+                ->sum(function($invoice) {
+                    return $invoice->getTotalInvoicePrice();
+                }), 0, ',', '.')
+            ),
         ];
     }
 }

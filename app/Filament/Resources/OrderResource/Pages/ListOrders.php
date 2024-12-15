@@ -37,7 +37,7 @@ class ListOrders extends ListRecords
             'Menunggu Pengambilan' => Tab::make()->query(fn ($query) => $query->where('order_status', 'Menunggu Pengambilan')), 
             'Pengambilan Gagal' => Tab::make()->query(fn ($query) => $query->where('order_status', 'Pengambilan Gagal')), 
             'Dibatalkan' => Tab::make()->query(fn ($query) => $query->where('order_status', 'Dibatalkan')), 
-            'Refund' => Tab::make()->query(fn ($query) => $query->where('order_status', 'Refund')), 
+            'Offline' => Tab::make()->query(fn ($query) => $query->where('order_status', 'Offline')), 
         ];
     }
 }

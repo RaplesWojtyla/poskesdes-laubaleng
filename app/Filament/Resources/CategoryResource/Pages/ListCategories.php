@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\CategoryResource\Pages;
 
 use App\Filament\Resources\CategoryResource;
+use App\Filament\Resources\CategoryResource\Widgets\CategoryStats;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
@@ -14,6 +15,13 @@ class ListCategories extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+        ];
+    }
+    
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            CategoryStats::class
         ];
     }
 }

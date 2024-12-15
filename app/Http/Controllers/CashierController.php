@@ -79,7 +79,7 @@ class CashierController extends Controller
             //     }
             // }
 
-            $order->order_status = 'Offline';
+            $order->order_status = 'Pengambilan Berhasil';
             $order->save();
 
             DB::commit();

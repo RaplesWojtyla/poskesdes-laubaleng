@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\UnitResource\Pages;
 
 use App\Filament\Resources\UnitResource;
+use App\Filament\Resources\UnitResource\Widgets\UnitStats;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
@@ -14,6 +15,13 @@ class ListUnits extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+        ];
+    }
+    
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            UnitStats::class
         ];
     }
 }

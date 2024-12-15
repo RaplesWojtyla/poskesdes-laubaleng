@@ -40,11 +40,6 @@ class OrderResource extends Resource
                 TextColumn::make('invoice_code')
                     ->label('Kode Invoice')
                     ->sortable(),
-
-                TextColumn::make('recipient_name')
-                    ->label('Nama Penerima')
-                    ->sortable()
-                    ->searchable(),
                 
                 TextColumn::make('order_date')
                     ->label('Tanggal Transaksi')
@@ -52,7 +47,7 @@ class OrderResource extends Resource
                     ->sortable(),
                 
                 TextColumn::make('payment_status')
-                    ->label('Status Transaksi')
+                    ->label('Status Pembayaran')
                     ->badge()
                     ->color(fn (string $state): string => match($state) {
                         'Pembayaran Berhasil' => 'success',
@@ -68,10 +63,14 @@ class OrderResource extends Resource
                         'Menunggu Pengambilan' => 'Menunggu Pengambilan',
                         'Pengambilan Gagal' => 'Pengambilan Gagal',
                         'Dibatalkan' => 'Dibatalkan',
-                        'Refund' => 'Refund',
+                        'Offline' => 'Offline',
                     ])
                     ->searchable()
-                    ->sortable()
+                    ->sortable(),
+
+                TextColumn::make('total_invoice_price')
+                    ->label('Total')
+                    ->sortable(),
             ])
             ->filters([
                 //

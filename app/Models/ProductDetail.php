@@ -26,4 +26,8 @@ class ProductDetail extends Model
     public function product() {
         return $this->belongsTo(Product::class, 'id_product');
     }
+
+    public static function getTotalStock() {
+        return self::sum('stock');
+    }
 }
