@@ -60,7 +60,7 @@ class LiveCart extends Component
         DB::beginTransaction();
         try {
             $cartItems = CartManagement::getCartItems(auth()->user()->id_user);
-            $totalPrice = CartManagement::calcTotalPriceAllCartItems($cartItems);
+            // $totalPrice = CartManagement::calcTotalPriceAllCartItems($cartItems);
             $id_selling_invoice = \Illuminate\Support\Str::uuid();
 
             $lastInvoice = SellingInvoice::latest()->first();
@@ -90,6 +90,7 @@ class LiveCart extends Component
                 
                 ProductDetail::where('id_product', $cartItem->id_product)
                     ->where('stock', '>', 0)
+                    ->where('exp_date', '>', now())
                     ->orderBy('exp_date')
                     ->first()
                     ->decrement('stock', $cartItem->quantity);

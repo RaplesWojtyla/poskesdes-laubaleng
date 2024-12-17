@@ -19,7 +19,6 @@ class LatestOrders extends BaseWidget
     {
         return $table
             ->query(OrderResource::getEloquentQuery()
-            ->where('payment_status', 'Pembayaran Berhasil')
             ->whereNotNull('order_completed'))
             ->defaultPaginationPageOption(5)
             ->defaultSort('order_completed', 'desc')

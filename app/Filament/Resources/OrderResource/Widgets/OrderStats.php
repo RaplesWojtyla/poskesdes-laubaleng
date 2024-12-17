@@ -14,7 +14,10 @@ class OrderStats extends BaseWidget
         return [
             Stat::make('Transaksi Online', SellingInvoice::query()->where('order_status', 'Pengambilan Berhasil')->count()),
             Stat::make('Transaksi Offline', SellingInvoice::query()->where('order_status', 'Offline')->count()),
-            Stat::make('Menunggu Pengambilan', SellingInvoice::query()->where('order_status', 'Menunggu Pengambilan')->count()),
+            Stat::make('Transaksi Gagal', SellingInvoice::query()
+                ->where('order_status', 'Pengambilan Gagal')
+                ->orWhere('order_status', 'Dibatalkan')
+                ->count()),
             // Stat::make('Pengambilan Gagal', SellingInvoice::query()->where('order_status', 'Pengambilan Gagal')->count()),
             Stat::make('Total Pemasukan', 'Rp ' . number_format(SellingInvoice::query()
                 ->where('payment_status', 'Pembayaran Berhasil')

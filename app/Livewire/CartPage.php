@@ -10,7 +10,7 @@ use App\Models\Carts;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Title;
 
-#[Title('Keranjang - Poskesdes Laubaleng')]
+#[Title('Keranjang - Poskesdes Lau Baleng')]
 class CartPage extends Component
 {
     use LivewireAlert;

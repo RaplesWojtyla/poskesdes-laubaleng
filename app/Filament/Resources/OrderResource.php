@@ -36,6 +36,7 @@ class OrderResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('order_date', 'desc')
             ->columns([
                 TextColumn::make('invoice_code')
                     ->label('Kode Invoice')

@@ -12,8 +12,9 @@ class ProductStats extends BaseWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('Obat', Product::query()->count()),
-            Stat::make('Total Stock Obat', ProductDetail::getTotalStock())
+            Stat::make('Jumlah Obat', Product::query()->count()),
+            Stat::make('Stock Obat Aktif', ProductDetail::getTotalStock()),
+            Stat::make('Stock Obat Kadaluarsa', ProductDetail::getTotalExpiredProductStock())
         ];
     }
 }

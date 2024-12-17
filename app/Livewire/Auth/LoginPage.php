@@ -5,7 +5,7 @@ namespace App\Livewire\Auth;
 use Livewire\Component;
 use Livewire\Attributes\Title;
 
-#[Title('Login - Poskesdes Laubaleng')]
+#[Title('Login - Poskesdes Lau Baleng')]
 class LoginPage extends Component
 {
     public $email;

@@ -10,7 +10,7 @@ use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Title('Product Detail - Poskesdes Laubaleng')]
+#[Title('Product Detail - Poskesdes Lau Baleng')]
 class ProductDetailPage extends Component
 {
     use LivewireAlert;
@@ -28,6 +28,7 @@ class ProductDetailPage extends Component
     {
         $productDetail = ProductDetail::where('id_product', $this->id_product)
             ->where('stock', '>', 0)
+            ->where('exp_date', '>', now())
             ->orderBy('exp_date')->first();
 
         ++$this->quantity;
@@ -63,9 +64,8 @@ class ProductDetailPage extends Component
     {
         $productDetail = ProductDetail::where('id_product', $this->id_product)
                             ->where('stock', '>', 0)
+                            ->where('exp_date', '>', now())
                             ->orderBy('exp_date')->first();
-        // $piw = DB::table('vw_products')->where('category', 'Demam')->get();
-        // dd($piw);
 
         if ($productDetail == null) 
         {
@@ -73,7 +73,6 @@ class ProductDetailPage extends Component
                 ->orderBy('exp_date')
                 ->first();
         }
-        // dd($productDetail->first()); 
 
         return view('livewire.product-detail-page', [
             'productDetail' => $productDetail

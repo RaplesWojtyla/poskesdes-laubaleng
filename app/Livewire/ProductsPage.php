@@ -12,7 +12,7 @@ use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-#[Title('Products - Poskesdes Laubaleng')]
+#[Title('Products - Poskesdes Lau Baleng')]
 class ProductsPage extends Component
 {
     use WithPagination, LivewireAlert;
@@ -58,7 +58,8 @@ class ProductsPage extends Component
         $products = Product::query()
             ->where('status', 'aktif')
             ->whereHas('productDetail', function($query) {
-                $query->where('stock', '>', 0);
+                $query->where('stock', '>', 0)
+                      ->where('exp_date', '>', now());
             });
         
         // Filtering by categories

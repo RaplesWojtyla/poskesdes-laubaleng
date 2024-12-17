@@ -22,7 +22,12 @@ class CartManagement
         } 
 		else
 		{
-            $product = Product::find($id_product);
+            $product = Product::find($id_product)->where('status', 'aktif')
+                        ->whereHas('productDetail', function($query) {
+                            $query->where('stock', '>', 0)
+                                  ->where('exp_date', '>', now())
+                                  ->orderBy('exp_date');
+                        })->first();
 
             if ($product) 
 			{
@@ -42,6 +47,7 @@ class CartManagement
 	{
         $productDetail = ProductDetail::where('id_product', $id_product)
             ->where('stock', '>', 0)
+            ->where('exp_date', '>', now())
             ->orderBy('exp_date')->first();
 
 		$cartItem = Carts::where('id_user', $id_user)

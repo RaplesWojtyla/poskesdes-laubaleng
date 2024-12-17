@@ -24,7 +24,6 @@ class PaymentSuccessPage extends Component
             $transaction->update([
                 'payment_status' => 'Pembayaran Berhasil',
                 'order_status' => 'Menunggu Pengambilan',
-                'order_completed' => now(),
             ]);
 
             foreach($transaction->first()->sellingInvoiceDetail as $detail)

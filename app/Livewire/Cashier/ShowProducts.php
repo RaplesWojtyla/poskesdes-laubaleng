@@ -75,7 +75,9 @@ class ShowProducts extends Component
     public function getFilteredProducts()
     {
         $filters = Product::query()->whereHas('productDetail', function ($query) {
-            $query->where('stock', '>', 0)->orderBy('exp_date');
+            $query->where('stock', '>', 0)
+                ->where('exp_date', '>', now())
+                ->orderBy('exp_date');
         });
 
         foreach ($this->selectedFilters as $filterKey => $value) {

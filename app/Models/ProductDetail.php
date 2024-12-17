@@ -28,6 +28,10 @@ class ProductDetail extends Model
     }
 
     public static function getTotalStock() {
-        return self::sum('stock');
+        return self::where('exp_date', '>', now())->sum('stock');
+    }
+    
+    public static function getTotalExpiredProductStock() {
+        return self::where('exp_date', '<=', now())->sum('stock');
     }
 }
