@@ -14,17 +14,25 @@ return new class extends Migration
     {
         $sql = "
             DROP EVENT IF EXISTS check_product_expired_event;
-
+            
             CREATE EVENT check_product_expired_event
             ON SCHEDULE EVERY 1 DAY
             DO
                 UPDATE products p
-                JOIN products_detail pd ON p.id_product = pd.id_product
+                JOIN (
+                    SELECT
+                        pd.id_product,
+                        MAX(pd.exp_date)
+                    FROM
+                        products_detail pd
+                    GROUP BY
+                        pd.id_product
+                ) sub ON p.id_product = sub.id_product
                 SET p.status = 'Expired'
-                WHERE pd.exp_date <= NOW() AND p.status = 'active';
-        ";  
+                WHERE sub.exp_date <= NOW();
+        ";
 
-        // DB::statement($sql);
+        DB::unprepared($sql);
     }
 
     /**
@@ -32,6 +40,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('check_product_expired_event');
+        // Schema::dropIfExists('check_product_expired_event');
     }
 };

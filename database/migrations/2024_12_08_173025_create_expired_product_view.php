@@ -16,8 +16,8 @@ return new class extends Migration
             DROP VIEW IF EXISTS vw_expired_product;
 
             CREATE VIEW vw_expired_product AS
-            SELECT 
-                p.id_product,
+            SELECT
+                pd.id_product_detail,
                 p.product_name,
                 pd.stock,
                 pd.exp_date,
