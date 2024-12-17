@@ -94,11 +94,11 @@ class CheckoutPage extends Component
                     'product_sell_price' => $cartItem->product->product_sell_price,
                 ]);
 
-                ProductDetail::where('id_product', $cartItem->id_product)
-                    ->where('stock', '>', 0)
-                    ->orderBy('exp_date')
-                    ->first()
-                    ->decrement('stock', $cartItem->quantity);
+                // ProductDetail::where('id_product', $cartItem->id_product)
+                //     ->where('stock', '>', 0)
+                //     ->orderBy('exp_date')
+                //     ->first()
+                //     ->decrement('stock', $cartItem->quantity);
 
                 $params['item_details'][] = [
                     'id' => $cartItem->id_product,

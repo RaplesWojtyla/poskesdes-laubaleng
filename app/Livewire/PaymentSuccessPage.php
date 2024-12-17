@@ -26,6 +26,15 @@ class PaymentSuccessPage extends Component
                 'order_status' => 'Menunggu Pengambilan',
                 'order_completed' => now(),
             ]);
+
+            foreach($transaction->first()->sellingInvoiceDetail as $detail)
+            {
+                $detail->product->productDetail
+                    ->where('stock', '>', 0)
+                    ->sortBy('exp_date')
+                    ->first()
+                    ->decrement('stock', $detail->quantity);
+            }
         }
 
         return view('livewire.payment-success-page', [

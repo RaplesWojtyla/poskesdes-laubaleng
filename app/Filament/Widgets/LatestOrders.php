@@ -18,17 +18,19 @@ class LatestOrders extends BaseWidget
     public function table(Table $table): Table
     {
         return $table
-            ->query(OrderResource::getEloquentQuery())
+            ->query(OrderResource::getEloquentQuery()
+            ->where('payment_status', 'Pembayaran Berhasil')
+            ->whereNotNull('order_completed'))
             ->defaultPaginationPageOption(5)
-            ->defaultSort('order_date', 'desc')
+            ->defaultSort('order_completed', 'desc')
             ->columns([
                 TextColumn::make('invoice_code')
                     ->label('Kode Invoice')
                     ->searchable()
                     ->sortable(),
                 
-                TextColumn::make('order_date')
-                    ->label('Tanggal Transaksi')
+                TextColumn::make('order_completed')
+                    ->label('Transaksi Selesai')
                     ->date('d F Y')
                     ->sortable(),
                 

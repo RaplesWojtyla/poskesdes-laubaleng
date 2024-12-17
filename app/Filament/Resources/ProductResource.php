@@ -34,6 +34,9 @@ class ProductResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-squares-2x2';
     protected static ?string $recordTitleAttribute = 'product_name';
+    // protected static ?string $title = 'Obat';
+    protected static ?string $pluralLabel = 'Daftar Obat';
+    protected static ?string $navigationLabel = 'Daftar Obat';
     protected static ?int $navigationSort = 6;
 
     public static function form(Form $form): Form

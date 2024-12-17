@@ -61,7 +61,7 @@
                             <td>{{ $pendingOrder->recipient_name }}</td>
                             <td>
 								<span class="bg-blue-500 py-1 px-3 rounded text-white shadow uppercase">
-                                    {{ $pendingOrder->recipient_payment == 'other_qris' ? 'qris' : $pendingOrder->recipient_payment }}
+                                    {{ $pendingOrder->recipient_payment == 'other_qris' ? 'qris' : str_replace('_', ' ', $pendingOrder->recipient_payment) }}
                                 </span>
                             <td>
 								<span class="bg-green-500 py-1 px-3 rounded text-white shadow">
@@ -76,8 +76,6 @@
                                 // Mendapatkan waktu sekarang dan order_date + 3 hari
                                     $now = now();
                                     $deadline = $orderDate->addDays(3);
-                                    // $deadline = $orderDate->addMinutes(1);
-                                    // @dd($now->diffAsCarbonInterval($deadline));
                             
                                 // Menghitung selisih waktu dalam bentuk CarbonInterval
                                     $difference = $now->diffAsCarbonInterval($deadline);

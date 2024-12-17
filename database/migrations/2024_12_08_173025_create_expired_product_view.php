@@ -20,6 +20,7 @@ return new class extends Migration
                 p.id_product,
                 p.product_name,
                 pd.stock,
+                pd.exp_date,
                 pdesc.product_img
             FROM 
                 products p

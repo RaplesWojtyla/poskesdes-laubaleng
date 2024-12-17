@@ -13,6 +13,8 @@ return new class extends Migration
     public function up(): void
     {
         $sql = "
+            DROP FUNCTION IF EXISTS get_total_invoice_price;
+            
             CREATE FUNCTION get_total_invoice_price(id_selling_invoice CHAR(36))
             RETURNS DECIMAL(15, 2)
             DETERMINISTIC
@@ -21,8 +23,8 @@ return new class extends Migration
 
                 SELECT SUM(total_price(quantity, product_sell_price))
                 INTO total_price
-                FROM selling_invoice_detail
-                WHERE id_selling_invoice = id_selling_invoice;
+                FROM selling_invoice_detail AS sid
+                WHERE sid.id_selling_invoice COLLATE utf8mb4_unicode_ci  = id_selling_invoice COLLATE utf8mb4_unicode_ci;
 
                 RETURN IFNULL(total_price, 0);
             END;

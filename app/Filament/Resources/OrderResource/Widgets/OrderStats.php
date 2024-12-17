@@ -18,6 +18,7 @@ class OrderStats extends BaseWidget
             // Stat::make('Pengambilan Gagal', SellingInvoice::query()->where('order_status', 'Pengambilan Gagal')->count()),
             Stat::make('Total Pemasukan', 'Rp ' . number_format(SellingInvoice::query()
                 ->where('payment_status', 'Pembayaran Berhasil')
+                ->whereNotNull('order_completed')
                 ->get()
                 ->sum(function($invoice) {
                     return $invoice->getTotalInvoicePrice();

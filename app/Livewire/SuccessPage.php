@@ -12,10 +12,7 @@ class SuccessPage extends Component
     public function render(Request $request)
     {
         $transaction = SellingInvoice::where('invoice_code', $request->order_id)->first();
-
-        $totalPrice = $transaction->sellingInvoiceDetail->sum(function ($item) {
-            return $item->product_sell_price * $item->quantity;
-        });
+        $totalPrice = $transaction->getTotalInvoicePrice();
 
         return view('livewire.success-page', [
             'transaction' => $transaction,

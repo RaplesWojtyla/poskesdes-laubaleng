@@ -38,7 +38,7 @@
                         <p class="mb-2 text-sm leading-5 text-gray-600 dark:text-gray-400 ">
                             Metode Pembayaran: </p>
                         <p class="text-base font-semibold leading-4 uppercase text-gray-800 dark:text-gray-400 ">
-                            {{ $transaction->recipient_payment == 'other_qris' ? 'qris' : $transaction->recipient_payment }} </p>
+                            {{ $transaction->recipient_payment == 'other_qris' ? 'qris' : str_replace('_', ' ', $transaction->recipient_payment) }} </p>
                     </div>
                 </div>
                 <div class="px-4 mb-10">
