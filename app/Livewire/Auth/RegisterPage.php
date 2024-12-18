@@ -4,6 +4,7 @@ namespace App\Livewire\Auth;
 
 use App\Models\Customer;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -35,6 +36,8 @@ class RegisterPage extends Component
             'role' => 'user'
         ]);
 
+        event(new Registered($user));
+
         Customer::create([
             'id_user' => $id_user,
             'email' => $this->email,
@@ -44,7 +47,8 @@ class RegisterPage extends Component
         auth()->login($user);
 
         // return redirect()->to('/dashboard');
-        return redirect()->intended();
+        // return redirect()->intended();
+        return redirect()->to('/email/verify');
 
     }
 

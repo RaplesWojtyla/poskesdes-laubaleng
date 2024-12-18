@@ -19,6 +19,8 @@ use App\Livewire\ProductsPage;
 use App\Livewire\SuccessPage;
 use App\Providers\Filament\AdminPanelProvider;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +32,23 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+ 
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+ 
+    return redirect('/');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+ 
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+ 
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
 
 Route::get('/', HomePage::class);
 Route::get('/categories', CategoriesPage::class);
@@ -44,19 +63,20 @@ Route::middleware('guest')->group(function () {
 });
 Route::get('/cart', action: CartPage::class);
 
-Route::middleware(['auth', 'hasRole:user'])->group(function () {
-	// Route::get('/', HomePage::class);
+Route::middleware(['auth', 'verified', 'hasRole:user'])->group(function () {
+	Route::get('/poskesdes', HomePage::class);
 	Route::get('/checkout', action: CheckoutPage::class);
 	Route::get('/orders', action: MyOrderPage::class);
 	Route::get('/my-orders/{id_selling_invoice}', action: MyOrderDetailPage::class);	
 	Route::get('/success', SuccessPage::class);
 	Route::get('/payment-success', PaymentSuccessPage::class);
 	Route::get('/cancel', CancelPage::class);
-	Route::get('/logout', function () {
-		auth()->logout();
-		return redirect()->to('/');
-	});
 });
+
+Route::get('/customer/logout', function () {
+    auth()->logout();
+    return redirect()->to('/');
+})->name('customer.logout');
 
 Route::middleware(['auth', 'hasRole:cashier'])->group(function () {
 	Route::get('/cashier', function()
@@ -71,10 +91,10 @@ Route::middleware(['auth', 'hasRole:cashier'])->group(function () {
 	Route::get('/cashier/order-completed/{id_selling_invoice}', [CashierController::class, 'successOrder'])->name('successOrder');
 	Route::get('/cashier/history-transaction', [CashierController::class, 'historyTransaction'])->name('cashier.historyTransaction');
 	
-	Route::post('/logout', function () {
+	Route::post('/cashier/logout', function () {
 		auth()->logout();
 		return redirect()->to('/');
-	});
+	})->name('cashier.logout');
 });
 
 // Route::middleware(['auth', 'owner'])->group(function () {
