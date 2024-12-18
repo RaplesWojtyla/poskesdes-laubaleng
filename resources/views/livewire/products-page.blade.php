@@ -8,75 +8,54 @@
             {{-- json_encode($selected_categories) --}}
             <div class="w-16 pb-2 mb-6 border-b border-rose-600 dark:border-gray-400"></div>
             <ul>
+              <li class="mb-4" wire:key="semua">
+                <label for="all" class="flex items-center dark:text-gray-400 ">
+                  <input id="all" type="radio" wire:model.live="selected_categories" class="w-4 h-4 mr-2" value="">
+                  <span class="text-lg">All</span>
+                </label>
+              </li>
               @foreach ($categories as $category)
               <li class="mb-4" wire:key="{{ $category->id_category }}">
                 <label for="{{ $category->category }}" class="flex items-center dark:text-gray-400 ">
-                  <input id="{{ $category->category }}" type="checkbox" wire:model.live="selected_categories" class="w-4 h-4 mr-2" value="{{ $category->id_category }}">
+                  <input id="{{ $category->category }}" type="radio" wire:model.live="selected_categories" class="w-4 h-4 mr-2" value="{{ $category->id_category }}">
                   <span class="text-lg">{{ $category->category }}</span>
                 </label>
               </li>
               @endforeach
             </ul>
-
           </div>
-          {{--
-          <div class="p-4 mb-5 bg-white border border-gray-200 dark:bg-gray-900 dark:border-gray-900">
-            <h2 class="text-2xl font-bold dark:text-gray-400">Brand</h2>
-            <div class="w-16 pb-2 mb-6 border-b border-rose-600 dark:border-gray-400"></div>
-            <ul>
-              <li class="mb-4">
-                <label for="" class="flex items-center dark:text-gray-300">
-                  <input type="checkbox" class="w-4 h-4 mr-2">
-                  <span class="text-lg dark:text-gray-400">Apple</span>
-                </label>
-              </li>
-              <li class="mb-4">
-                <label for="" class="flex items-center dark:text-gray-300">
-                  <input type="checkbox" class="w-4 h-4 mr-2">
-                  <span class="text-lg dark:text-gray-400">Samsung</span>
-                </label>
-              </li>
-              <li class="mb-4">
-                <label for="" class="flex items-center dark:text-gray-300">
-                  <input type="checkbox" class="w-4 h-4 mr-2">
-                  <span class="text-lg dark:text-gray-400">Nothing</span>
-                </label>
-              </li>
-              <li class="mb-4">
-                <label for="" class="flex items-center dark:text-gray-300">
-                  <input type="checkbox" class="w-4 h-4 mr-2">
-                  <span class="text-lg dark:text-gray-400">One Plus</span>
-                </label>
-              </li>
-            </ul>
-          </div>
-          --}}
           <div class="p-4 mb-5 bg-white border border-gray-200 dark:bg-gray-900 dark:border-gray-900">
             <h2 class="text-2xl font-bold dark:text-gray-400">Golongan Obat</h2>
             <div class="w-16 pb-2 mb-6 border-b border-rose-600 dark:border-gray-400"></div>
             <ul>
               <li class="mb-4">
-                <label for="bebas" class="flex items-center dark:text-gray-300">
-                  <input id="bebas" type="checkbox" wire:model.live="bebas" value="Bebas" class="w-4 h-4 mr-2">
-                  <span class="text-lg dark:text-gray-400">Bebas</span>
+                <label for="semua" class="flex items-center dark:text-gray-400 ">
+                  <input id="semua" type="radio" wire:model.live="golonganObat" class="w-4 h-4 mr-2" value="">
+                  <span class="text-lg">Semua</span>
                 </label>
               </li>
               <li class="mb-4">
-                <label for="bebasTerbatas" class="flex items-center dark:text-gray-300">
-                  <input type="checkbox" id="bebasTerbatas" wire:model.live="bebasTerbatas" value="Bebas Terbatas" class="w-4 h-4 mr-2">
-                  <span class="text-lg dark:text-gray-400">Bebas Terbatas</span>
+                <label for="bebas" class="flex items-center dark:text-gray-400 ">
+                  <input id="bebas" type="radio" wire:model.live="golonganObat" class="w-4 h-4 mr-2" value="Bebas">
+                  <span class="text-lg">Bebas</span>
                 </label>
               </li>
               <li class="mb-4">
-                <label for="keras" class="flex items-center dark:text-gray-300">
-                  <input id="keras" type="checkbox" wire:model.live="keras" value="Keras" class="w-4 h-4 mr-2">
-                  <span class="text-lg dark:text-gray-400">Keras</span>
+                <label for="bebasTerbatas" class="flex items-center dark:text-gray-400 ">
+                  <input id="bebasTerbatas" type="radio" wire:model.live="golonganObat" class="w-4 h-4 mr-2" value="Bebas Terbatas">
+                  <span class="text-lg">Bebas Terbatas</span>
                 </label>
               </li>
               <li class="mb-4">
-                <label for="narkotika" class="flex items-center dark:text-gray-300">
-                  <input id="narkotika" type="checkbox" wire:model.live="narkotika" value="Narkotika" class="w-4 h-4 mr-2">
-                  <span class="text-lg dark:text-gray-400">Narkotika</span>
+                <label for="keras" class="flex items-center dark:text-gray-400 ">
+                  <input id="keras" type="radio" wire:model.live="golonganObat" class="w-4 h-4 mr-2" value="Keras">
+                  <span class="text-lg">Keras</span>
+                </label>
+              </li>
+              <li class="mb-4">
+                <label for="narkotika" class="flex items-center dark:text-gray-400 ">
+                  <input id="narkotika" type="radio" wire:model.live="golonganObat" class="w-4 h-4 mr-2" value="Narkotika">
+                  <span class="text-lg">Narkotika</span>
                 </label>
               </li>
             </ul>
@@ -99,6 +78,7 @@
           <div class="px-3 mb-4">
             <div class="items-center justify-between hidden px-3 py-2 bg-gray-100 md:flex dark:bg-gray-900 ">
               <div class="flex items-center justify-between">
+                <input type="text" wire:model.live="search" placeholder="Search products..." class="block w-full text-base bg-gray-100 cursor-pointer dark:text-gray-400 dark:bg-gray-900">
                 <select wire:model.live="sort" class="block w-40 text-base bg-gray-100 cursor-pointer dark:text-gray-400 dark:bg-gray-900">
                   <option value="latest">Sort by latest</option>
                   <option value="price">Sort by Price</option>

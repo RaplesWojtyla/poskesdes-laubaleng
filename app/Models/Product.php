@@ -37,4 +37,9 @@ class Product extends Model
     public function getTotalStockAttribute() {
         return $this->productDetail->sum('stock');
     }
+
+    public function scopeSearch($query, $term)
+    {
+        return $query->where('product_name', 'LIKE', '%' . $term . '%');
+    }
 }

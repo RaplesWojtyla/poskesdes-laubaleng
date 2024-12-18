@@ -18,25 +18,19 @@ class ProductsPage extends Component
     use WithPagination, LivewireAlert;
     
     #[Url]
-    public $selected_categories = [];
+    public $selected_categories;
 
     #[Url]
-    public $bebas;
-
-    #[Url]
-    public $bebasTerbatas;
-
-    #[Url]
-    public $keras;
-
-    #[Url]
-    public $narkotika;
+    public $golonganObat;
 
     #[Url]
     public $price_range = 30000;
 
     #[Url]
     public $sort = 'latest';
+
+    #[Url]
+    public $search = '';
     
     // Add items to cart
     public function addToCart($id_product)
@@ -60,50 +54,25 @@ class ProductsPage extends Component
             ->whereHas('productDetail', function($query) {
                 $query->where('stock', '>', 0)
                       ->where('exp_date', '>', now());
-            });
+            })
+            // ->where('product_name', 'LIKE', $this->search . '%');
+            ->search($this->search);
         
         // Filtering by categories
         if(!empty($this->selected_categories)) 
         {
             $products->when($this->selected_categories, function($query) {
                 $query->whereHas('productDescription', function($que) {
-                    $que->whereIn('id_category', $this->selected_categories);
+                    $que->where('id_category', $this->selected_categories);
                 });
             });
         }
         
-        if($this->bebas) 
+        if(!empty($this->golonganObat)) 
         {
-            $products->when($this->bebas, function($query) {
+            $products->when($this->golonganObat, function($query) {
                 $query->whereHas('productDescription', function($que) {
-                    $que->where('golongan_obat', 'Bebas');
-                });
-            });
-        }
-        
-        if($this->bebasTerbatas) 
-        {
-            $products->when($this->bebasTerbatas, function($query) {
-                $query->whereHas('productDescription', function($que) {
-                    $que->where('golongan_obat', 'Bebas Terbatas');
-                });
-            });
-        }
-
-        if($this->keras) 
-        {
-            $products->when($this->keras, function($query) {
-                $query->whereHas('productDescription', function($que) {
-                    $que->where('golongan_obat', 'Keras');
-                });
-            });
-        }
-
-        if($this->narkotika) 
-        {
-            $products->when($this->narkotika, function($query) {
-                $query->whereHas('productDescription', function($que) {
-                    $que->where('golongan_obat', 'Narkotika');
+                    $que->where('golongan_obat', $this->golonganObat);
                 });
             });
         }
