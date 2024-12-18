@@ -34,7 +34,7 @@
 </nav>
 {{-- SIDEBAR END --}}
 {{-- LOGOUT ALERT START --}}
-<form action="/logout" method="POST" class="w-screen h-screen opacity-0 absolute top-0 backdrop-blur-md z-50 hidden flex justify-center items-center transition duration-300 ease-in-out backdrop-brightness-50" id="logoutAlertPopUp">
+<form action="/cashier/logout" method="POST" class="w-screen h-screen opacity-0 absolute top-0 backdrop-blur-md z-50 hidden flex justify-center items-center transition duration-300 ease-in-out backdrop-brightness-50" id="logoutAlertPopUp">
     @csrf
     <div class="bg-white h-fit w-[30%] rounded-lg shadow-sm shadow-semiBlack py-10 px-8 flex flex-col gap-4 items-center text-center">
         <i class="text-7xl text-mainColor fa-solid fa-circle-question"></i>
