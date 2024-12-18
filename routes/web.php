@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CashierController;
+use App\Http\Controllers\OrderReportController;
 use App\Livewire\Auth\ForgotPasswordPage;
 use App\Livewire\Auth\LoginPage;
 use App\Livewire\Auth\RegisterPage;
@@ -72,7 +73,6 @@ Route::middleware(['auth', 'verified', 'hasRole:user'])->group(function () {
 	Route::get('/payment-success', PaymentSuccessPage::class);
 	Route::get('/cancel', CancelPage::class);
 });
-
 Route::get('/customer/logout', function () {
     auth()->logout();
     return redirect()->to('/');
@@ -97,15 +97,6 @@ Route::middleware(['auth', 'hasRole:cashier'])->group(function () {
 	})->name('cashier.logout');
 });
 
-// Route::middleware(['auth', 'owner'])->group(function () {
-//     Route::prefix('admin')->group(function () {
-//         Route::get('/', function () {
-// 			return redirect()->to('/admin');
-// 		})->name('admin.dashboard');
-        
-// 		Route::get('/', function () {
-// 			return redirect()->to('/admin');
-// 		})->name('admin.dashboard');
-//         // Tambahkan route lain yang diperlukan untuk halaman admin
-//     });
-// });
+Route::middleware(['auth', 'hasRole:owner'])->group(function () {
+    Route::get('/orders/report', [OrderReportController::class, 'showReport'])->name('orders.report');
+});
