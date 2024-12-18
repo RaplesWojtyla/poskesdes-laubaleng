@@ -11,6 +11,9 @@ use Filament\Tables\Table;
 use Carbon\Carbon;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 
 class ProductDetailRelationManager extends RelationManager
@@ -72,9 +75,9 @@ class ProductDetailRelationManager extends RelationManager
             ])
             ->actions([
                 ActionGroup::make([
-                    Tables\Actions\EditAction::make(),
-                    Tables\Actions\ViewAction::make(),
-                    Tables\Actions\DeleteAction::make(),
+                    EditAction::make(),
+                    ViewAction::make(),
+                    DeleteAction::make(),
                 ]),
             ])
             ->bulkActions([

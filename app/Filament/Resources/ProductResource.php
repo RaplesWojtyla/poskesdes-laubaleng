@@ -142,40 +142,48 @@ class ProductResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('product_name')
             ->columns([
                 TextColumn::make('product_name')
                     ->label('Nama Obat')
+                    ->sortable()
                     ->searchable(),
 
                 TextColumn::make('productDescription.category.category')
                     ->label('Kategori Obat')
+                    ->sortable()
                     ->searchable(),
                 
                 TextColumn::make('productDescription.unit.unit')
                     ->label('Unit Obat')
+                    ->sortable()
                     ->searchable(),
                 
                 TextColumn::make('productDescription.golongan_obat')
                     ->label('Golongan Obat')
+                    ->sortable()
                     ->searchable(),
                 
                 TextColumn::make('productDescription.type')
                     ->label('Tipe Obat')
+                    ->sortable()
                     ->searchable(),
                 
                 TextColumn::make('productDescription.NIE')
                     ->label('Nomor Izin Edar')
+                    ->sortable()
                     ->searchable(),
                 
                 TextColumn::make('detail.stock')
                     ->label('Total Stock')
                     ->getStateUsing(function (Product $record) {
-                        return $record->total_stock;
+                        return $record->productDetail()->where('exp_date', '>', now())->sum('stock');
                     })
                     ->searchable(),
                 
                 // TextColumn::make('productDetail.exp_date')
                 //     ->label('Tanggal Kadaluarsa')
+                // ->sortable()
                 //     ->searchable(),
 
                 TextColumn::make('nearest_exp_date')
@@ -186,6 +194,7 @@ class ProductResource extends Resource
                     ->searchable(),
                 
                 TextColumn::make('status')
+                    ->sortable()
                     ->searchable(),
             ])
             ->filters([
@@ -199,10 +208,6 @@ class ProductResource extends Resource
                 
                 SelectFilter::make('unit')
                     ->relationship('productDescription.unit', 'unit')
-                    ->placeholder('Semua Unit'),
-                
-                SelectFilter::make('Golongan Obat')
-                    ->relationship('productDescription', 'golongan_obat')
                     ->placeholder('Semua Unit')
             ])
             ->actions([

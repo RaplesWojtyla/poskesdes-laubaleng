@@ -55,8 +55,10 @@ class CategoryResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('category')
             ->columns([
                 TextColumn::make('category')
+                    ->sortable()
                     ->searchable(),
                 
                 ImageColumn::make('category_img')

@@ -22,7 +22,7 @@ return new class extends Migration
                 JOIN (
                     SELECT
                         pd.id_product,
-                        MAX(pd.exp_date)
+                        MAX(pd.exp_date) AS exp_date
                     FROM
                         products_detail pd
                     GROUP BY
