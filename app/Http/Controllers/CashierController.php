@@ -113,22 +113,4 @@ class CashierController extends Controller
             return redirect()->back()->with('error', 'Pesanan tidak ditemukan.');
         }
     }
-
-    public function resep_dokter(Request $request)
-    {
-        return view('cashier.show-image', [
-            'title' => 'Resep Dokter',
-            'root' => 'resep-dokter',
-            'file' => $request->img,
-        ]);
-    }
-
-    public function refund(Request $request)
-    {
-        return view('kasir.show-image', [
-            'title' => 'Refund',
-            'root' => 'refund',
-            'file' => $request->img,
-        ]);
-    }
 }

@@ -122,7 +122,14 @@
                       {{ $product->product_name}}
                     </h3>
                   </div>
-                  <p class="text-lg ">
+                  <p class="text-lg mb-2">
+                    @if($product->productDescription->type == 'Umum')
+                      <span class="bg-green-500 py-1 px-2 text-white rounded shadow"> Umum </span>
+                    @else
+                      <span class="bg-red-500 py-1 px-2 text-white rounded shadow"> Resep Dokter </span>
+                    @endif
+                  </p>
+                  <p class="text-lg">
                     <span class="text-green-600 dark:text-green-600"> Rp {{ number_format($product->product_sell_price, '2', ',', '.')}}</span>
                   </p>
                 </div>

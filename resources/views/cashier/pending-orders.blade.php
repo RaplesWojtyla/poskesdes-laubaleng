@@ -140,8 +140,13 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="py-2 flex gap-2 items-center">
-                                                            <i class="fa-solid fa-image"></i>
-                                                            <a href="/cashier/resep_dokter/{{ $pendingOrder->recipient_file }}" target="_blank">{{ $pendingOrder->recipient_file }}</a>
+                                                            @if($pendingOrder->id_selling_invoice != null)
+                                                                <a href="/cashier/resep_dokter/{{ $pendingOrder->id_selling_invoice }}" target="_blank">
+                                                                    <img src="{{ url('storage', $pendingOrder->resep_dokter) }}" alt="Resep Dokter" class="w-32 h-32 object-cover">
+                                                                </a>
+                                                            @else
+                                                                <i class="fa-solid fa-image"></i>
+                                                            @endif
                                                         </td>
                                                     </tr>
                                                 </table>
