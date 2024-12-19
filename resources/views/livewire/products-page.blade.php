@@ -11,7 +11,7 @@
               <li class="mb-4" wire:key="semua">
                 <label for="all" class="flex items-center dark:text-gray-400 ">
                   <input id="all" type="radio" wire:model.live="selected_categories" class="w-4 h-4 mr-2" value="">
-                  <span class="text-lg">All</span>
+                  <span class="text-lg">Semua</span>
                 </label>
               </li>
               @foreach ($categories as $category)

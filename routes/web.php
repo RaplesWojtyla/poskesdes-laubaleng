@@ -90,6 +90,7 @@ Route::middleware(['auth', 'hasRole:cashier'])->group(function () {
 	Route::get('/cashier/order-failed/{id_selling_invoice}', [CashierController::class, 'failOrder'])->name('failOrder');
 	Route::get('/cashier/order-completed/{id_selling_invoice}', [CashierController::class, 'successOrder'])->name('successOrder');
 	Route::get('/cashier/history-transaction', [CashierController::class, 'historyTransaction'])->name('cashier.historyTransaction');
+	Route::get('/cashier/resep_dokter/{id_selling_invoice}', [CashierController::class, 'resep_dokter']);
 	
 	Route::post('/cashier/logout', function () {
 		auth()->logout();

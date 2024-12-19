@@ -113,4 +113,13 @@ class CashierController extends Controller
             return redirect()->back()->with('error', 'Pesanan tidak ditemukan.');
         }
     }
+
+    public function resep_dokter($id_selling_invoice){
+        $resepDokter = SellingInvoice::findOrFail($id_selling_invoice)->resep_dokter;
+
+        return view('cashier.show-image',[
+            'title' => 'Resep Dokter',
+            'file' => $resepDokter,
+        ]);
+    }
 }
