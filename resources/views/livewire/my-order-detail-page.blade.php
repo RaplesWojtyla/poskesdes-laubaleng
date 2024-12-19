@@ -117,6 +117,34 @@
         </div>
       </div>
     <!-- End Card -->
+    @elseif($orderDetail->payment_status == 'Pembayaran Berhasil' && $orderDetail->order_status == 'Pengambilan Gagal')
+    <!-- Card -->
+      <div class="flex flex-col bg-red-100 border-2 border-red-500 shadow-lg rounded-xl dark:bg-slate-900 dark:border-gray-800">
+        <div class="p-4 md:p-5 flex gap-x-4">
+          <div class="flex-shrink-0 flex justify-center items-center size-[46px] bg-red-200 rounded-lg dark:bg-gray-800">
+            <svg class="flex-shrink-0 size-5 text-gray-600 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 22h14" />
+              <path d="M5 2h14" />
+              <path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22" />
+              <path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2" />
+            </svg>
+          </div>
+
+          <div class="grow">
+            <div class="flex items-center gap-x-2">
+              <p class="text-xs uppercase tracking-wide text-gray-500">
+                Transaksi Selesai
+              </p>
+            </div>
+            <div class="mt-1 flex items-center gap-x-2">
+              <h3 class="text-xl font-medium text-gray-800 dark:text-gray-200">
+                {{ date('d F Y',strtotime($orderDetail->order_completed)) }}
+              </h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- End Card -->
     @elseif($orderDetail->payment_status == 'Pembayaran Gagal' && $orderDetail->order_completed != null)
     <!-- Card -->
       <div class="flex flex-col bg-red-100 border-2 border-red-500 shadow-lg rounded-xl dark:bg-slate-900 dark:border-gray-800">
@@ -212,6 +240,13 @@
     <!-- End Card -->
   </div>
   <!-- End Grid -->
+
+  @if($orderDetail->reject_reason != null)
+    <div class="bg-red-100 border-2 border-red-500 shadow-lg rounded-xl dark:bg-slate-900 dark:border-gray-800 p-4 md:p-5 mt-4">
+      <h2 class="text-lg font-semibold text-red-600">Alasan Penolakan</h2>
+      <p class="mt-2 text-gray-800 dark:text-gray-200">{{ $orderDetail->reject_reason }}</p>
+    </div>
+  @endif
 
   <div class="flex flex-col md:flex-row gap-4 mt-4">
     <div class="md:w-3/4">

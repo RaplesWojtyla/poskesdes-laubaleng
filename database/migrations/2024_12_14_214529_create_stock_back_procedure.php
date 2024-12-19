@@ -22,7 +22,8 @@ return new class extends Migration
             BEGIN 
                 UPDATE products_detail
                 SET stock = stock + quantity
-                WHERE id_product COLLATE utf8mb4_unicode_ci = id_product_param COLLATE utf8mb4_unicode_ci
+                WHERE id_product COLLATE utf8mb4_unicode_ci = id_product_param COLLATE utf8mb4_unicode_ci AND
+                exp_date > NOW()
                 ORDER BY exp_date LIMIT 1;
             END;
         ";

@@ -87,14 +87,22 @@ class LiveCart extends Component
                     'quantity' => $cartItem->quantity,
                     'product_sell_price' => $cartItem->product->product_sell_price,
                 ]);
-                
-                ProductDetail::where('id_product', $cartItem->id_product)
+
+                $productDetail = ProductDetail::where('id_product', $cartItem->id_product)
                     ->where('stock', '>', 0)
                     ->where('exp_date', '>', now())
                     ->orderBy('exp_date')
-                    ->first()
-                    ->decrement('stock', $cartItem->quantity);
+                    ->lockForUpdate()
+                    ->first();
+                
+                if ($productDetail->stock < $cartItem->quantity) 
+                {
+                    throw new \Exception('Stok ' . $cartItem->product->product_name . ' tidak mencukupi.');
+                }
+
+                $productDetail->decrement('stock', $cartItem->quantity);
             }
+
             CartManagement::clearCartItems(auth()->user()->id_user);
             
             DB::commit();
@@ -103,7 +111,7 @@ class LiveCart extends Component
         catch (\Exception $e) {
             DB::rollBack();
             
-            return redirect()->back()->with('error', 'Transaksi Gagal');
+            return redirect()->back()->with('error', $e->getMessage());
             // throw $e;
         }
     }

@@ -94,11 +94,19 @@ class CheckoutPage extends Component
                     'product_sell_price' => $cartItem->product->product_sell_price,
                 ]);
 
-                // ProductDetail::where('id_product', $cartItem->id_product)
-                //     ->where('stock', '>', 0)
-                //     ->orderBy('exp_date')
-                //     ->first()
-                //     ->decrement('stock', $cartItem->quantity);
+                $productDetail = ProductDetail::where('id_product', $cartItem->id_product)
+                    ->where('stock', '>', 0)
+                    ->where('exp_date', '>', now())
+                    ->orderBy('exp_date')
+                    ->lockForUpdate()
+                    ->first();
+                
+                if ($productDetail->stock < $cartItem->quantity) 
+                {
+                    throw new \Exception('Stok ' . $cartItem->product->product_name . ' tidak mencukupi.');
+                }
+
+                $productDetail->decrement('stock', $cartItem->quantity);
 
                 $params['item_details'][] = [
                     'id' => $cartItem->id_product,
