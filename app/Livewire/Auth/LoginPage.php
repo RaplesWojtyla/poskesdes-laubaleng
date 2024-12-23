@@ -32,12 +32,7 @@ class LoginPage extends Component
         {
             return redirect()->to('/cashier');
         }
-        // else if (auth()->check() && auth()->user()->role == 'user')
-        // {
-        //     return redirect()->to('/poskesdes');
-        // }
-
-        // return redirect()->intended();
+        
         return redirect()->to('/');
     }
 

@@ -24,7 +24,7 @@ class ProductsPage extends Component
     public $golonganObat;
 
     #[Url]
-    public $price_range = 30000;
+    public $price_range = 70000;
 
     #[Url]
     public $sort = 'latest';
