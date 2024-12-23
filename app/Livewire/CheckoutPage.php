@@ -56,7 +56,7 @@ class CheckoutPage extends Component
             $lastInvoice = SellingInvoice::latest()->first();
             $currInvoice = $lastInvoice ? (int)substr($lastInvoice->invoice_code, 4) + 1 : 1;
             $invoiceCode = 'INV-' . str_pad($currInvoice, 5, '0', STR_PAD_LEFT);
-            // $invoiceCode = 'INV-00054';
+            // $invoiceCode = 'INV-000867';
 
             $resepDokterPath = isset($this->resepDokter) ? $this->resepDokter->store('resep_dokter', 'public') : '';
 
