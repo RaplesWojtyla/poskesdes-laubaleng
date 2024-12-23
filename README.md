@@ -103,7 +103,7 @@ Dengan mengintegrasikan semua data dalam satu platform, website ini mendukung op
          Email: -cek dimysql-
          Password: 12345678 
      ## Login Level: Owner
-         Email: -cek dimysql-
+         Email: owner@gmail.com
          Password: 1234567890 
 
 # [Kontributor](#kontributor)
