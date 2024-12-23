@@ -1,65 +1,137 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## - [Intro](#intro)
+## - [Instalasi Dan Konfigurasi](#instalasi-dan-konfigurasi)
+## - [Kontributor](#Kontributor)
+## - [Source](#source)
 
-## About Laravel
+# [Intro](#intro)
+Website ini merupakan aplikasi berbasis web yang dirancang untuk membantu Pos Kesehatan Desa (Poskesdes) Laubaleng dalam mengelola data secara efisien dan terorganisir. Sistem ini dibuat untuk menggantikan proses manual yang selama ini digunakan, seperti pencatatan transaksi dengan pembukuan dan pengelolaan data obat menggunakan file Excel.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Dengan mengintegrasikan semua data dalam satu platform, website ini mendukung operasional Poskesdes, termasuk pencatatan transaksi penjualan, penyimpanan data obat, dan manajemen akun pengguna. Selain itu, pelanggan dapat dengan mudah mengakses informasi obat dan melakukan pemesanan secara online, sehingga meningkatkan aksesibilitas dan kualitas pelayanan. Website ini juga sudah terintegrasi dengan payment gateway, memudahkan proses pembayaran transaksi secara online dengan aman dan cepat.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+# Instalasi Dan Konfigurasi
+- ## Tech
+    [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg" height="30" alt="laravel logo" />](#laravel-10)
+    <img width="12" />
+    [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/livewire/livewire-original.svg" height="30" alt="csharp logo" />](#livewire)
+    <img width="12" />
+    [<img src="https://shop.filamentphp.com/cdn/shop/files/Logo-2.png" height="30" alt="filament logo" />](#filament)
+    <img width="12" />
+    [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" height="30" alt="laravel logo" />](#tailwind-css)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+ - ## Instalasi
+   - #### Lakukan Clone pada Github Repositori ini
+        - Klik tombol "Code" (berwarna hijau) untuk mendapatkan URL repository. Jika menggunakan HTTPS, salin URL tersebut. Jika menggunakan SSH, klik ikon SSH dan salin URL SSH.
+        - Buka terminal, command prompt atau Git Bash(rekomendasi) di komputer Anda.
+        - Pindah ke direktori di mana Anda ingin menyimpan salinan lokal repository. Gunakan perintah cd untuk berpindah ke direktori tersebut.
+          #### Contoh:
+              cd path/ke/direktori/tujuan
+        - Gunakan perintah git clone dengan menyertakan URL repository yang telah Anda salin sebelumnya.
+          #### Contoh untuk HTTPS:
+              git clone https://github.com/nama-akun/nama-repo.git
+          #### Atau untuk SSH:
+              git clone git@github.com:nama-akun/nama-repo.git
+   - #### Jalankan Di Code Editor
+       - Buka Terminal di direktori penyimpanan project.
+   - #### Install Dependensi
+     #### - Jalankan perintah berikut:
+         composer install
+     #### - Selanjutnya, jalankan perintah berikut:
+         npm install
+   - #### Buat Salinan File Konfigurasi
+     - Salin file `.env.example` dan beri nama baru menjadi `.env`
+       #### Jalankan Perintah Berikut:
+           cp .env.example .env
+   - #### Konfigurasi file `.env`
+     - # Masukkan pengaturan untuk storage file .env
+             FILESYSTEM_DISK=public
+     - Buka file `.env` dan konfigurasi pengaturan database, koneksi email, dan login google.
+       ### Pengaturan database
+       #### Ubah sesuai dengan nama database yang dibuat:
+             DB_DATABASE=<nama_database>
+         
+       ### Pengaturan Mail
+       #### Ubah sesuai kebutuhan:
+            MAIL_MAILER=smtp
+            MAIL_HOST=<host_yang_digunakan>
+            MAIL_PORT=<port_mail>
+            MAIL_USERNAME=Username
+            MAIL_PASSWORD=Password
+            MAIL_ENCRYPTION=null
+            MAIL_FROM_ADDRESS="poskesdeslaubaleng@gmail.com"
+            MAIL_FROM_NAME="Poskesdes Lau Baleng"
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+       ### Pengaturan Midtrans (Payment Gateway)
+       - Register/Login ke midtrans.com
+       - Ubah Environtment menjadi: Sandbox (default: Production)
+       - Masuk ke SETTINGS -> ACCESS KEYS
+       - Lalu 
+       #### Ubah <YOUR_MIDTRANS_SERVER_KEY>, dan <YOUR_MIDTRANS_CLIENT_KEY> sesuai dengan yang tertera pada midtrans anda:
+            MIDTRANS_SERVER_KEY=<YOUR_MIDTRANS_SERVER_KEY>
+            MIDTRANS_CLIENT_KEY=<YOUR_MIDTRANS_CLIENT_KEY>
+            MIDTRANS_IS_PRODUCTION=false
+            MIDTRANS_IS_SANITIZED=true
+            MIDTRANS_IS_3DS=true 
+       
+   - #### Gunakan Laragon (Tidak disarankan menggunakan XAMPP)
+   - #### Generate Application Key
+     #### Jalankan perintah berikut di terminal:
+         php artisan key:generate
+   - #### Jalankan Migrasi
+     Jalankan perintah migrasi untuk membuat struktur table
+     #### jalankan perintah berikut:
+         php artisan migrate
+     Jalankan perintah seeder untuk mengisi data pada table dengan data dummy
+     #### jalankan perintah berikut:
+         php artisan db:seed
+   - #### Jalankan Server Lokal
+     #### jalankan perintah berikut:
+         php artisan serve
+     #### lalu
+         php artisan storage:link
+     #### dan
+         npm run dev
+   - #### Buka Proyek di Browser
+      Buka browser dan kunjungi alamat yang ditampilkan di terminal. Biasanya, ini adalah `http://127.0.0.1:8000`.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+     ## Login Level: User 
+         Email: -cek dimysql-
+         Password: qwertyui
+     ## Login Level: Cashier
+         Email: -cek dimysql-
+         Password: 12345678 
+     ## Login Level: Owner
+         Email: -cek dimysql-
+         Password: 1234567890 
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+# [Kontributor](#kontributor)
+- ### Patra Rafles Wostyla Sinaga
+  - Instagram: @raples.wojtyla
+  - Role: Full-Stack Web Developer and Database Administrator
+- ### Susi Pujiarti Butar-Butar
+  - Instagram: @susi_pujiarti_
+  - Role: Nyusun Laporan Akhir dan PPT
+- ### Zaizha Michella
+  - Instagram: @zmichellaa
+  - Role: Nyusun Laporan Akhir dan PPT
+- ### Evan Arga Ignatius Hutagalung
+  - Instagram: @evanhutagalung63
+  - Role: Nyusun PPT
+- ### Geri Nugraha Sitepu
+  - Instagram: @geri.ngrha
+  - Role: Nyusun PPT
 
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# [Source](#source)
+- ## [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg" height="30" alt="laravel logo" /> Laravel 10](#laravel-10)
+  https://laravel.com/docs/10.x
+- ## [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/livewire/livewire-original.svg" height="30" alt="livewire logo" /> Livewire](#livewire)
+  https://livewire.laravel.com/docs/quickstart
+- ## [<img src="https://shop.filamentphp.com/cdn/shop/files/Logo-2.png" height="30" alt="filament logo" />](#filament)
+  https://filamentphp.com/docs
+- ## [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" height="30" alt="laravel logo" /> Tailwindcss](#tailwind-css)
+  https://tailwindcss.com/docs/installation
 
 ## License
 
