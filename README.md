@@ -30,9 +30,9 @@ Dengan mengintegrasikan semua data dalam satu platform, website ini mendukung op
               cd path/ke/direktori/tujuan
         - Gunakan perintah git clone dengan menyertakan URL repository yang telah Anda salin sebelumnya.
           #### Contoh untuk HTTPS:
-              git clone https://github.com/nama-akun/nama-repo.git
+              git clone https://github.com/RaplesWojtyla/poskesdes-laubaleng.git
           #### Atau untuk SSH:
-              git clone git@github.com:nama-akun/nama-repo.git
+              git clone git@github.com:RaplesWojtyla/poskesdes-laubaleng.git
    - #### Jalankan Di Code Editor
        - Buka Terminal di direktori penyimpanan project.
    - #### Install Dependensi
